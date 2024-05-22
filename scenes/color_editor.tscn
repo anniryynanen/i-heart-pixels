@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwl8qyprnb8is"]
+
+[ext_resource type="Script" path="res://scenes/color_editor.gd" id="1_pcwig"]
+[ext_resource type="PackedScene" uid="uid://dl1hwv3q6do0e" path="res://scenes/color_slider.tscn" id="2_e58xi"]
+[ext_resource type="PackedScene" uid="uid://cuvv0ttrqqef3" path="res://scenes/color_slider_handle.tscn" id="3_r3fki"]
+
+[node name="ColorEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pcwig")
+
+[node name="Sliders" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Hue" parent="Sliders" instance=ExtResource("2_e58xi")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Saturation" parent="Sliders" instance=ExtResource("2_e58xi")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+type = 1
+
+[node name="Lightness" parent="Sliders" instance=ExtResource("2_e58xi")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+type = 2
+
+[node name="Handles" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="HueHandle" parent="Handles" instance=ExtResource("3_r3fki")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SaturationHandle" parent="Handles" instance=ExtResource("3_r3fki")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LightnessHandle" parent="Handles" instance=ExtResource("3_r3fki")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3

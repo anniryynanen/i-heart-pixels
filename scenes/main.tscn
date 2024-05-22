@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpqpbds16fmgh"]
+
+[ext_resource type="PackedScene" uid="uid://dwl8qyprnb8is" path="res://scenes/color_editor.tscn" id="1_ntfhl"]
+
+[node name="Main" type="Node"]
+
+[node name="ColorEditor" parent="." instance=ExtResource("1_ntfhl")]
+color = Color(0.215686, 0.384314, 0.45098, 1)
