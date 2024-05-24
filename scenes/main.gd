@@ -1,6 +1,7 @@
 extends Control
 
 var settings_loaded = false
+var orig_font_sizes: Dictionary = {}
 
 
 func _ready() -> void:
@@ -33,10 +34,10 @@ func _on_resized() -> void:
 func load_settings() -> void:
     Settings.load()
 
-    scale.x = Settings.get_value("app", "scale", 1)
-    scale.y = scale.x
-    anchor_right = 1 / scale.x
-    anchor_bottom = 1 / scale.y
+    if not Settings.has_key("app", "scale"):
+        Settings.set_key("app", "scale", 1.0)
+
+    set_app_scale(Settings.get_value("app", "scale"))
 
     if Settings.has_key("window", "x"):
         get_window().position.x = Settings.get_value("window", "x")
@@ -49,3 +50,15 @@ func load_settings() -> void:
     get_window().mode = Settings.get_value("window", "mode", Window.Mode.MODE_WINDOWED)
 
     settings_loaded = true
+
+
+func set_app_scale(app_scale: float) -> void:
+    for label: Label in find_children("*", "Label"):
+        if not label.label_settings:
+            continue
+
+        var id: int = label.label_settings.get_instance_id()
+        if id not in orig_font_sizes:
+            orig_font_sizes[id] = label.label_settings.font_size
+
+        label.label_settings.font_size = roundi(app_scale * orig_font_sizes[id])

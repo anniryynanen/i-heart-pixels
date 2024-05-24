@@ -23,6 +23,13 @@ func duplicate() -> OKColor:
     return OKColor.new(h, s, l, a)
 
 
+func rounded() -> OKColor:
+    return OKColor.new(
+        roundf(h * 255.0) / 255.0,
+        roundf(s * 100.0) / 100.0,
+        roundf(l * 100.0) / 100.0, a)
+
+
 func opaque() -> OKColor:
     return OKColor.new(h, s, l)
 
@@ -38,10 +45,9 @@ static func from_rgb(color: Color) -> OKColor:
     if is_nan(ok.s):
         ok.s = 0.0
 
-    # Clamp values between 0 and 1
-    ok.h = minf(maxf(ok.h, 0.0), 1.0)
-    ok.s = minf(maxf(ok.s, 0.0), 1.0)
-    ok.l = minf(maxf(ok.l, 0.0), 1.0)
+    ok.h = clampf(ok.h, 0.0, 1.0)
+    ok.s = clampf(ok.s, 0.0, 1.0)
+    ok.l = clampf(ok.l, 0.0, 1.0)
 
     return ok
 
