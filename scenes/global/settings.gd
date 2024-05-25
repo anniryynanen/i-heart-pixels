@@ -6,7 +6,7 @@ const ERROR_TITLE = ":("
 var file: ConfigFile = ConfigFile.new()
 
 
-func has_key(section: String, key: String) -> bool:
+func has_value(section: String, key: String) -> bool:
     return file.has_section_key(section, key)
 
 

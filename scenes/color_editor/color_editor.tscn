@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dwl8qyprnb8is"]
+[gd_scene load_steps=7 format=3 uid="uid://dwl8qyprnb8is"]
 
-[ext_resource type="Script" path="res://scenes/color_editor.gd" id="1_pcwig"]
+[ext_resource type="Script" path="res://scenes/color_editor/color_editor.gd" id="1_pcwig"]
 [ext_resource type="FontFile" uid="uid://bny6ttbd3ne51" path="res://fonts/sofia_sans_condensed/SofiaSansCondensed-Regular.ttf" id="2_bi8ge"]
-[ext_resource type="PackedScene" uid="uid://dl1hwv3q6do0e" path="res://scenes/color_slider.tscn" id="2_e58xi"]
-[ext_resource type="PackedScene" uid="uid://cuvv0ttrqqef3" path="res://scenes/color_slider_handle.tscn" id="3_r3fki"]
+[ext_resource type="PackedScene" uid="uid://dl1hwv3q6do0e" path="res://scenes/color_editor/color_slider.tscn" id="2_e58xi"]
+[ext_resource type="PackedScene" uid="uid://cuvv0ttrqqef3" path="res://scenes/color_editor/color_slider_handle.tscn" id="3_r3fki"]
+[ext_resource type="Script" path="res://scenes/scalable_label.gd" id="4_y57f0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_s3oli"]
 font = ExtResource("2_bi8ge")
@@ -60,6 +61,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "OKHSL"
 label_settings = SubResource("LabelSettings_s3oli")
+script = ExtResource("4_y57f0")
 
 [node name="Handles" type="VBoxContainer" parent="."]
 layout_mode = 1

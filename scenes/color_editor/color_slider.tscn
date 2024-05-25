@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dl1hwv3q6do0e"]
 
-[ext_resource type="Script" path="res://scenes/color_slider.gd" id="1_n3edj"]
+[ext_resource type="Script" path="res://scenes/color_editor/color_slider.gd" id="1_n3edj"]
 
 [node name="ColorSlider" type="Control"]
 layout_mode = 3

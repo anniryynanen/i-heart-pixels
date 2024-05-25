@@ -1,11 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://cuvv0ttrqqef3"]
+[gd_scene load_steps=5 format=3 uid="uid://cuvv0ttrqqef3"]
 
-[ext_resource type="Script" path="res://scenes/color_slider_handle.gd" id="1_ay6ai"]
+[ext_resource type="Script" path="res://scenes/color_editor/color_slider_handle.gd" id="1_ay6ai"]
 [ext_resource type="FontFile" uid="uid://bny6ttbd3ne51" path="res://fonts/sofia_sans_condensed/SofiaSansCondensed-Regular.ttf" id="2_d4h8n"]
+[ext_resource type="Script" path="res://scenes/scalable_label.gd" id="3_u0q4i"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ynx8q"]
 font = ExtResource("2_d4h8n")
-font_size = 14
 
 [node name="ColorSliderHandle" type="Control"]
 layout_mode = 3
@@ -42,3 +42,5 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "255"
 label_settings = SubResource("LabelSettings_ynx8q")
+horizontal_alignment = 2
+script = ExtResource("3_u0q4i")

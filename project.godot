@@ -19,8 +19,8 @@ config/features=PackedStringArray("4.2", "Mobile")
 [autoload]
 
 Settings="*res://scenes/global/settings.tscn"
+Signals="*res://scenes/global/signals.tscn"
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+renderer/rendering_method="mobile"
