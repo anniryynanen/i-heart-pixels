@@ -1,14 +1,21 @@
 extends HBoxContainer
 
-var settings_loaded = false
+var settings_applied = false
+
+
+func _enter_tree() -> void:
+    Settings.load()
+
+    if not Settings.has_value("app", "scale"):
+        Settings.set_value("app", "scale", 1.0)
 
 
 func _ready() -> void:
-    load_settings()
+    apply_settings()
 
 
 func _on_resized() -> void:
-    if not settings_loaded:
+    if not settings_applied:
         return
 
     if get_window().mode == Window.Mode.MODE_WINDOWED:
@@ -30,22 +37,17 @@ func _notification(what: int) -> void:
         get_tree().quit()
 
 
-func load_settings() -> void:
-    Settings.load()
-
-    if not Settings.has_value("app", "scale"):
-        Settings.set_value("app", "scale", 1.0)
-    Signals.app_scale_changed.emit(Settings.get_value("app", "scale"))
-
-    if Settings.has_value("window", "x"):
-        get_window().position.x = Settings.get_value("window", "x")
-        get_window().position.y = Settings.get_value("window", "y")
+func apply_settings() -> void:
+    Signals.app_scale_changed.emit(Settings.get_app_scale())
 
     if Settings.has_value("window", "width"):
         get_window().size.x = Settings.get_value("window", "width")
         get_window().size.y = Settings.get_value("window", "height")
 
-    if Settings.has_value("window", "mode"):
-        get_window().mode = Settings.get_value("window", "mode")
+    if Settings.has_value("window", "x"):
+        get_window().position.x = Settings.get_value("window", "x")
+        get_window().position.y = Settings.get_value("window", "y")
 
-    settings_loaded = true
+    get_window().mode = Settings.get_value("window", "mode", Window.Mode.MODE_MAXIMIZED)
+
+    settings_applied = true

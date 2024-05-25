@@ -95,7 +95,7 @@ func _draw() -> void:
 
     line_color.l = 0.22 if color.l > 0.5 else 0.78
     var line_width: int = 1
-    var global_width: float = width / Settings.get_value("app", "scale")
+    var global_width: float = width / Settings.get_app_scale()
     if global_width > 50:
         line_color.l = 0.33 if color.l > 0.5 else 0.67
         line_width = 2

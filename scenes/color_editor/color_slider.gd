@@ -18,11 +18,21 @@ var handle: ColorSliderHandle:
         handle.steps = STEPS[type]
 
 
+func value() -> int:
+    match type:
+        Type.HUE:
+            return roundi(color.h * STEPS[type])
+        Type.SATURATION:
+            return roundi(color.s * STEPS[type])
+        _:
+            return roundi(color.l * STEPS[type])
+
+
 func _draw() -> void:
     handle.height = 0.85 * size.y
     handle.width = minf(handle.height, floorf(size.x / 4.0))
     var slices: int = roundi(minf(255, size.x - handle.width))
-    var slices_before:int = roundi(value() / (STEPS[type] * 1.0) * slices)
+    var slices_before:int = roundi(value() / float(STEPS[type]) * slices)
 
     # Draw slices
     for i in range(slices):
@@ -38,7 +48,7 @@ func _draw() -> void:
             end += handle.width
 
         var slice_color: OKColor = color.opaque()
-        var slice_value: float = i / (slices * 1.0)
+        var slice_value: float = i / float(slices)
         match type:
             Type.HUE:
                 slice_color.h = slice_value
@@ -58,13 +68,3 @@ func _draw() -> void:
         handle.color = color.opaque()
         handle.value = value()
         handle.queue_redraw()
-
-
-func value() -> int:
-    match type:
-        Type.HUE:
-            return roundi(color.h * STEPS[type])
-        Type.SATURATION:
-            return roundi(color.s * STEPS[type])
-        _:
-            return roundi(color.l * STEPS[type])

@@ -1,4 +1,4 @@
-extends Control
+extends ScalableControl
 
 @export var color: Color
 
@@ -7,6 +7,8 @@ var sliders: Array[ColorSlider]
 
 
 func _ready() -> void:
+    super._ready()
+
     sliders.append(%Hue)
     sliders.append(%Saturation)
     sliders.append(%Lightness)

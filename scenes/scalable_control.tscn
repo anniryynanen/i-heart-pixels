@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://duvt1ic83dguc"]
+
+[ext_resource type="Script" path="res://scenes/scalable_control.gd" id="1_gn4lr"]
+
+[node name="ScalableControl" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_gn4lr")

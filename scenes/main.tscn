@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dpqpbds16fmgh"]
+[gd_scene load_steps=4 format=3 uid="uid://dpqpbds16fmgh"]
 
 [ext_resource type="PackedScene" uid="uid://dwl8qyprnb8is" path="res://scenes/color_editor/color_editor.tscn" id="1_ntfhl"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_qg5aj"]
+[ext_resource type="PackedScene" uid="uid://clr3rba3j2bsb" path="res://scenes/canvas.tscn" id="2_hvaxd"]
 
 [node name="Main" type="HBoxContainer"]
 anchors_preset = 15
@@ -9,11 +10,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
 script = ExtResource("1_qg5aj")
 
-[node name="ColorEditor" parent="." instance=ExtResource("1_ntfhl")]
+[node name="Canvas" parent="." instance=ExtResource("2_hvaxd")]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="ColorEditor" parent="." instance=ExtResource("1_ntfhl")]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
 color = Color(0.215686, 0.384314, 0.45098, 1)
 
 [connection signal="resized" from="." to="." method="_on_resized"]
