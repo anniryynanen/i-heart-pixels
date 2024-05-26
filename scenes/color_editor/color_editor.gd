@@ -1,8 +1,10 @@
 extends ScalableControl
 
-@export var color: Color
+signal color_changed(color: OKColor)
 
-var ok_color: OKColor
+@export var rgb_color: Color
+
+var color: OKColor
 var sliders: Array[ColorSlider]
 
 
@@ -17,28 +19,29 @@ func _ready() -> void:
     %Saturation.handle = %SaturationHandle
     %Lightness.handle = %LightnessHandle
 
-    ok_color = OKColor.from_rgb(color).rounded()
-    sliders.map(func(s: ColorSlider): s.color = ok_color)
+    color = OKColor.from_rgb(rgb_color).rounded()
+    sliders.map(func(s: ColorSlider): s.color = color)
 
 
 func _on_hue_handle_value_changed() -> void:
-    ok_color.h = %HueHandle.value / 255.0
+    color.h = %HueHandle.value / 255.0
     _on_ok_color_changed()
 
 
 func _on_saturation_handle_value_changed() -> void:
-    ok_color.s = %SaturationHandle.value / 100.0
+    color.s = %SaturationHandle.value / 100.0
     _on_ok_color_changed()
 
 
 func _on_lightness_handle_value_changed() -> void:
-    ok_color.l = %LightnessHandle.value / 100.0
+    color.l = %LightnessHandle.value / 100.0
     _on_ok_color_changed()
 
 
 func _on_ok_color_changed() -> void:
-    color = Color.from_ok_hsl(ok_color.h, ok_color.s, ok_color.l, ok_color.a)
+    rgb_color = Color.from_ok_hsl(color.h, color.s, color.l, color.a)
     sliders.map(func(s: ColorSlider):
-        s.color = ok_color
+        s.color = color
         s.queue_redraw()
     )
+    color_changed.emit(color)

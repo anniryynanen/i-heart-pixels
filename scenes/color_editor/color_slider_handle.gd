@@ -23,6 +23,8 @@ func _ready() -> void:
     # independently
     %Value.label_settings = %Value.label_settings.duplicate()
 
+    Signals.focus_lost.connect(func(): if dragging: stop_dragging())
+
 
 func _gui_input(event: InputEvent) -> void:
     if event is InputEventMouseButton:
@@ -37,16 +39,14 @@ func _on_button_event(button: InputEventMouseButton) -> void:
         _on_button_pressed(button)
     else:
         if button.button_index == MOUSE_BUTTON_LEFT:
-            dragging = false
+            stop_dragging()
 
 
 func _on_button_pressed(button: InputEventMouseButton) -> void:
     match button.button_index:
         MOUSE_BUTTON_LEFT:
             if area.has_point(button.position):
-                dragging = true
-                drag_start_x = button.position.x
-                drag_start_value = value
+                start_dragging(button.position)
             else:
                 var diff: float = 0.0
                 if button.position.x < left:
@@ -82,6 +82,16 @@ func _on_motion_event(motion: InputEventMouseMotion) -> void:
         if new_value != value:
             value = new_value
             value_changed.emit()
+
+
+func start_dragging(mouse_pos: Vector2) -> void:
+    dragging = true
+    drag_start_x = mouse_pos.x
+    drag_start_value = value
+
+
+func stop_dragging() -> void:
+    dragging = false
 
 
 func _draw() -> void:

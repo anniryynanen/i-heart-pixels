@@ -13,6 +13,8 @@ func _enter_tree() -> void:
 func _ready() -> void:
     apply_settings()
 
+    %Canvas.set_color(%ColorEditor.color)
+
 
 func _on_resized() -> void:
     if not settings_applied:
