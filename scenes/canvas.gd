@@ -1,13 +1,14 @@
 extends Control
 
 const ZOOM_STEP = 1.4
-const PAN_STEP = 1.4
 
 var pixel_width: float = 80.0
 var top_left: Vector2 = Vector2(0.0, 0.0)
 var current_pixel: Vector2i = Vector2i(-1, -1)
+var pan_step = 1.0
 var dragging = false
 
+var hovering = false
 var drawing = false
 var color: OKColor
 
@@ -16,19 +17,26 @@ var image_changed = false
 var texture: ImageTexture = ImageTexture.create_from_image(image)
 
 
-func set_color(ok_color: OKColor) -> void:
-    color = ok_color
-
-
 func _ready() -> void:
     pixel_width *= Settings.get_app_scale()
+    pan_step *= Settings.get_app_scale()
 
-    Signals.focus_lost.connect(func(): if drawing: stop_drawing())
-    Signals.focus_lost.connect(func(): if dragging: stop_dragging())
+    Signals.focus_lost.connect(_on_focus_lost)
+
+
+func _on_focus_lost() -> void:
+    if drawing:
+        stop_drawing()
+
+    if dragging:
+        stop_dragging()
+
+    if hovering:
+        stop_hovering()
 
 
 func _process(delta: float) -> void:
-    var distance: float = delta * PAN_STEP * (size.x / pixel_width) * pixel_width
+    var distance: float = delta * pan_step * (size.x / pixel_width) * pixel_width
 
     if Input.is_physical_key_pressed(KEY_W):
         top_left.y -= distance
@@ -96,6 +104,10 @@ func _on_motion_event(motion: InputEventMouseMotion) -> void:
             draw_pixel(current_pixel)
 
 
+func set_color(ok_color: OKColor) -> void:
+    color = ok_color
+
+
 func save_mouse_pos(mouse_pos: Vector2) -> Vector2:
      return (mouse_pos + top_left) / pixel_width
 
@@ -103,6 +115,16 @@ func save_mouse_pos(mouse_pos: Vector2) -> Vector2:
 func restore_mouse_pos(mouse_pos: Vector2, rel_mouse_pos: Vector2) -> void:
     var new_mouse_pos: Vector2 = rel_mouse_pos * pixel_width - top_left
     top_left += new_mouse_pos - mouse_pos
+
+
+func start_hovering() -> void:
+    hovering = true
+    queue_redraw()
+
+
+func stop_hovering() -> void:
+    hovering = false
+    queue_redraw()
 
 
 func start_dragging() -> void:
@@ -158,7 +180,8 @@ func _draw() -> void:
     var texture_size: Vector2 = Vector2(pixel_width, pixel_width) * texture.get_size()
     draw_texture_rect(texture, Rect2(-top_left, texture_size), false)
 
-    draw_hover_highlight()
+    if hovering:
+        draw_hover_highlight()
 
 
 func draw_background_alpha() -> void:
@@ -187,14 +210,17 @@ func draw_background_alpha() -> void:
 
 
 func draw_hover_highlight() -> void:
-    var hl_color: Color = Color.BLACK
-
+    var pixel_color: OKColor = OKColor.new()
     if pixel_in_image(current_pixel):
-        var pixel_color: Color = image.get_pixel(current_pixel.x, current_pixel.y)
-        if OKColor.from_rgb(pixel_color).l <= 0.5:
-            hl_color = Color.WHITE
+        pixel_color = OKColor.from_rgb(image.get_pixel(current_pixel.x, current_pixel.y))
 
-    draw_rect(Rect2(
-            current_pixel * pixel_width - top_left,
-            Vector2(pixel_width, pixel_width)),
-        hl_color, false, 1.0)
+    var line_width: float = 1.0
+    if Settings.get_app_scale() > 1.9:
+        line_width *= Settings.get_app_scale()
+
+    var hl_pos: Vector2 = current_pixel * pixel_width - top_left
+    hl_pos += Vector2(line_width / 2.0, line_width / 2.0)
+    var hl_size: Vector2 = Vector2(pixel_width - line_width, pixel_width - line_width)
+
+    draw_rect(Rect2(hl_pos, hl_size),
+        ColorEditor.get_line_color(pixel_color).to_rgb(), false, line_width)

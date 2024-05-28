@@ -19,6 +19,10 @@ func _to_string() -> String:
     return "(%s, %s, %s, %s)" % [h, s, l, a]
 
 
+func to_hex() -> String:
+    return to_rgb().to_html(false)
+
+
 func duplicate() -> OKColor:
     return OKColor.new(h, s, l, a)
 

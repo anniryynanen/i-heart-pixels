@@ -1,4 +1,3 @@
-class_name ScalableLabel
 extends Label
 
 var orig_font_size: int

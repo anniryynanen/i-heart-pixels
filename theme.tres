@@ -1,0 +1,121 @@
+[gd_resource type="Theme" load_steps=15 format=3 uid="uid://bp7ntkss4y7ms"]
+
+[ext_resource type="FontFile" uid="uid://b38kkef63j7c7" path="res://fonts/noto_sans/NotoSans-Regular.ttf" id="1_jio2m"]
+[ext_resource type="Texture2D" uid="uid://c685fxh0dy8li" path="res://icons/h_split_handle.svg" id="1_wplux"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jqf83"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.50629, 0.50629, 0.50629, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gplei"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.577652, 0.577652, 0.577652, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_igd3v"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.406954, 0.406954, 0.406954, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1aws3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mkc8m"]
+bg_color = Color(0, 0, 0, 0.196078)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1u7cv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1qso4"]
+bg_color = Color(0, 0, 0, 0.352941)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hons6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u78gf"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 4.0
+bg_color = Color(0.63997, 0.63997, 0.63997, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s3p28"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 4.0
+bg_color = Color(0.73535, 0.73535, 0.73535, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eifv7"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 4.0
+bg_color = Color(0.577652, 0.577652, 0.577652, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1sbry"]
+content_margin_left = 5.0
+content_margin_top = 4.0
+content_margin_right = 5.0
+content_margin_bottom = 4.0
+bg_color = Color(0.63997, 0.63997, 0.63997, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[resource]
+default_font = ExtResource("1_jio2m")
+default_font_size = 14
+Button/styles/hover = SubResource("StyleBoxFlat_jqf83")
+Button/styles/normal = SubResource("StyleBoxFlat_gplei")
+Button/styles/pressed = SubResource("StyleBoxFlat_igd3v")
+HBoxContainer/constants/separation = 4
+HSplitContainer/constants/autohide = 0
+HSplitContainer/constants/minimum_grab_thickness = 5
+HSplitContainer/constants/separation = 5
+HSplitContainer/icons/grabber = ExtResource("1_wplux")
+IconButton/base_type = &"Button"
+IconButton/styles/focus = SubResource("StyleBoxEmpty_1aws3")
+IconButton/styles/hover = SubResource("StyleBoxFlat_mkc8m")
+IconButton/styles/normal = SubResource("StyleBoxEmpty_1u7cv")
+IconButton/styles/pressed = SubResource("StyleBoxFlat_1qso4")
+Label/colors/font_color = Color(0, 0, 0, 1)
+MenuBar/colors/font_color = Color(0, 0, 0, 1)
+MenuBar/colors/font_hover_color = Color(0, 0, 0, 1)
+MenuBar/colors/font_pressed_color = Color(0, 0, 0, 1)
+MenuBar/constants/h_separation = 4
+MenuBar/constants/outline_size = 0
+MenuBar/styles/disabled = SubResource("StyleBoxEmpty_hons6")
+MenuBar/styles/hover = SubResource("StyleBoxFlat_u78gf")
+MenuBar/styles/normal = SubResource("StyleBoxFlat_s3p28")
+MenuBar/styles/pressed = SubResource("StyleBoxFlat_eifv7")
+TooltipLabel/colors/font_color = Color(0, 0, 0, 1)
+TooltipLabel/constants/outline_size = 0
+TooltipLabel/constants/shadow_offset_x = 1
+TooltipLabel/constants/shadow_offset_y = 1
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_1sbry")

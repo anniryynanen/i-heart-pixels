@@ -1,4 +1,6 @@
-Most of `ok_color.gd` is Copyright (c) 2021 Björn Ottosson
+Most of `ok_color.gd` is Copyright (c) 2021 Björn Ottosson (MIT license, see text below)
+
+Icons in `phosphor` folder are Copyright (c) 2023 Phosphor Icons (MIT license, see text below)
 
 Font copyrights and licenses are found in the `fonts` folder
 

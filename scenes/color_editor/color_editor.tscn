@@ -6,12 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://cuvv0ttrqqef3" path="res://scenes/color_editor/color_slider_handle.tscn" id="3_r3fki"]
 [ext_resource type="Script" path="res://scenes/scalable_label.gd" id="4_y57f0"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_s3oli"]
+[sub_resource type="LabelSettings" id="LabelSettings_bg5h6"]
 font = ExtResource("2_bi8ge")
-font_size = 14
+font_size = 17
 font_color = Color(0, 0, 0, 1)
 
 [node name="ColorEditor" type="Control"]
+clip_contents = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,14 +54,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -28.0
-offset_top = -14.0
-offset_right = -1.0
-offset_bottom = 1.0
+offset_left = -39.0
+offset_top = -20.0
+offset_right = -3.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "OKHSL"
-label_settings = SubResource("LabelSettings_s3oli")
+label_settings = SubResource("LabelSettings_bg5h6")
 script = ExtResource("4_y57f0")
 
 [node name="Handles" type="VBoxContainer" parent="."]

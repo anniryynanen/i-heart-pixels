@@ -6,6 +6,7 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_ynx8q"]
 font = ExtResource("2_d4h8n")
+font_size = 17
 
 [node name="ColorSliderHandle" type="Control"]
 layout_mode = 3
@@ -35,8 +36,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -19.0
-offset_top = -18.0
+offset_left = -22.0
+offset_top = -20.0
 offset_right = -2.0
 grow_horizontal = 0
 grow_vertical = 0

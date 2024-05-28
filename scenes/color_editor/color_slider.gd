@@ -29,7 +29,7 @@ func value() -> int:
 
 
 func _draw() -> void:
-    handle.height = 0.85 * size.y
+    handle.height = 0.9 * size.y
     handle.width = minf(handle.height, floorf(size.x / 4.0))
     var slices: int = roundi(minf(255, size.x - handle.width))
     var slices_before:int = roundi(value() / float(STEPS[type]) * slices)

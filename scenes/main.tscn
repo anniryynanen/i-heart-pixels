@@ -1,28 +1,121 @@
-[gd_scene load_steps=4 format=3 uid="uid://dpqpbds16fmgh"]
+[gd_scene load_steps=11 format=3 uid="uid://dpqpbds16fmgh"]
 
+[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://theme.tres" id="1_0c86d"]
 [ext_resource type="PackedScene" uid="uid://dwl8qyprnb8is" path="res://scenes/color_editor/color_editor.tscn" id="1_ntfhl"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_qg5aj"]
 [ext_resource type="PackedScene" uid="uid://clr3rba3j2bsb" path="res://scenes/canvas.tscn" id="2_hvaxd"]
+[ext_resource type="Texture2D" uid="uid://bqrbvd1sumtgq" path="res://icons/phosphor/clipboard-duotone.svg" id="5_l426g"]
+[ext_resource type="Texture2D" uid="uid://d0gefyaohfi4b" path="res://icons/phosphor/copy-duotone.svg" id="5_whfxy"]
 
-[node name="Main" type="HBoxContainer"]
+[sub_resource type="Gradient" id="Gradient_lodis"]
+colors = PackedColorArray(0.73535, 0.73535, 0.73535, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fduj5"]
+gradient = SubResource("Gradient_lodis")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vt2l4"]
+texture = SubResource("GradientTexture1D_fduj5")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wbius"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 0
+theme = ExtResource("1_0c86d")
 script = ExtResource("1_qg5aj")
 
-[node name="Canvas" parent="." instance=ExtResource("2_hvaxd")]
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Canvas" parent="HSplitContainer" instance=ExtResource("2_hvaxd")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ColorEditor" parent="." instance=ExtResource("1_ntfhl")]
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MenuBar" type="MenuBar" parent="HSplitContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="File" type="PopupMenu" parent="HSplitContainer/VBoxContainer/HBoxContainer/MenuBar"]
+
+[node name="View" type="PopupMenu" parent="HSplitContainer/VBoxContainer/HBoxContainer/MenuBar"]
+
+[node name="Gradient" type="Panel" parent="HSplitContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_vt2l4")
+
+[node name="ColorValueContainer" type="PanelContainer" parent="HSplitContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wbius")
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/VBoxContainer/HBoxContainer/ColorValueContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/VBoxContainer/HBoxContainer/ColorValueContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/VBoxContainer/HBoxContainer/ColorValueContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+
+[node name="HexColor" type="Label" parent="HSplitContainer/VBoxContainer/HBoxContainer/ColorValueContainer/MarginContainer/HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "#ffffff"
+horizontal_alignment = 2
+
+[node name="CopyColor" type="Button" parent="HSplitContainer/VBoxContainer/HBoxContainer/ColorValueContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Copy color"
+focus_mode = 0
+theme_type_variation = &"IconButton"
+icon = ExtResource("5_whfxy")
+
+[node name="PasteColor" type="Button" parent="HSplitContainer/VBoxContainer/HBoxContainer/ColorValueContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Paste color"
+focus_mode = 0
+theme_type_variation = &"IconButton"
+icon = ExtResource("5_l426g")
+
+[node name="ColorEditor" parent="HSplitContainer/VBoxContainer" instance=ExtResource("1_ntfhl")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
+size_flags_vertical = 3
 rgb_color = Color(0.215686, 0.384314, 0.45098, 1)
 
 [connection signal="resized" from="." to="." method="_on_resized"]
-[connection signal="color_changed" from="ColorEditor" to="Canvas" method="set_color"]
+[connection signal="pressed" from="HSplitContainer/VBoxContainer/HBoxContainer/ColorValueContainer/MarginContainer/HBoxContainer/CopyColor" to="." method="_on_copy_color_pressed"]
+[connection signal="pressed" from="HSplitContainer/VBoxContainer/HBoxContainer/ColorValueContainer/MarginContainer/HBoxContainer/PasteColor" to="." method="_on_paste_color_pressed"]
+[connection signal="color_changed" from="HSplitContainer/VBoxContainer/ColorEditor" to="." method="_on_color_editor_color_changed"]
+[connection signal="color_changed" from="HSplitContainer/VBoxContainer/ColorEditor" to="HSplitContainer/Canvas" method="set_color"]

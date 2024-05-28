@@ -1,10 +1,15 @@
+class_name ColorEditor
 extends ScalableControl
 
 signal color_changed(color: OKColor)
 
 @export var rgb_color: Color
 
-var color: OKColor
+var color: OKColor:
+    set(value):
+        color = value
+        sliders.map(func(s: ColorSlider): s.color = color)
+        color_changed.emit(color)
 var sliders: Array[ColorSlider]
 
 
@@ -45,3 +50,19 @@ func _on_ok_color_changed() -> void:
         s.queue_redraw()
     )
     color_changed.emit(color)
+
+
+static func get_line_color(bg_color: OKColor) -> OKColor:
+    var line_color: OKColor = bg_color.duplicate()
+    line_color.l = 0.1 if bg_color.l > 0.5 else 0.9
+    if bg_color.l <= 0.5:
+        line_color.s *= 0.8
+    line_color.a = 0.45
+    return line_color
+
+
+static func get_text_color(bg_color: OKColor) -> OKColor:
+    var text_color: OKColor = OKColor.new()
+    text_color.l = 0.0 if bg_color.l > 0.5 else 1.0
+    text_color.a = 0.8
+    return text_color

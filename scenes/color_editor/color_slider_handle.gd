@@ -98,25 +98,25 @@ func _draw() -> void:
     if not color:
         return
 
-    var line_color: OKColor = color.duplicate()
-    line_color.l = 0.11 if color.l > 0.5 else 0.89
-    line_color.s /= 2.0
-    %Value.label_settings.font_color = line_color.to_rgb()
-
-    line_color.l = 0.22 if color.l > 0.5 else 0.78
     var line_width: int = 1
     var global_width: float = width / Settings.get_app_scale()
     if global_width > 50:
-        line_color.l = 0.33 if color.l > 0.5 else 0.67
         line_width = 2
 
-    top = (size.y - height) / 2
+    if Settings.get_app_scale() > 1.9:
+        line_width = roundi(line_width * Settings.get_app_scale())
+
+    top = (size.y - height) / 2.0
     area = Rect2(left, top, width, height)
+    var line_area: Rect2 = Rect2(left + line_width / 2.0, top + line_width / 2.0,
+        width - line_width, height - line_width)
 
     draw_rect(area, color.to_rgb())
-    draw_rect(area, line_color.to_rgb(), false, line_width)
+    draw_rect(line_area, ColorEditor.get_line_color(color).to_rgb(), false, line_width)
 
     %ValueAnchor.anchor_left = (left + width - line_width) / size.x
     %ValueAnchor.anchor_right = %ValueAnchor.anchor_left
     %ValueAnchor.anchor_bottom = (top + height - line_width / 2.0) / size.y
+
     %Value.text = String.num(value)
+    %Value.label_settings.font_color = ColorEditor.get_text_color(color).to_rgb()

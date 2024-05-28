@@ -1,4 +1,7 @@
-extends HBoxContainer
+class_name Main
+extends Control
+
+const ERROR_TITLE = ":("
 
 var settings_applied = false
 
@@ -14,6 +17,7 @@ func _ready() -> void:
     apply_settings()
 
     %Canvas.set_color(%ColorEditor.color)
+    _on_color_editor_color_changed(%ColorEditor.color)
 
 
 func _on_resized() -> void:
@@ -53,3 +57,52 @@ func apply_settings() -> void:
     get_window().mode = Settings.get_value("window", "mode", Window.Mode.MODE_MAXIMIZED)
 
     settings_applied = true
+
+
+func _on_color_editor_color_changed(color: OKColor) -> void:
+    var text_color = ColorEditor.get_text_color(color)
+    text_color.a = 0.96
+
+    %HexColor.text = "#" + color.to_hex()
+    %HexColor.add_theme_color_override("font_color", text_color.to_rgb())
+    %ColorValueContainer.get_theme_stylebox("panel").bg_color = color.to_rgb()
+
+    var style_box: StyleBoxTexture = %Gradient.get_theme_stylebox("panel") as StyleBoxTexture
+    var texture: GradientTexture1D = style_box.texture as GradientTexture1D
+    texture.gradient.set_color(1, color.to_rgb())
+
+    var bg_color: OKColor
+    if text_color.l == 0.0:
+        bg_color = OKColor.new(0.0, 0.0, 0.0, 0.2)
+        %CopyColor.icon = load("res://icons/phosphor/copy-duotone.svg")
+        %PasteColor.icon = load("res://icons/phosphor/clipboard-duotone.svg")
+    else:
+        bg_color = OKColor.new(0.0, 0.0, 1.0, 0.26)
+        %CopyColor.icon = load("res://icons/phosphor/copy-duotone-white.svg")
+        %PasteColor.icon = load("res://icons/phosphor/clipboard-duotone-white.svg")
+
+    %CopyColor.get_theme_stylebox("hover").bg_color = bg_color.to_rgb()
+    %PasteColor.get_theme_stylebox("hover").bg_color = bg_color.to_rgb()
+
+    bg_color.a *= 1.8
+    %CopyColor.get_theme_stylebox("pressed").bg_color = bg_color.to_rgb()
+    %PasteColor.get_theme_stylebox("pressed").bg_color = bg_color.to_rgb()
+
+
+func _on_copy_color_pressed() -> void:
+    DisplayServer.clipboard_set("#" + %ColorEditor.color.to_hex())
+
+
+func _on_paste_color_pressed() -> void:
+    var text: String = DisplayServer.clipboard_get()
+
+    if text.is_valid_html_color():
+        var color: Color = Color(text)
+        color.a = 1.0
+        %ColorEditor.color = OKColor.from_rgb(color)
+    else:
+        # There might be a lot of text, show longest valid length + 1
+        if text.length() > 10:
+            text = text.substr(0, 10) + "..."
+        OS.alert("Can't paste a color from %s" % text, ERROR_TITLE)
+

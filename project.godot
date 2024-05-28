@@ -24,3 +24,4 @@ Signals="*res://scenes/global/signals.tscn"
 [rendering]
 
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.73535, 0.73535, 0.73535, 1)
