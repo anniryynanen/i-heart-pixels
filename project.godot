@@ -19,7 +19,7 @@ config/features=PackedStringArray("4.2", "Mobile")
 [autoload]
 
 Settings="*res://scenes/global/settings.tscn"
-Signals="*res://scenes/global/signals.tscn"
+Globals="*res://scenes/global/globals.tscn"
 
 [rendering]
 

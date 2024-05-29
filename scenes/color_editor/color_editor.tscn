@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://scenes/color_editor/color_editor.gd" id="1_pcwig"]
 [ext_resource type="FontFile" uid="uid://bny6ttbd3ne51" path="res://fonts/sofia_sans_condensed/SofiaSansCondensed-Regular.ttf" id="2_bi8ge"]
-[ext_resource type="PackedScene" uid="uid://dl1hwv3q6do0e" path="res://scenes/color_editor/color_slider.tscn" id="2_e58xi"]
-[ext_resource type="PackedScene" uid="uid://cuvv0ttrqqef3" path="res://scenes/color_editor/color_slider_handle.tscn" id="3_r3fki"]
+[ext_resource type="PackedScene" uid="uid://dl1hwv3q6do0e" path="res://scenes/color_editor/color_strip.tscn" id="2_oesjs"]
 [ext_resource type="Script" path="res://scenes/scalable_label.gd" id="4_y57f0"]
+[ext_resource type="PackedScene" uid="uid://cuvv0ttrqqef3" path="res://scenes/color_editor/color_handle.tscn" id="5_fqclp"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bg5h6"]
 font = ExtResource("2_bi8ge")
@@ -21,7 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pcwig")
 
-[node name="Sliders" type="VBoxContainer" parent="."]
+[node name="Strips" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,22 +30,22 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="Hue" parent="Sliders" instance=ExtResource("2_e58xi")]
+[node name="HueStrip" parent="Strips" instance=ExtResource("2_oesjs")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Saturation" parent="Sliders" instance=ExtResource("2_e58xi")]
+[node name="SaturationStrip" parent="Strips" instance=ExtResource("2_oesjs")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-type = 1
+color_param = 1
 
-[node name="Lightness" parent="Sliders" instance=ExtResource("2_e58xi")]
+[node name="LightnessStrip" parent="Strips" instance=ExtResource("2_oesjs")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-type = 2
+color_param = 2
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
@@ -72,21 +72,23 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="HueHandle" parent="Handles" instance=ExtResource("3_r3fki")]
+[node name="HueHandle" parent="Handles" instance=ExtResource("5_fqclp")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SaturationHandle" parent="Handles" instance=ExtResource("3_r3fki")]
+[node name="SaturationHandle" parent="Handles" instance=ExtResource("5_fqclp")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+color_param = 1
 
-[node name="LightnessHandle" parent="Handles" instance=ExtResource("3_r3fki")]
+[node name="LightnessHandle" parent="Handles" instance=ExtResource("5_fqclp")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+color_param = 2
 
-[connection signal="value_changed" from="Handles/HueHandle" to="." method="_on_hue_handle_value_changed"]
-[connection signal="value_changed" from="Handles/SaturationHandle" to="." method="_on_saturation_handle_value_changed"]
-[connection signal="value_changed" from="Handles/LightnessHandle" to="." method="_on_lightness_handle_value_changed"]
+[connection signal="handle_left_changed" from="Strips/HueStrip" to="Handles/HueHandle" method="set_handle_left"]
+[connection signal="handle_left_changed" from="Strips/SaturationStrip" to="Handles/SaturationHandle" method="set_handle_left"]
+[connection signal="handle_left_changed" from="Strips/LightnessStrip" to="Handles/LightnessHandle" method="set_handle_left"]

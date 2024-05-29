@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcjw6gcgty4km"]
+
+[ext_resource type="Script" path="res://scenes/color_bar.gd" id="1_j7f1n"]
+[ext_resource type="Texture2D" uid="uid://d0gefyaohfi4b" path="res://icons/phosphor/copy-duotone.svg" id="1_rbu2y"]
+[ext_resource type="Texture2D" uid="uid://bqrbvd1sumtgq" path="res://icons/phosphor/clipboard-duotone.svg" id="2_o6ryc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wbius"]
+
+[node name="ColorBar" type="PanelContainer"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_wbius")
+script = ExtResource("1_j7f1n")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+
+[node name="HexColor" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "#ffffff"
+horizontal_alignment = 2
+
+[node name="CopyColor" type="Button" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Copy color"
+focus_mode = 0
+theme_type_variation = &"IconButton"
+icon = ExtResource("1_rbu2y")
+
+[node name="PasteColor" type="Button" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Paste color"
+focus_mode = 0
+theme_type_variation = &"IconButton"
+icon = ExtResource("2_o6ryc")
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/CopyColor" to="." method="_on_copy_color_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/PasteColor" to="." method="_on_paste_color_pressed"]

@@ -1,62 +1,40 @@
 class_name ColorEditor
-extends ScalableControl
+extends Control
 
 signal color_changed(color: OKColor)
 
-@export var rgb_color: Color
-
-var color: OKColor:
+var color: OKColor = OKColor.new():
     set(value):
-        color = value
-        sliders.map(func(s: ColorSlider): s.color = color)
-        color_changed.emit(color)
-var sliders: Array[ColorSlider]
+        color = value.duplicate()
+        color.a = 1.0 # ColorEditor only deals with opaque colors
+
+        strips.map(func(s): s.color = color)
+        handles.map(func(h): h.color = color)
+
+var strips: Array[ColorStrip]
+var handles: Array[ColorHandle]
 
 
 func _ready() -> void:
-    super._ready()
+    strips.append(%HueStrip)
+    strips.append(%SaturationStrip)
+    strips.append(%LightnessStrip)
 
-    sliders.append(%Hue)
-    sliders.append(%Saturation)
-    sliders.append(%Lightness)
+    handles.append(%HueHandle)
+    handles.append(%SaturationHandle)
+    handles.append(%LightnessHandle)
 
-    %Hue.handle = %HueHandle
-    %Saturation.handle = %SaturationHandle
-    %Lightness.handle = %LightnessHandle
-
-    color = OKColor.from_rgb(rgb_color).rounded()
-    sliders.map(func(s: ColorSlider): s.color = color)
+    handles.map(func(h): h.color_changed.connect(self._on_handle_color_changed))
 
 
-func _on_hue_handle_value_changed() -> void:
-    color.h = %HueHandle.value / 255.0
-    _on_ok_color_changed()
-
-
-func _on_saturation_handle_value_changed() -> void:
-    color.s = %SaturationHandle.value / 100.0
-    _on_ok_color_changed()
-
-
-func _on_lightness_handle_value_changed() -> void:
-    color.l = %LightnessHandle.value / 100.0
-    _on_ok_color_changed()
-
-
-func _on_ok_color_changed() -> void:
-    rgb_color = Color.from_ok_hsl(color.h, color.s, color.l, color.a)
-    sliders.map(func(s: ColorSlider):
-        s.color = color
-        s.queue_redraw()
-    )
-    color_changed.emit(color)
+func _on_handle_color_changed(handle_color: OKColor) -> void:
+    Globals.pen_color = handle_color
 
 
 static func get_line_color(bg_color: OKColor) -> OKColor:
     var line_color: OKColor = bg_color.duplicate()
-    line_color.l = 0.1 if bg_color.l > 0.5 else 0.9
-    if bg_color.l <= 0.5:
-        line_color.s *= 0.8
+    line_color.s *= 0.8
+    line_color.l = 0.14 if bg_color.l > 0.5 else 0.9
     line_color.a = 0.45
     return line_color
 

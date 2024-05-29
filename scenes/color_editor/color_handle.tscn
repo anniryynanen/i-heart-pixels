@@ -1,21 +1,21 @@
 [gd_scene load_steps=5 format=3 uid="uid://cuvv0ttrqqef3"]
 
-[ext_resource type="Script" path="res://scenes/color_editor/color_slider_handle.gd" id="1_ay6ai"]
-[ext_resource type="FontFile" uid="uid://bny6ttbd3ne51" path="res://fonts/sofia_sans_condensed/SofiaSansCondensed-Regular.ttf" id="2_d4h8n"]
-[ext_resource type="Script" path="res://scenes/scalable_label.gd" id="3_u0q4i"]
+[ext_resource type="Script" path="res://scenes/color_editor/color_handle.gd" id="1_f7go5"]
+[ext_resource type="FontFile" uid="uid://bny6ttbd3ne51" path="res://fonts/sofia_sans_condensed/SofiaSansCondensed-Regular.ttf" id="2_6e1xv"]
+[ext_resource type="Script" path="res://scenes/scalable_label.gd" id="3_v27ga"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ynx8q"]
-font = ExtResource("2_d4h8n")
+font = ExtResource("2_6e1xv")
 font_size = 17
 
-[node name="ColorSliderHandle" type="Control"]
+[node name="ColorHandle" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ay6ai")
+script = ExtResource("1_f7go5")
 
 [node name="ValueAnchor" type="Control" parent="."]
 unique_name_in_owner = true
@@ -44,4 +44,4 @@ grow_vertical = 0
 text = "255"
 label_settings = SubResource("LabelSettings_ynx8q")
 horizontal_alignment = 2
-script = ExtResource("3_u0q4i")
+script = ExtResource("3_v27ga")

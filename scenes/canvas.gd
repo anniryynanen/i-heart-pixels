@@ -1,16 +1,17 @@
 extends Control
 
 const ZOOM_STEP = 1.4
+const BASE_PIXEL_WIDTH = 80.0
+const BASE_PAN_STEP = 1.0
 
-var pixel_width: float = 80.0
+var pixel_width: float = BASE_PIXEL_WIDTH
 var top_left: Vector2 = Vector2(0.0, 0.0)
 var current_pixel: Vector2i = Vector2i(-1, -1)
-var pan_step = 1.0
+var pan_step: float = BASE_PAN_STEP
 var dragging = false
 
 var hovering = false
 var drawing = false
-var color: OKColor
 
 var image: Image = Image.create(10, 10, false, Image.Format.FORMAT_RGBA8)
 var image_changed = false
@@ -18,24 +19,15 @@ var texture: ImageTexture = ImageTexture.create_from_image(image)
 
 
 func _ready() -> void:
-    pixel_width *= Settings.get_app_scale()
-    pan_step *= Settings.get_app_scale()
-
-    Signals.focus_lost.connect(_on_focus_lost)
-
-
-func _on_focus_lost() -> void:
-    if drawing:
-        stop_drawing()
-
-    if dragging:
-        stop_dragging()
-
-    if hovering:
-        stop_hovering()
+    Globals.focus_lost.connect(_on_focus_lost)
+    Globals.app_scale_changed.connect(_on_app_scale_changed)
 
 
 func _process(delta: float) -> void:
+    # Don't pan if some UI element has focus
+    if get_viewport().gui_get_focus_owner() != null:
+        return
+
     var distance: float = delta * pan_step * (size.x / pixel_width) * pixel_width
 
     if Input.is_physical_key_pressed(KEY_W):
@@ -104,8 +96,21 @@ func _on_motion_event(motion: InputEventMouseMotion) -> void:
             draw_pixel(current_pixel)
 
 
-func set_color(ok_color: OKColor) -> void:
-    color = ok_color
+func _on_focus_lost() -> void:
+    if drawing:
+        stop_drawing()
+
+    if dragging:
+        stop_dragging()
+
+    if hovering:
+        stop_hovering()
+
+
+func _on_app_scale_changed(app_scale: float) -> void:
+    pixel_width = BASE_PIXEL_WIDTH * app_scale
+    pan_step = BASE_PAN_STEP * app_scale
+    queue_redraw()
 
 
 func save_mouse_pos(mouse_pos: Vector2) -> Vector2:
@@ -161,7 +166,7 @@ func update_current_pixel(mouse_pos: Vector2) -> bool:
 
 func draw_pixel(pixel: Vector2i) -> void:
     if pixel_in_image(pixel):
-        image.set_pixel(pixel.x, pixel.y, color.to_rgb())
+        image.set_pixel(pixel.x, pixel.y, Globals.pen_color.to_rgb())
         image_changed = true
         queue_redraw()
 
@@ -187,7 +192,7 @@ func _draw() -> void:
 func draw_background_alpha() -> void:
     var square_size: Vector2 = Vector2(pixel_width, pixel_width)
 
-    while square_size.x < 10.0 * Settings.get_app_scale():
+    while square_size.x < 10.0 * Globals.app_scale:
         square_size *= 2.0
 
     var offset: Vector2 = Vector2(
@@ -215,8 +220,8 @@ func draw_hover_highlight() -> void:
         pixel_color = OKColor.from_rgb(image.get_pixel(current_pixel.x, current_pixel.y))
 
     var line_width: float = 1.0
-    if Settings.get_app_scale() > 1.9:
-        line_width *= Settings.get_app_scale()
+    if Globals.app_scale > 1.9:
+        line_width *= Globals.app_scale
 
     var hl_pos: Vector2 = current_pixel * pixel_width - top_left
     hl_pos += Vector2(line_width / 2.0, line_width / 2.0)

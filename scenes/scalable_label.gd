@@ -8,7 +8,7 @@ func _ready() -> void:
         label_settings = LabelSettings.new()
     orig_font_size = label_settings.font_size
 
-    Signals.app_scale_changed.connect(_on_app_scale_changed)
+    Globals.app_scale_changed.connect(_on_app_scale_changed)
 
 
 func _on_app_scale_changed(app_scale: float) -> void:

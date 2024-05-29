@@ -1,6 +1,12 @@
 class_name OKColor
 extends RefCounted
 
+enum Param {
+    HUE,
+    SATURATION,
+    LIGHTNESS
+}
+
 var h: float
 var s: float
 var l: float
@@ -28,10 +34,14 @@ func duplicate() -> OKColor:
 
 
 func rounded() -> OKColor:
+    var h_steps: int = OKColor.steps(OKColor.Param.HUE)
+    var s_steps: int = OKColor.steps(OKColor.Param.SATURATION)
+    var l_steps: int = OKColor.steps(OKColor.Param.LIGHTNESS)
+
     return OKColor.new(
-        roundf(h * 255.0) / 255.0,
-        roundf(s * 100.0) / 100.0,
-        roundf(l * 100.0) / 100.0, a)
+        roundf(h * h_steps) / h_steps,
+        roundf(s * s_steps) / s_steps,
+        roundf(l * l_steps) / l_steps, a)
 
 
 func opaque() -> OKColor:
@@ -40,6 +50,25 @@ func opaque() -> OKColor:
 
 func to_rgb() -> Color:
     return Color.from_ok_hsl(h, s, l, a)
+
+
+func get_param_in_steps(param: Param) -> int:
+    var param_steps: int = OKColor.steps(param)
+
+    match param:
+        Param.HUE: return roundi(h * param_steps)
+        Param.SATURATION: return roundi(s * param_steps)
+        Param.LIGHTNESS: return roundi(l * param_steps)
+        _: return -1
+
+
+func set_param_in_steps(param: Param, value: int) -> void:
+    var param_steps: int = OKColor.steps(param)
+
+    match param:
+        Param.HUE: h = value / float(param_steps)
+        Param.SATURATION: s = value / float(param_steps)
+        Param.LIGHTNESS: l = value / float(param_steps)
 
 
 static func from_rgb(color: Color) -> OKColor:
@@ -54,6 +83,16 @@ static func from_rgb(color: Color) -> OKColor:
     ok.l = clampf(ok.l, 0.0, 1.0)
 
     return ok
+
+
+static func steps(param: Param) -> int:
+    match param:
+        Param.HUE:
+            return 359
+        Param.SATURATION, Param.LIGHTNESS:
+            return 100
+        _:
+            return -1
 
 
 static func cbrt(x: float) -> float:
