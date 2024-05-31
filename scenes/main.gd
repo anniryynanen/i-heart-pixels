@@ -70,7 +70,7 @@ func _on_pen_color_changed(pen_color: OKColor) -> void:
 
 func set_default_settings() -> void:
     Settings.set_if_missing("app", "scale", 1.0)
-    Settings.set_if_missing("panels", "right_width", 400.0)
+    Settings.set_if_missing("panels", "right_width", 300.0)
     Settings.set_if_missing("pen", "color", OKColor.new(155.0 / 359.0, 0.77, 0.68))
 
 

@@ -25,10 +25,15 @@ func _ready() -> void:
     handles.append(%LightnessHandle)
 
     handles.map(func(h): h.color_changed.connect(self._on_handle_color_changed))
+    Globals.pen_color_changed.connect(_on_pen_color_changed)
 
 
 func _on_handle_color_changed(handle_color: OKColor) -> void:
     Globals.pen_color = handle_color
+
+
+func _on_pen_color_changed(pen_color: OKColor) -> void:
+    %Color.color = pen_color.to_rgb()
 
 
 static func get_line_color(bg_color: OKColor) -> OKColor:
@@ -41,6 +46,6 @@ static func get_line_color(bg_color: OKColor) -> OKColor:
 
 static func get_text_color(bg_color: OKColor) -> OKColor:
     var text_color: OKColor = OKColor.new()
-    text_color.l = 0.0 if bg_color.l > 0.5 else 1.0
+    text_color.l = 0.0 if bg_color.l >= 0.5 else 1.0
     text_color.a = 0.8
     return text_color

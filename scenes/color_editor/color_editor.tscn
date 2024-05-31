@@ -19,7 +19,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pcwig")
 
-[node name="Strips" type="VBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,40 +28,63 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="HueStrip" parent="Strips" instance=ExtResource("2_oesjs")]
+[node name="Color" type="ColorRect" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(7, 0)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Strips" type="VBoxContainer" parent="HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="HueStrip" parent="HBoxContainer/Control/Strips" instance=ExtResource("2_oesjs")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SaturationStrip" parent="Strips" instance=ExtResource("2_oesjs")]
+[node name="SaturationStrip" parent="HBoxContainer/Control/Strips" instance=ExtResource("2_oesjs")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 color_param = 1
 
-[node name="LightnessStrip" parent="Strips" instance=ExtResource("2_oesjs")]
+[node name="LightnessStrip" parent="HBoxContainer/Control/Strips" instance=ExtResource("2_oesjs")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 color_param = 2
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="HBoxContainer/Control"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -39.0
-offset_top = -20.0
-offset_right = -3.0
+offset_left = -41.0
+offset_top = -22.0
+offset_right = -2.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = SubResource("Theme_e7lmp")
 text = "OKHSL"
 metadata/keep_anchors = true
 
-[node name="Handles" type="VBoxContainer" parent="."]
+[node name="Handles" type="VBoxContainer" parent="HBoxContainer/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,23 +93,23 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="HueHandle" parent="Handles" instance=ExtResource("5_fqclp")]
+[node name="HueHandle" parent="HBoxContainer/Control/Handles" instance=ExtResource("5_fqclp")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SaturationHandle" parent="Handles" instance=ExtResource("5_fqclp")]
+[node name="SaturationHandle" parent="HBoxContainer/Control/Handles" instance=ExtResource("5_fqclp")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 color_param = 1
 
-[node name="LightnessHandle" parent="Handles" instance=ExtResource("5_fqclp")]
+[node name="LightnessHandle" parent="HBoxContainer/Control/Handles" instance=ExtResource("5_fqclp")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 color_param = 2
 
-[connection signal="handle_left_changed" from="Strips/HueStrip" to="Handles/HueHandle" method="set_handle_left"]
-[connection signal="handle_left_changed" from="Strips/SaturationStrip" to="Handles/SaturationHandle" method="set_handle_left"]
-[connection signal="handle_left_changed" from="Strips/LightnessStrip" to="Handles/LightnessHandle" method="set_handle_left"]
+[connection signal="handle_left_changed" from="HBoxContainer/Control/Strips/HueStrip" to="HBoxContainer/Control/Handles/HueHandle" method="set_handle_left"]
+[connection signal="handle_left_changed" from="HBoxContainer/Control/Strips/SaturationStrip" to="HBoxContainer/Control/Handles/SaturationHandle" method="set_handle_left"]
+[connection signal="handle_left_changed" from="HBoxContainer/Control/Strips/LightnessStrip" to="HBoxContainer/Control/Handles/LightnessHandle" method="set_handle_left"]

@@ -40,37 +40,37 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainSplit"]
+[node name="RightPanel" type="VBoxContainer" parent="MainSplit"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="TopBar" type="HBoxContainer" parent="MainSplit/VBoxContainer"]
+[node name="TopBar" type="HBoxContainer" parent="MainSplit/RightPanel"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="MenuBar" type="MenuBar" parent="MainSplit/VBoxContainer/TopBar"]
+[node name="MenuBar" type="MenuBar" parent="MainSplit/RightPanel/TopBar"]
 layout_mode = 2
 
-[node name="File" type="PopupMenu" parent="MainSplit/VBoxContainer/TopBar/MenuBar"]
+[node name="File" type="PopupMenu" parent="MainSplit/RightPanel/TopBar/MenuBar"]
 
-[node name="View" type="PopupMenu" parent="MainSplit/VBoxContainer/TopBar/MenuBar"]
+[node name="View" type="PopupMenu" parent="MainSplit/RightPanel/TopBar/MenuBar"]
 item_count = 1
 item_0/text = "App Scale..."
 item_0/id = 0
 
-[node name="Gradient" type="Panel" parent="MainSplit/VBoxContainer/TopBar"]
+[node name="Gradient" type="Panel" parent="MainSplit/RightPanel/TopBar"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_vt2l4")
 
-[node name="ColorBar" parent="MainSplit/VBoxContainer/TopBar" instance=ExtResource("4_5abg1")]
+[node name="ColorBar" parent="MainSplit/RightPanel/TopBar" instance=ExtResource("4_5abg1")]
 layout_mode = 2
 
-[node name="ColorEditor" parent="MainSplit/VBoxContainer" instance=ExtResource("1_ntfhl")]
+[node name="ColorEditor" parent="MainSplit/RightPanel" instance=ExtResource("1_ntfhl")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 260)
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="AppScalePopup" parent="." instance=ExtResource("6_3g742")]
 unique_name_in_owner = true
@@ -78,4 +78,4 @@ visible = false
 
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="dragged" from="MainSplit" to="." method="_on_main_split_dragged"]
-[connection signal="id_pressed" from="MainSplit/VBoxContainer/TopBar/MenuBar/View" to="." method="_on_view_menu_id_pressed"]
+[connection signal="id_pressed" from="MainSplit/RightPanel/TopBar/MenuBar/View" to="." method="_on_view_menu_id_pressed"]
