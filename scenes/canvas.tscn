@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://clr3rba3j2bsb"]
+[gd_scene load_steps=3 format=3 uid="uid://clr3rba3j2bsb"]
 
 [ext_resource type="Script" path="res://scenes/canvas.gd" id="1_13rbr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fs5va"]
+bg_color = Color(0.73535, 0.73535, 0.73535, 1)
 
 [node name="Canvas" type="Control"]
 texture_filter = 1
@@ -13,10 +16,63 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_13rbr")
 
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 2
+
+[node name="Control" type="Control" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+
+[node name="VScrollPanel" type="PanelContainer" parent="GridContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fs5va")
+
+[node name="Control" type="Control" parent="GridContainer/VScrollPanel"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+
+[node name="VScroll" type="VScrollBar" parent="GridContainer/VScrollPanel/Control"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_right = 8.0
+offset_bottom = 640.0
+
+[node name="HScrollPanel" type="PanelContainer" parent="GridContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fs5va")
+
+[node name="Control" type="Control" parent="GridContainer/HScrollPanel"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="HScroll" type="HScrollBar" parent="GridContainer/HScrollPanel/Control"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_right = 1144.0
+offset_bottom = 8.0
+
+[node name="Corner" type="PanelContainer" parent="GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fs5va")
+
 [node name="DrawTimer" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
 
 [connection signal="mouse_entered" from="." to="." method="start_hovering"]
 [connection signal="mouse_exited" from="." to="." method="stop_hovering"]
+[connection signal="resized" from="." to="." method="_on_resized"]
+[connection signal="value_changed" from="GridContainer/VScrollPanel/Control/VScroll" to="." method="_on_v_scroll_value_changed"]
+[connection signal="value_changed" from="GridContainer/HScrollPanel/Control/HScroll" to="." method="_on_h_scroll_value_changed"]
 [connection signal="timeout" from="DrawTimer" to="." method="stop_drawing"]

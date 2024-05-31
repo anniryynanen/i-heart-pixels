@@ -9,6 +9,7 @@ var margin_overrides: Array[MarginContainer]
 var box_overrides: Array[BoxContainer]
 var svg_buttons: Array[Button]
 var sliders: Array[Slider]
+var scrollbars: Array[ScrollBar]
 
 
 func start() -> void:
@@ -60,6 +61,9 @@ func scan_nodes(node: Node) -> void:
 
         elif control is Slider:
             sliders.append(control as Slider)
+
+        elif control is ScrollBar:
+            scrollbars.append(control as ScrollBar)
 
     for child in node.get_children(true):
         scan_nodes(child)
@@ -144,6 +148,9 @@ func update_scale() -> void:
 
     for slider in sliders:
         slider.scale = Vector2(Globals.app_scale, Globals.app_scale)
+
+    for scrollbar in scrollbars:
+        scrollbar.scale = Vector2(Globals.app_scale, Globals.app_scale)
 
     main.notification(Control.NOTIFICATION_THEME_CHANGED)
     update_size(main)

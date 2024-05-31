@@ -52,6 +52,9 @@ theme_override_constants/separation = 0
 layout_mode = 2
 
 [node name="File" type="PopupMenu" parent="MainSplit/RightPanel/TopBar/MenuBar"]
+item_count = 1
+item_0/text = "hi!"
+item_0/id = 0
 
 [node name="View" type="PopupMenu" parent="MainSplit/RightPanel/TopBar/MenuBar"]
 item_count = 1
