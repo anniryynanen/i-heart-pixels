@@ -25,11 +25,6 @@ var drag_start_value: int
 
 func _ready() -> void:
     steps = OKColor.steps(color_param)
-
-    # Each handle has its own label settings, so that they can be colored
-    # independently
-    %Value.label_settings = %Value.label_settings.duplicate()
-
     Globals.focus_lost.connect(func(): if dragging: stop_dragging())
 
 
@@ -111,24 +106,25 @@ func set_handle_left(offset: float) -> void:
 
 static func get_handle_size(area_size: Vector2) -> Vector2:
     var height: float = 0.9 * area_size.y
-    return Vector2(height, minf(height, floorf(area_size.x / 4.0)))
+    return Vector2(minf(height, floorf(area_size.x / 4.0)), height)
 
 
 func _draw() -> void:
     var handle_size: Vector2 = ColorHandle.get_handle_size(size)
 
     var line_width: int = 1
-    var global_width: float = handle_size.x / Globals.app_scale
-    if global_width > 50:
+    if handle_size.x / Globals.app_scale > 50:
         line_width = 2
-
-    if Globals.app_scale > 1.9:
-        line_width = roundi(line_width * Globals.app_scale)
+    line_width = roundi(line_width * Globals.app_scale)
 
     var handle_top: float = (size.y - handle_size.y) / 2.0
     handle_area = Rect2(handle_left, handle_top, handle_size.x, handle_size.y)
-    var line_area: Rect2 = Rect2(handle_left + line_width / 2.0, handle_top + line_width / 2.0,
-        handle_size.x - line_width, handle_size.y - line_width)
+
+    var line_area: Rect2 = Rect2(
+        handle_left + line_width / 2.0,
+        handle_top + line_width / 2.0,
+        handle_size.x - line_width,
+        handle_size.y - line_width)
 
     draw_rect(handle_area, color.to_rgb())
     draw_rect(line_area, ColorEditor.get_line_color(color).to_rgb(), false, line_width)
@@ -138,4 +134,4 @@ func _draw() -> void:
     %ValueAnchor.anchor_bottom = (handle_top + handle_size.y - line_width / 2.0) / size.y
 
     %Value.text = String.num(color.get_param_in_steps(color_param))
-    %Value.label_settings.font_color = ColorEditor.get_text_color(color).to_rgb()
+    %Value.add_theme_color_override("font_color", ColorEditor.get_text_color(color).to_rgb())

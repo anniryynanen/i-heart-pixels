@@ -1,10 +1,9 @@
 extends Control
 
 const ZOOM_STEP = 1.4
-const BASE_PIXEL_WIDTH = 80.0
 const BASE_PAN_STEP = 1.0
 
-var pixel_width: float = BASE_PIXEL_WIDTH
+var pixel_width: float = 80.0
 var top_left: Vector2 = Vector2(0.0, 0.0)
 var current_pixel: Vector2i = Vector2i(-1, -1)
 var pan_step: float = BASE_PAN_STEP
@@ -108,7 +107,6 @@ func _on_focus_lost() -> void:
 
 
 func _on_app_scale_changed(app_scale: float) -> void:
-    pixel_width = BASE_PIXEL_WIDTH * app_scale
     pan_step = BASE_PAN_STEP * app_scale
     queue_redraw()
 
@@ -190,7 +188,7 @@ func _draw() -> void:
 
 
 func draw_background_alpha() -> void:
-    var square_size: Vector2 = Vector2(pixel_width, pixel_width)
+    var square_size: Vector2 = Vector2(pixel_width, pixel_width) * Globals.app_scale
 
     while square_size.x < 10.0 * Globals.app_scale:
         square_size *= 2.0
@@ -219,9 +217,7 @@ func draw_hover_highlight() -> void:
     if pixel_in_image(current_pixel):
         pixel_color = OKColor.from_rgb(image.get_pixel(current_pixel.x, current_pixel.y))
 
-    var line_width: float = 1.0
-    if Globals.app_scale > 1.9:
-        line_width *= Globals.app_scale
+    var line_width: float = Globals.app_scale
 
     var hl_pos: Vector2 = current_pixel * pixel_width - top_left
     hl_pos += Vector2(line_width / 2.0, line_width / 2.0)

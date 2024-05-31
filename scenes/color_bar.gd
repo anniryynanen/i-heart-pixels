@@ -16,19 +16,24 @@ func _on_pen_color_changed(pen_color: OKColor) -> void:
     var bg_color: OKColor
     if text_color.l == 0.0:
         bg_color = OKColor.new(0.0, 0.0, 0.0, 0.2)
-        %CopyColor.icon = load("res://icons/phosphor/copy-duotone.svg")
-        %PasteColor.icon = load("res://icons/phosphor/clipboard-duotone.svg")
     else:
         bg_color = OKColor.new(0.0, 0.0, 1.0, 0.26)
-        %CopyColor.icon = load("res://icons/phosphor/copy-duotone-white.svg")
-        %PasteColor.icon = load("res://icons/phosphor/clipboard-duotone-white.svg")
+
+    %CopyColor.visible = text_color.l == 0.0
+    %PasteColor.visible = text_color.l == 0.0
+    %CopyColorWhite.visible = text_color.l == 1.0
+    %PasteColorWhite.visible = text_color.l == 1.0
 
     %CopyColor.get_theme_stylebox("hover").bg_color = bg_color.to_rgb()
     %PasteColor.get_theme_stylebox("hover").bg_color = bg_color.to_rgb()
+    %CopyColorWhite.get_theme_stylebox("hover").bg_color = bg_color.to_rgb()
+    %PasteColorWhite.get_theme_stylebox("hover").bg_color = bg_color.to_rgb()
 
     bg_color.a *= 1.8
     %CopyColor.get_theme_stylebox("pressed").bg_color = bg_color.to_rgb()
     %PasteColor.get_theme_stylebox("pressed").bg_color = bg_color.to_rgb()
+    %CopyColorWhite.get_theme_stylebox("pressed").bg_color = bg_color.to_rgb()
+    %PasteColorWhite.get_theme_stylebox("pressed").bg_color = bg_color.to_rgb()
 
 
 func _on_copy_color_pressed() -> void:

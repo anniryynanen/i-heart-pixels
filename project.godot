@@ -20,6 +20,11 @@ config/features=PackedStringArray("4.2", "Mobile")
 
 Settings="*res://scenes/global/settings.tscn"
 Globals="*res://scenes/global/globals.tscn"
+AppScale="*res://scenes/global/app_scale.tscn"
+
+[display]
+
+window/subwindows/embed_subwindows=false
 
 [rendering]
 

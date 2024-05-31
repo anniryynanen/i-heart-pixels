@@ -1,15 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwl8qyprnb8is"]
+[gd_scene load_steps=6 format=3 uid="uid://dwl8qyprnb8is"]
 
 [ext_resource type="Script" path="res://scenes/color_editor/color_editor.gd" id="1_pcwig"]
 [ext_resource type="FontFile" uid="uid://bny6ttbd3ne51" path="res://fonts/sofia_sans_condensed/SofiaSansCondensed-Regular.ttf" id="2_bi8ge"]
 [ext_resource type="PackedScene" uid="uid://dl1hwv3q6do0e" path="res://scenes/color_editor/color_strip.tscn" id="2_oesjs"]
-[ext_resource type="Script" path="res://scenes/scalable_label.gd" id="4_y57f0"]
 [ext_resource type="PackedScene" uid="uid://cuvv0ttrqqef3" path="res://scenes/color_editor/color_handle.tscn" id="5_fqclp"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_bg5h6"]
-font = ExtResource("2_bi8ge")
-font_size = 17
-font_color = Color(0, 0, 0, 1)
+[sub_resource type="Theme" id="Theme_e7lmp"]
+default_font = ExtResource("2_bi8ge")
+default_font_size = 17
 
 [node name="ColorEditor" type="Control"]
 clip_contents = true
@@ -59,9 +57,9 @@ offset_top = -20.0
 offset_right = -3.0
 grow_horizontal = 0
 grow_vertical = 0
+theme = SubResource("Theme_e7lmp")
 text = "OKHSL"
-label_settings = SubResource("LabelSettings_bg5h6")
-script = ExtResource("4_y57f0")
+metadata/keep_anchors = true
 
 [node name="Handles" type="VBoxContainer" parent="."]
 layout_mode = 1

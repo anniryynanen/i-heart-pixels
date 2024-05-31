@@ -2,6 +2,10 @@ extends Control
 
 var settings_applied = false
 
+enum ViewMenu {
+    APP_SCALE = 0
+}
+
 
 func _enter_tree() -> void:
     Settings.load()
@@ -10,6 +14,8 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
     %ColorEditor.color_changed.connect(func(c): Globals.pen_color = c)
+
+    Globals.app_scale_changed.connect(_on_app_scale_changed)
     Globals.pen_color_changed.connect(_on_pen_color_changed)
 
     apply_settings()
@@ -39,6 +45,21 @@ func _on_resized() -> void:
     Settings.set_value("window", "mode", get_window().mode)
 
 
+func _on_app_scale_changed(app_scale: float) -> void:
+    %MainSplit.split_offset = roundi(
+        -Settings.get_value("panels", "right_width") * Globals.app_scale)
+
+
+func _on_view_menu_id_pressed(id: int) -> void:
+    match id:
+        ViewMenu.APP_SCALE:
+            %AppScalePopup.popup_centered()
+
+
+func _on_main_split_dragged(offset: int) -> void:
+    Settings.set_value("panels", "right_width", roundi(-offset / Globals.app_scale))
+
+
 func _on_pen_color_changed(pen_color: OKColor) -> void:
     %ColorEditor.color = pen_color
 
@@ -64,5 +85,8 @@ func apply_settings() -> void:
 
     get_window().mode = Settings.get_value("window", "mode", Window.Mode.MODE_MAXIMIZED)
 
+    %MainSplit.split_offset = -Settings.get_value("panels", "right_width")
+
     Globals.apply_settings()
     settings_applied = true
+    AppScale.start.call_deferred()

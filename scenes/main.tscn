@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://dpqpbds16fmgh"]
+[gd_scene load_steps=10 format=3 uid="uid://dpqpbds16fmgh"]
 
 [ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://theme.tres" id="1_0c86d"]
 [ext_resource type="PackedScene" uid="uid://dwl8qyprnb8is" path="res://scenes/color_editor/color_editor.tscn" id="1_ntfhl"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_qg5aj"]
 [ext_resource type="PackedScene" uid="uid://clr3rba3j2bsb" path="res://scenes/canvas.tscn" id="2_hvaxd"]
 [ext_resource type="PackedScene" uid="uid://dcjw6gcgty4km" path="res://scenes/color_bar.tscn" id="4_5abg1"]
+[ext_resource type="PackedScene" uid="uid://c4votcijhmgs3" path="res://scenes/app_scale_popup.tscn" id="6_3g742"]
 
 [sub_resource type="Gradient" id="Gradient_lodis"]
 colors = PackedColorArray(0.73535, 0.73535, 0.73535, 1, 1, 1, 1, 1)
@@ -53,6 +54,9 @@ layout_mode = 2
 [node name="File" type="PopupMenu" parent="MainSplit/VBoxContainer/TopBar/MenuBar"]
 
 [node name="View" type="PopupMenu" parent="MainSplit/VBoxContainer/TopBar/MenuBar"]
+item_count = 1
+item_0/text = "App Scale..."
+item_0/id = 0
 
 [node name="Gradient" type="Panel" parent="MainSplit/VBoxContainer/TopBar"]
 unique_name_in_owner = true
@@ -65,10 +69,13 @@ layout_mode = 2
 
 [node name="ColorEditor" parent="MainSplit/VBoxContainer" instance=ExtResource("1_ntfhl")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="AppScalePopup" parent="." instance=ExtResource("6_3g742")]
+unique_name_in_owner = true
+visible = false
+
 [connection signal="resized" from="." to="." method="_on_resized"]
-[connection signal="color_changed" from="MainSplit/VBoxContainer/ColorEditor" to="." method="_on_color_editor_color_changed"]
-[connection signal="color_changed" from="MainSplit/VBoxContainer/ColorEditor" to="MainSplit/Canvas" method="set_color"]
+[connection signal="dragged" from="MainSplit" to="." method="_on_main_split_dragged"]
+[connection signal="id_pressed" from="MainSplit/VBoxContainer/TopBar/MenuBar/View" to="." method="_on_view_menu_id_pressed"]

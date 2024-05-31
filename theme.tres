@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=15 format=3 uid="uid://bp7ntkss4y7ms"]
+[gd_resource type="Theme" load_steps=17 format=3 uid="uid://bp7ntkss4y7ms"]
 
 [ext_resource type="FontFile" uid="uid://b38kkef63j7c7" path="res://fonts/noto_sans/NotoSans-Regular.ttf" id="1_jio2m"]
 [ext_resource type="Texture2D" uid="uid://c685fxh0dy8li" path="res://icons/h_split_handle.svg" id="1_wplux"]
@@ -77,6 +77,20 @@ content_margin_right = 6.0
 content_margin_bottom = 4.0
 bg_color = Color(0.577652, 0.577652, 0.577652, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0cgrj"]
+bg_color = Color(0.576471, 0.576471, 0.576471, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vrwf3"]
+bg_color = Color(0.660971, 0.660971, 0.660971, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1sbry"]
 content_margin_left = 5.0
 content_margin_top = 4.0
@@ -114,6 +128,15 @@ MenuBar/styles/disabled = SubResource("StyleBoxEmpty_hons6")
 MenuBar/styles/hover = SubResource("StyleBoxFlat_u78gf")
 MenuBar/styles/normal = SubResource("StyleBoxFlat_s3p28")
 MenuBar/styles/pressed = SubResource("StyleBoxFlat_eifv7")
+PopupMenu/colors/font_color = Color(0, 0, 0, 1)
+PopupMenu/colors/font_hover_color = Color(0, 0, 0, 1)
+PopupMenu/constants/h_separation = 0
+PopupMenu/constants/indent = 0
+PopupMenu/constants/item_end_padding = 6
+PopupMenu/constants/item_start_padding = 6
+PopupMenu/constants/v_separation = 6
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_0cgrj")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_vrwf3")
 TooltipLabel/colors/font_color = Color(0, 0, 0, 1)
 TooltipLabel/constants/outline_size = 0
 TooltipLabel/constants/shadow_offset_x = 1

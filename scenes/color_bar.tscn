@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcjw6gcgty4km"]
+[gd_scene load_steps=7 format=3 uid="uid://dcjw6gcgty4km"]
 
 [ext_resource type="Script" path="res://scenes/color_bar.gd" id="1_j7f1n"]
 [ext_resource type="Texture2D" uid="uid://d0gefyaohfi4b" path="res://icons/phosphor/copy-duotone.svg" id="1_rbu2y"]
 [ext_resource type="Texture2D" uid="uid://bqrbvd1sumtgq" path="res://icons/phosphor/clipboard-duotone.svg" id="2_o6ryc"]
+[ext_resource type="Texture2D" uid="uid://dj4rwa2bpdbt6" path="res://icons/phosphor/copy-duotone-white.svg" id="3_xv1u3"]
+[ext_resource type="Texture2D" uid="uid://btiy4iicce40o" path="res://icons/phosphor/clipboard-duotone-white.svg" id="5_3ourn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wbius"]
 
@@ -32,7 +34,6 @@ theme_override_constants/margin_right = 2
 unique_name_in_owner = true
 layout_mode = 2
 text = "#ffffff"
-horizontal_alignment = 2
 
 [node name="CopyColor" type="Button" parent="MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
@@ -42,6 +43,15 @@ focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("1_rbu2y")
 
+[node name="CopyColorWhite" type="Button" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+tooltip_text = "Copy color"
+focus_mode = 0
+theme_type_variation = &"IconButton"
+icon = ExtResource("3_xv1u3")
+
 [node name="PasteColor" type="Button" parent="MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -50,5 +60,16 @@ focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("2_o6ryc")
 
+[node name="PasteColorWhite" type="Button" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+tooltip_text = "Paste color"
+focus_mode = 0
+theme_type_variation = &"IconButton"
+icon = ExtResource("5_3ourn")
+
 [connection signal="pressed" from="MarginContainer/HBoxContainer/CopyColor" to="." method="_on_copy_color_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/CopyColorWhite" to="." method="_on_copy_color_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/PasteColor" to="." method="_on_paste_color_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/PasteColorWhite" to="." method="_on_paste_color_pressed"]

@@ -1,12 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cuvv0ttrqqef3"]
+[gd_scene load_steps=4 format=3 uid="uid://cuvv0ttrqqef3"]
 
 [ext_resource type="Script" path="res://scenes/color_editor/color_handle.gd" id="1_f7go5"]
 [ext_resource type="FontFile" uid="uid://bny6ttbd3ne51" path="res://fonts/sofia_sans_condensed/SofiaSansCondensed-Regular.ttf" id="2_6e1xv"]
-[ext_resource type="Script" path="res://scenes/scalable_label.gd" id="3_v27ga"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_ynx8q"]
-font = ExtResource("2_6e1xv")
-font_size = 17
+[sub_resource type="Theme" id="Theme_s76h8"]
+default_font = ExtResource("2_6e1xv")
+default_font_size = 17
 
 [node name="ColorHandle" type="Control"]
 layout_mode = 3
@@ -41,7 +40,7 @@ offset_top = -20.0
 offset_right = -2.0
 grow_horizontal = 0
 grow_vertical = 0
+theme = SubResource("Theme_s76h8")
 text = "255"
-label_settings = SubResource("LabelSettings_ynx8q")
 horizontal_alignment = 2
-script = ExtResource("3_v27ga")
+metadata/keep_anchors = true
