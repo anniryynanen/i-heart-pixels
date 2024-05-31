@@ -1,10 +1,4 @@
-Most of `ok_color.gd` is Copyright (c) 2021 Björn Ottosson (MIT license, see text below)
-
-Icons in `phosphor` folder are Copyright (c) 2023 Phosphor Icons (MIT license, see text below)
-
-Font copyrights and licenses are found in the `fonts` folder
-
-The rest of the project is Copyright Anni Ryynänen and licensed under the MIT license:
+Copyright Anni Ryynänen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
