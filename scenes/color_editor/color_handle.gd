@@ -16,8 +16,6 @@ var handle_left: float:
         queue_redraw()
 
 var steps: int
-var handle_area: Rect2
-
 var dragging: bool
 var drag_start_x: float
 var drag_start_value: int
@@ -64,7 +62,7 @@ func _on_button_pressed(button: InputEventMouseButton) -> void:
 
 func _on_motion_event(motion: InputEventMouseMotion) -> void:
     if dragging:
-        var full_dist: float = size.x - handle_area.size.x
+        var full_dist: float = size.x - ColorHandle.get_handle_size(size).x
         var moved: int = roundi((motion.position.x - drag_start_x) / full_dist * steps)
         var new_value: int = clampi(drag_start_value + moved, 0, steps)
 
@@ -81,19 +79,18 @@ func start_dragging(mouse_pos: Vector2) -> void:
 
 func stop_dragging(button: InputEventMouseButton = null) -> void:
     if dragging and button:
-        var full_dist: float = size.x - handle_area.size.x
+        var handle_width: float = ColorHandle.get_handle_size(size).x
+        var full_dist: float = size.x - handle_width
         var moved: int = roundi((button.position.x - drag_start_x) / full_dist * steps)
 
         if moved == 0:
             var value: int = color.get_param_in_steps(color_param)
-            var left: float = handle_area.position.x
-            var width: float = handle_area.size.x
 
             var diff: float = 0.0
-            if button.position.x < left:
-                diff = button.position.x - left
-            elif button.position.x > left + width:
-                diff = button.position.x - left - width
+            if button.position.x < handle_left:
+                diff = button.position.x - handle_left
+            elif button.position.x > handle_left + handle_width:
+                diff = button.position.x - handle_left - handle_width
 
             moved = roundi(diff / full_dist * steps)
             var new_value: int = clampi(value + moved, 0, steps)
