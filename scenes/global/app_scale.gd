@@ -22,6 +22,9 @@ func start() -> void:
 
 
 func scan_nodes(node: Node) -> void:
+    if node is FileDialog:
+        return
+
     if node is Window and not node is PopupMenu:
         var window: Window = node as Window
         window.set_meta("width", window.size.x)
@@ -175,6 +178,8 @@ func update_scale() -> void:
 
 
 func update_stylebox(box: StyleBox) -> void:
+    box.set_block_signals(true)
+
     box.content_margin_left = roundi(box.get_meta("content_margin_left") * Globals.app_scale)
     box.content_margin_right = roundi(box.get_meta("content_margin_right") * Globals.app_scale)
     box.content_margin_top = roundi(box.get_meta("content_margin_top") * Globals.app_scale)
@@ -206,6 +211,8 @@ func update_stylebox(box: StyleBox) -> void:
         line_box.grow_begin = roundi(box.get_meta("grow_begin") * Globals.app_scale)
         line_box.grow_end = roundi(box.get_meta("grow_end") * Globals.app_scale)
         line_box.thickness = roundi(box.get_meta("thickness") * Globals.app_scale)
+
+    box.set_block_signals(false)
 
 
 func update_theme_constant(theme: Theme, theme_type: String, constant_name: String) -> void:
