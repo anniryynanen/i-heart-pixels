@@ -111,6 +111,17 @@ func save_stylebox(box: StyleBox) -> void:
         flat_box.set_meta("corner_radius_bottom_left", flat_box.corner_radius_bottom_left)
         flat_box.set_meta("corner_radius_bottom_right", flat_box.corner_radius_bottom_right)
 
+        flat_box.set_meta("border_width_left", flat_box.border_width_left)
+        flat_box.set_meta("border_width_right", flat_box.border_width_right)
+        flat_box.set_meta("border_width_top", flat_box.border_width_top)
+        flat_box.set_meta("border_width_bottom", flat_box.border_width_bottom)
+
+    elif box is StyleBoxLine:
+        var line_box: StyleBoxLine = box as StyleBoxLine
+        line_box.set_meta("grow_begin", line_box.grow_begin)
+        line_box.set_meta("grow_end", line_box.grow_end)
+        line_box.set_meta("thickness", line_box.thickness)
+
 
 func update_scale() -> void:
     for theme: Theme in themes.values():
@@ -172,17 +183,29 @@ func update_stylebox(box: StyleBox) -> void:
     if box is StyleBoxFlat:
         var flat_box: StyleBoxFlat = box as StyleBoxFlat
 
-        flat_box.corner_radius_top_left = roundi(
-            box.get_meta("corner_radius_top_left") * Globals.app_scale)
+        flat_box.corner_radius_top_left \
+            = roundi(box.get_meta("corner_radius_top_left") * Globals.app_scale)
+        flat_box.corner_radius_top_right \
+            = roundi(box.get_meta("corner_radius_top_right") * Globals.app_scale)
+        flat_box.corner_radius_bottom_left \
+            = roundi(box.get_meta("corner_radius_bottom_left") * Globals.app_scale)
+        flat_box.corner_radius_bottom_right \
+            = roundi(box.get_meta("corner_radius_bottom_right") * Globals.app_scale)
 
-        flat_box.corner_radius_top_right = roundi(
-            box.get_meta("corner_radius_top_right") * Globals.app_scale)
+        flat_box.border_width_left \
+            = roundi(box.get_meta("border_width_left") * Globals.app_scale)
+        flat_box.border_width_right \
+            = roundi(box.get_meta("border_width_right") * Globals.app_scale)
+        flat_box.border_width_top \
+            = roundi(box.get_meta("border_width_top") * Globals.app_scale)
+        flat_box.border_width_bottom \
+            = roundi(box.get_meta("border_width_bottom") * Globals.app_scale)
 
-        flat_box.corner_radius_bottom_left = roundi(
-            box.get_meta("corner_radius_bottom_left") * Globals.app_scale)
-
-        flat_box.corner_radius_bottom_right = roundi(
-            box.get_meta("corner_radius_bottom_right") * Globals.app_scale)
+    elif box is StyleBoxLine:
+        var line_box: StyleBoxLine = box as StyleBoxLine
+        line_box.grow_begin = roundi(box.get_meta("grow_begin") * Globals.app_scale)
+        line_box.grow_end = roundi(box.get_meta("grow_end") * Globals.app_scale)
+        line_box.thickness = roundi(box.get_meta("thickness") * Globals.app_scale)
 
 
 func update_theme_constant(theme: Theme, theme_type: String, constant_name: String) -> void:

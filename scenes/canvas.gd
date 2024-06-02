@@ -12,19 +12,26 @@ var dragging = false
 var hovering = false
 var drawing = false
 
-var image: Image = Image.create(16, 16, false, Image.Format.FORMAT_RGBA8)
-var image_changed = false
-var texture: ImageTexture = ImageTexture.create_from_image(image)
+var current_layer: Image
+var current_layer_changed = false
+var texture: ImageTexture
 
 
 func _ready() -> void:
-    Globals.focus_lost.connect(_on_focus_lost)
+    Globals.image_changed.connect(_on_image_changed)
     Globals.app_scale_changed.connect(_on_app_scale_changed)
+    Globals.focus_lost.connect(_on_focus_lost)
+
+    current_layer = Globals.image.current_layer.image
+    texture = ImageTexture.create_from_image(current_layer)
 
 
 func _process(delta: float) -> void:
     # Don't pan if some UI element has focus
     if get_viewport().gui_get_focus_owner() != null:
+        return
+
+    if Input.is_key_pressed(KEY_CTRL):
         return
 
     var distance: float = delta * pan_step * (size.x / pixel_width) * pixel_width
@@ -106,6 +113,17 @@ func _on_v_scroll_value_changed(value: float) -> void:
 
 
 func _on_resized() -> void:
+    if not current_layer:
+        return
+
+    update_position()
+
+
+func _on_image_changed(image: IHP) -> void:
+    current_layer = Globals.image.current_layer.image
+    current_layer_changed = true
+    texture = ImageTexture.create_from_image(current_layer)
+
     update_position()
 
 
@@ -178,13 +196,15 @@ func update_current_pixel(mouse_pos: Vector2) -> bool:
 
 func draw_pixel(pixel: Vector2i) -> void:
     if pixel_in_image(pixel):
-        image.set_pixel(pixel.x, pixel.y, Globals.pen_color.to_rgb())
-        image_changed = true
+        current_layer.set_pixel(pixel.x, pixel.y, Globals.pen_color.to_rgb())
+        current_layer_changed = true
         queue_redraw()
+
+        Globals.image.touch()
 
 
 func pixel_in_image(pixel: Vector2i) -> bool:
-    return Rect2i(Vector2i(0, 0), image.get_size()).has_point(pixel)
+    return Rect2i(Vector2i(0, 0), current_layer.get_size()).has_point(pixel)
 
 
 func get_image_size() -> Vector2:
@@ -219,9 +239,9 @@ func update_position() -> void:
 func _draw() -> void:
     draw_background_alpha()
 
-    if image_changed:
-        texture.update(image)
-        image_changed = false
+    if current_layer_changed:
+        texture.update(current_layer)
+        current_layer_changed = false
 
     draw_texture_rect(texture, Rect2(-top_left, get_image_size()), false)
     draw_image_outline()
@@ -236,24 +256,32 @@ func draw_background_alpha() -> void:
     while square_size.x < 10.0 * Globals.app_scale:
         square_size *= 2.0
 
-    var offset: Vector2 = Vector2(square_size.x * 2.0, square_size.y * 2.0)
+    var square_area: Rect2 = Rect2(-top_left, get_image_size())
+    square_area = square_area.intersection(get_rect())
 
-    var light_color: OKColor = OKColor.new(0.0, 0.0, 0.52)
-    var dark_color: OKColor = OKColor.new(0.0, 0.0, 0.48)
+    var indexes: Rect2 = Rect2(
+        (square_area.position / square_size).floor(),
+        (square_area.size / square_size).ceil())
 
-    var image_size: Vector2 = get_image_size()
-    var image_area: Rect2 = Rect2(-top_left, image_size)
+    var offset: Vector2 = Vector2(
+        fmod(-top_left.x, square_size.x) - square_size.x / 2.0,
+        fmod(-top_left.y, square_size.y) - square_size.y / 2.0)
 
-    var squares: Vector2 = (image_size + square_size * 5) / square_size
-    for x in range(ceili(squares.x)):
-        for y in range(ceili(squares.y)):
-            var square_color: OKColor = light_color if x % 2 == y % 2 else dark_color
+    var light_color: Color = OKColor.new(0.0, 0.0, 0.52).to_rgb()
+    var dark_color: Color = OKColor.new(0.0, 0.0, 0.48).to_rgb()
 
-            var pos: Vector2 = -top_left + square_size * Vector2(x, y)
-            var square: Rect2 = Rect2(pos - offset - square_size * 2.5, square_size)
+    var color_repeat: float = square_size.x * 2.0
+    var color_offset_x: float = absf(fmod(top_left.x, color_repeat) / color_repeat)
+    var color_offset_y: float = absf(fmod(top_left.y, color_repeat) / color_repeat)
 
-            if square.intersects(image_area):
-                draw_rect(square.intersection(image_area), square_color.to_rgb())
+    for x in range(indexes.position.x, indexes.position.x + indexes.size.x + 1):
+        for y in range(indexes.position.y, indexes.position.y + indexes.size.y + 1):
+            var color_x: int = x if color_offset_x < 0.5 else x + 1
+            var color_y: int = y if color_offset_y < 0.5 else y + 1
+            var square_color: Color = light_color if color_x % 2 == color_y % 2 else dark_color
+
+            var square = Rect2(Vector2(x, y) * square_size + offset, square_size)
+            draw_rect(square.intersection(square_area), square_color)
 
 
 func draw_image_outline() -> void:
@@ -273,7 +301,7 @@ func draw_hover_highlight() -> void:
         return
 
     var pixel_color: OKColor = OKColor.from_rgb(
-        image.get_pixel(current_pixel.x, current_pixel.y))
+        current_layer.get_pixel(current_pixel.x, current_pixel.y))
     var line_width: int = roundi(Globals.app_scale)
 
     var hl_pos: Vector2 = current_pixel * pixel_width - top_left

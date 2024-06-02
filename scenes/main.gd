@@ -2,13 +2,9 @@ extends Control
 
 var settings_applied = false
 
-enum ViewMenu {
-    APP_SCALE = 0
-}
-
 
 func _enter_tree() -> void:
-    Settings.load()
+    Settings.load_settings()
     set_default_settings()
 
 
@@ -20,6 +16,14 @@ func _ready() -> void:
 
     apply_settings()
 
+    var args: PackedStringArray = OS.get_cmdline_user_args()
+    if args.size() > 0:
+        var path: String = args[0]
+        var image: IHP = IHP.load_from_file(path)
+        if image:
+            Globals.image = image
+            Globals.current_path = path
+
 
 func _notification(what: int) -> void:
     # The app is quitting
@@ -28,7 +32,7 @@ func _notification(what: int) -> void:
             Settings.set_value("window", "x", get_window().position.x)
             Settings.set_value("window", "y", get_window().position.y)
 
-        Settings.save()
+        Settings.save_settings()
         get_tree().quit()
 
 
@@ -48,12 +52,6 @@ func _on_resized() -> void:
 func _on_app_scale_changed(app_scale: float) -> void:
     %MainSplit.split_offset = roundi(
         -Settings.get_value("panels", "right_width") * Globals.app_scale)
-
-
-func _on_view_menu_id_pressed(id: int) -> void:
-    match id:
-        ViewMenu.APP_SCALE:
-            %AppScalePopup.popup_centered()
 
 
 func _on_main_split_dragged(offset: int) -> void:

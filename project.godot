@@ -18,6 +18,7 @@ config/features=PackedStringArray("4.2", "Mobile")
 
 [autoload]
 
+Cache="*res://scenes/global/cache.tscn"
 Settings="*res://scenes/global/settings.tscn"
 Globals="*res://scenes/global/globals.tscn"
 AppScale="*res://scenes/global/app_scale.tscn"

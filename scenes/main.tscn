@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://dpqpbds16fmgh"]
 
-[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://theme.tres" id="1_0c86d"]
+[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_0c86d"]
 [ext_resource type="PackedScene" uid="uid://dwl8qyprnb8is" path="res://scenes/color_editor/color_editor.tscn" id="1_ntfhl"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_qg5aj"]
 [ext_resource type="PackedScene" uid="uid://clr3rba3j2bsb" path="res://scenes/canvas.tscn" id="2_hvaxd"]
 [ext_resource type="PackedScene" uid="uid://dcjw6gcgty4km" path="res://scenes/color_bar.tscn" id="4_5abg1"]
-[ext_resource type="PackedScene" uid="uid://c4votcijhmgs3" path="res://scenes/app_scale_popup.tscn" id="6_3g742"]
+[ext_resource type="PackedScene" uid="uid://cq54mhhpfawor" path="res://scenes/main_menu.tscn" id="4_7m4tl"]
 
 [sub_resource type="Gradient" id="Gradient_lodis"]
 colors = PackedColorArray(0.73535, 0.73535, 0.73535, 1, 1, 1, 1, 1)
@@ -48,18 +48,8 @@ theme_override_constants/separation = 0
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="MenuBar" type="MenuBar" parent="MainSplit/RightPanel/TopBar"]
+[node name="MainMenu" parent="MainSplit/RightPanel/TopBar" instance=ExtResource("4_7m4tl")]
 layout_mode = 2
-
-[node name="File" type="PopupMenu" parent="MainSplit/RightPanel/TopBar/MenuBar"]
-item_count = 1
-item_0/text = "hi!"
-item_0/id = 0
-
-[node name="View" type="PopupMenu" parent="MainSplit/RightPanel/TopBar/MenuBar"]
-item_count = 1
-item_0/text = "App Scale..."
-item_0/id = 0
 
 [node name="Gradient" type="Panel" parent="MainSplit/RightPanel/TopBar"]
 unique_name_in_owner = true
@@ -75,10 +65,5 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 260)
 layout_mode = 2
 
-[node name="AppScalePopup" parent="." instance=ExtResource("6_3g742")]
-unique_name_in_owner = true
-visible = false
-
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="dragged" from="MainSplit" to="." method="_on_main_split_dragged"]
-[connection signal="id_pressed" from="MainSplit/RightPanel/TopBar/MenuBar/View" to="." method="_on_view_menu_id_pressed"]

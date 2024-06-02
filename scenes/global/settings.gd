@@ -1,25 +1,27 @@
 extends Node
 
-const PATH = "user://settings.cfg"
+const SETTINGS_PATH = "user://settings.cfg"
 
 var file: ConfigFile = ConfigFile.new()
 
 
-func load() -> void:
-    var err: Error = file.load(PATH)
+func load_settings() -> void:
+    var err: Error = file.load(SETTINGS_PATH)
 
     if err and err != ERR_FILE_NOT_FOUND:
         OS.alert("Couldn't load settings from %s (%s)" %
-            [ProjectSettings.globalize_path(PATH), error_string(err)], Globals.ERROR_TITLE)
+            [ProjectSettings.globalize_path(SETTINGS_PATH), error_string(err)],
+            Globals.ERROR_TITLE)
 
 
-func save() -> void:
-    var err: Error = file.save(PATH)
+func save_settings() -> void:
+    var err: Error = file.save(SETTINGS_PATH)
     $SaveTimer.stop()
 
     if err:
         OS.alert("Couldn't save settings in %s (%s)" %
-            [ProjectSettings.globalize_path(PATH), error_string(err)], Globals.ERROR_TITLE)
+            [ProjectSettings.globalize_path(SETTINGS_PATH), error_string(err)],
+            Globals.ERROR_TITLE)
 
 
 func has_value(section: String, key: String) -> bool:
