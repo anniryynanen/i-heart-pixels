@@ -13,9 +13,8 @@ var layers_by_id: Dictionary = {}
 var next_layer_id: int = -1
 
 
-@warning_ignore("shadowed_variable")
-func _init(size: Vector2i) -> void:
-    self.size = size
+func _init(size_: Vector2i) -> void:
+    size = size_
 
     var layer: Layer = Layer.new(get_next_layer_id(), size)
     layers.append(layer)

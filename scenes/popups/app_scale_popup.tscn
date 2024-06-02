@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4votcijhmgs3"]
+[gd_scene load_steps=3 format=3 uid="uid://c4votcijhmgs3"]
 
-[ext_resource type="Script" path="res://scenes/app_scale_popup.gd" id="1_o6h6a"]
+[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_i4dui"]
+[ext_resource type="Script" path="res://scenes/popups/app_scale_popup.gd" id="1_o6h6a"]
 
 [node name="AppScalePopup" type="Window"]
 title = "App Scale"
@@ -11,6 +12,7 @@ transient = true
 exclusive = true
 unresizable = true
 popup_window = true
+theme = ExtResource("1_i4dui")
 script = ExtResource("1_o6h6a")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

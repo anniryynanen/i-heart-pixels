@@ -6,7 +6,6 @@ var name: String
 var image: Image
 
 
-@warning_ignore("shadowed_variable")
-func _init(id: int, size: Vector2i) -> void:
-    self.id = id
+func _init(id_: int, size: Vector2i) -> void:
+    id = id_
     image = Image.create(size.x, size.y, false, IHP.FORMAT)

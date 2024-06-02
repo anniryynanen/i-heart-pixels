@@ -8,13 +8,12 @@ var offset_top: float
 var offset_bottom: float
 
 
-@warning_ignore("shadowed_variable")
-func _init(control: Control):
-    self.control = control
-    self.offset_right = control.offset_right
-    self.offset_left = control.offset_left
-    self.offset_top = control.offset_top
-    self.offset_bottom = control.offset_bottom
+func _init(control_: Control):
+    control = control_
+    offset_right = control.offset_right
+    offset_left = control.offset_left
+    offset_top = control.offset_top
+    offset_bottom = control.offset_bottom
 
 
 func fix() -> void:

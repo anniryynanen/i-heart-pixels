@@ -7,6 +7,8 @@ func _enter_tree() -> void:
     Settings.load_settings()
     set_default_settings()
 
+    get_tree().auto_accept_quit = false
+
 
 func _ready() -> void:
     %ColorEditor.color_changed.connect(func(c): Globals.pen_color = c)
@@ -28,12 +30,10 @@ func _ready() -> void:
 func _notification(what: int) -> void:
     # The app is quitting
     if what == NOTIFICATION_WM_CLOSE_REQUEST:
-        if get_window().mode == Window.Mode.MODE_WINDOWED:
-            Settings.set_value("window", "x", get_window().position.x)
-            Settings.set_value("window", "y", get_window().position.y)
-
-        Settings.save_settings()
-        get_tree().quit()
+        if Globals.image.unsaved_changes:
+            $UnsavedChangesPopup.popup_centered()
+        else:
+            quit()
 
 
 func _on_resized() -> void:
@@ -49,21 +49,25 @@ func _on_resized() -> void:
     Settings.set_value("window", "mode", get_window().mode)
 
 
-func _on_app_scale_changed(app_scale: float) -> void:
-    %MainSplit.split_offset = roundi(
-        -Settings.get_value("panels", "right_width") * Globals.app_scale)
-
-
-func _on_main_split_dragged(offset: int) -> void:
-    Settings.set_value("panels", "right_width", roundi(-offset / Globals.app_scale))
-
-
 func _on_pen_color_changed(pen_color: OKColor) -> void:
     %ColorEditor.color = pen_color
 
     var style_box: StyleBoxTexture = %Gradient.get_theme_stylebox("panel") as StyleBoxTexture
     var texture: GradientTexture1D = style_box.texture as GradientTexture1D
     texture.gradient.set_color(1, pen_color.to_rgb())
+
+
+func _on_main_split_dragged(offset: int) -> void:
+    Settings.set_value("panels", "right_width", roundi(-offset / Globals.app_scale))
+
+
+func _on_app_scale_changed(app_scale: float) -> void:
+    %MainSplit.split_offset = roundi(
+        -Settings.get_value("panels", "right_width") * Globals.app_scale)
+
+
+func _on_unsaved_changes_popup_save() -> void:
+    %MainMenu.save_unsaved_changes(quit)
 
 
 func set_default_settings() -> void:
@@ -88,3 +92,12 @@ func apply_settings() -> void:
     Globals.apply_settings()
     settings_applied = true
     AppScale.start.call_deferred()
+
+
+func quit() -> void:
+    if get_window().mode == Window.Mode.MODE_WINDOWED:
+        Settings.set_value("window", "x", get_window().position.x)
+        Settings.set_value("window", "y", get_window().position.y)
+
+    Settings.save_settings()
+    get_tree().quit()

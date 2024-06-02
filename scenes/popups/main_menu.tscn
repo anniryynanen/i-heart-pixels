@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cq54mhhpfawor"]
 
-[ext_resource type="Script" path="res://scenes/main_menu.gd" id="1_jivql"]
-[ext_resource type="PackedScene" uid="uid://c4votcijhmgs3" path="res://scenes/app_scale_popup.tscn" id="2_c6cku"]
+[ext_resource type="Script" path="res://scenes/popups/main_menu.gd" id="1_jivql"]
+[ext_resource type="PackedScene" uid="uid://c4votcijhmgs3" path="res://scenes/popups/app_scale_popup.tscn" id="2_c6cku"]
 
 [node name="MainMenu" type="MenuBar"]
 script = ExtResource("1_jivql")
@@ -69,6 +69,6 @@ use_native_dialog = true
 
 [connection signal="index_pressed" from="File" to="." method="_on_file_index_pressed"]
 [connection signal="index_pressed" from="View" to="." method="_on_view_index_pressed"]
-[connection signal="file_selected" from="OpenDialog" to="." method="open"]
-[connection signal="file_selected" from="SaveDialog" to="." method="save"]
+[connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]
+[connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
 [connection signal="file_selected" from="ExportDialog" to="." method="export"]

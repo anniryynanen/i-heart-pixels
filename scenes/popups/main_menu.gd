@@ -14,6 +14,8 @@ enum View {
     APP_SCALE = 0
 }
 
+var on_saved: Callable
+
 
 func _ready() -> void:
     setup_shortcut(File.NEW, KEY_N)
@@ -45,13 +47,10 @@ func _on_file_index_pressed(index: int) -> void:
             $OpenDialog.popup_centered()
 
         File.SAVE:
-            if Globals.current_path:
-                Globals.image.save_to_file(Globals.current_path)
-            else:
-                $SaveDialog.popup_centered()
+            save_unsaved_changes()
 
         File.SAVE_AS:
-            $SaveDialog.popup_centered()
+            show_save_dialog()
 
         File.EXPORT:
             if Globals.current_path:
@@ -76,7 +75,7 @@ func _on_view_index_pressed(index: int) -> void:
             $AppScalePopup.popup_centered()
 
 
-func open(path: String) -> void:
+func _on_open_dialog_file_selected(path: String) -> void:
     if Globals.image.empty:
         var image: IHP = IHP.load_from_file(path)
         if image:
@@ -86,13 +85,26 @@ func open(path: String) -> void:
         OS.create_instance(["--", path])
 
 
-func save(path: String) -> void:
+func _on_save_dialog_file_selected(path: String) -> void:
     if not path.to_lower().ends_with(".ihp"):
         path += ".ihp"
 
     var success = Globals.image.save_to_file(path)
     if success:
         Globals.current_path = path
+        on_saved.call()
+
+
+func save_unsaved_changes(on_saved_: Callable = func(): pass) -> void:
+    if Globals.current_path:
+        Globals.image.save_to_file(Globals.current_path)
+    else:
+        show_save_dialog(on_saved_)
+
+
+func show_save_dialog(on_saved_: Callable = func(): pass) -> void:
+    on_saved = on_saved_
+    $SaveDialog.popup_centered()
 
 
 func export(path: String) -> void:
