@@ -1,27 +1,27 @@
 extends Node
 
-var main: Control
-var themes: Dictionary = {}
-var windows: Array[Window]
-var anchor_keepers: Array[AnchorKeeper]
-var min_sizes: Array[Control]
-var margin_overrides: Array[MarginContainer]
-var box_overrides: Array[BoxContainer]
-var svg_buttons: Array[Button]
-var sliders: Array[Slider]
-var scrollbars: Array[ScrollBar]
+var main_: Control
+var themes_: Dictionary = {}
+var windows_: Array[Window]
+var anchor_keepers_: Array[AnchorKeeper]
+var min_sizes_: Array[Control]
+var margin_overrides_: Array[MarginContainer]
+var box_overrides_: Array[BoxContainer]
+var svg_buttons_: Array[Button]
+var sliders_: Array[Slider]
+var scrollbars_: Array[ScrollBar]
 
 
 func start() -> void:
-    main = get_tree().root.find_child("Main", true, false) as Control
-    scan_nodes(main)
-    save_themes()
-    update_scale()
+    main_ = get_tree().root.find_child("Main", true, false) as Control
+    scan_nodes_(main_)
+    save_themes_()
+    update_scale_()
 
-    Globals.app_scale_changed.connect(func(_s): update_scale())
+    Globals.app_scale_changed.connect(func(_s): update_scale_())
 
 
-func scan_nodes(node: Node) -> void:
+func scan_nodes_(node: Node) -> void:
     if node is FileDialog:
         return
 
@@ -29,62 +29,62 @@ func scan_nodes(node: Node) -> void:
         var window: Window = node as Window
         window.set_meta("width", window.size.x)
         window.set_meta("height", window.size.y)
-        windows.append(window)
+        windows_.append(window)
 
     elif node is Control:
         var control: Control = node as Control
 
-        if control.theme and control.theme.get_instance_id() not in themes:
-            themes[control.theme.get_instance_id()] = control.theme
+        if control.theme and control.theme.get_instance_id() not in themes_:
+            themes_[control.theme.get_instance_id()] = control.theme
 
         if control.has_meta("keep_anchors") and control.get_meta("keep_anchors") == true:
-            anchor_keepers.append(AnchorKeeper.new(control))
+            anchor_keepers_.append(AnchorKeeper.new(control))
 
         if control.custom_minimum_size != Vector2():
             control.set_meta("custom_minimum_size", control.custom_minimum_size)
-            min_sizes.append(control)
+            min_sizes_.append(control)
 
         if control is MarginContainer:
-            save_constant_override(control, "margin_left")
-            save_constant_override(control, "margin_right")
-            save_constant_override(control, "margin_top")
-            save_constant_override(control, "margin_bottom")
-            margin_overrides.append(control)
+            save_constant_override_(control, "margin_left")
+            save_constant_override_(control, "margin_right")
+            save_constant_override_(control, "margin_top")
+            save_constant_override_(control, "margin_bottom")
+            margin_overrides_.append(control)
 
         elif control is BoxContainer:
-            save_constant_override(control, "separation")
-            box_overrides.append(control)
+            save_constant_override_(control, "separation")
+            box_overrides_.append(control)
 
         elif control is Button:
             var button: Button = control as Button
 
             if button.icon and button.icon.resource_path.ends_with(".svg"):
                 button.set_meta("icon", ScalableSVG.new(button.icon))
-                svg_buttons.append(button)
+                svg_buttons_.append(button)
 
         elif control is Slider:
-            sliders.append(control as Slider)
+            sliders_.append(control as Slider)
 
         elif control is ScrollBar:
-            scrollbars.append(control as ScrollBar)
+            scrollbars_.append(control as ScrollBar)
 
     for child in node.get_children(true):
-        scan_nodes(child)
+        scan_nodes_(child)
 
 
-func save_constant_override(control: Control, constant_name: String) -> void:
+func save_constant_override_(control: Control, constant_name: String) -> void:
     if control.has_theme_constant_override(constant_name):
         control.set_meta(constant_name, control.get_theme_constant(constant_name))
 
 
-func save_themes() -> void:
-    for theme: Theme in themes.values():
+func save_themes_() -> void:
+    for theme: Theme in themes_.values():
         theme.set_meta("default_font_size", theme.default_font_size)
 
         for theme_type: String in theme.get_stylebox_type_list():
             for box_name: String in theme.get_stylebox_list(theme_type):
 
-                save_stylebox(theme.get_stylebox(box_name, theme_type))
+                save_stylebox_(theme.get_stylebox(box_name, theme_type))
 
         for theme_type: String in theme.get_constant_type_list():
             for constant_name: String in theme.get_constant_list(theme_type):
@@ -101,7 +101,7 @@ func save_themes() -> void:
                     ScalableSVG.new(theme.get_icon(icon_name, theme_type)))
 
 
-func save_stylebox(box: StyleBox) -> void:
+func save_stylebox_(box: StyleBox) -> void:
     box.set_meta("content_margin_left", box.content_margin_left)
     box.set_meta("content_margin_right", box.content_margin_right)
     box.set_meta("content_margin_top", box.content_margin_top)
@@ -126,58 +126,58 @@ func save_stylebox(box: StyleBox) -> void:
         line_box.set_meta("thickness", line_box.thickness)
 
 
-func update_scale() -> void:
-    for theme: Theme in themes.values():
+func update_scale_() -> void:
+    for theme: Theme in themes_.values():
         theme.default_font_size = roundi(theme.get_meta("default_font_size") * Globals.app_scale)
 
         for theme_type: String in theme.get_stylebox_type_list():
             for box_name: String in theme.get_stylebox_list(theme_type):
-                update_stylebox(theme.get_stylebox(box_name, theme_type))
+                update_stylebox_(theme.get_stylebox(box_name, theme_type))
 
-        update_theme_constant(theme, "HBoxContainer", "separation")
-        update_theme_constant(theme, "VBoxContainer", "separation")
-        update_theme_constant(theme, "HSplitContainer", "minimum_grap_thickness")
-        update_theme_constant(theme, "HSplitContainer", "separation")
-        update_theme_constant(theme, "MenuBar", "h_separation")
-        update_theme_constant(theme, "PopupMenu", "item_start_padding")
-        update_theme_constant(theme, "PopupMenu", "end_padding")
-        update_theme_constant(theme, "PopupMenu", "v_separation")
+        update_theme_constant_(theme, "HBoxContainer", "separation")
+        update_theme_constant_(theme, "VBoxContainer", "separation")
+        update_theme_constant_(theme, "HSplitContainer", "minimum_grap_thickness")
+        update_theme_constant_(theme, "HSplitContainer", "separation")
+        update_theme_constant_(theme, "MenuBar", "h_separation")
+        update_theme_constant_(theme, "PopupMenu", "item_start_padding")
+        update_theme_constant_(theme, "PopupMenu", "end_padding")
+        update_theme_constant_(theme, "PopupMenu", "v_separation")
 
-        update_theme_icon(theme, "HSplitContainer", "grabber")
+        update_theme_icon_(theme, "HSplitContainer", "grabber")
 
-    for control in min_sizes:
+    for control in min_sizes_:
         control.custom_minimum_size = control.get_meta("custom_minimum_size") * Globals.app_scale
 
-    for control in margin_overrides:
-        update_constant_override(control, "margin_left")
-        update_constant_override(control, "margin_right")
-        update_constant_override(control, "margin_top")
-        update_constant_override(control, "margin_bottom")
+    for control in margin_overrides_:
+        update_constant_override_(control, "margin_left")
+        update_constant_override_(control, "margin_right")
+        update_constant_override_(control, "margin_top")
+        update_constant_override_(control, "margin_bottom")
 
-    for control in box_overrides:
-        update_constant_override(control, "separation")
+    for control in box_overrides_:
+        update_constant_override_(control, "separation")
 
-    for button in svg_buttons:
+    for button in svg_buttons_:
         button.icon = button.get_meta("icon").get_texture(Globals.app_scale)
 
-    for slider in sliders:
+    for slider in sliders_:
         slider.scale = Vector2(Globals.app_scale, Globals.app_scale)
 
-    for scrollbar in scrollbars:
+    for scrollbar in scrollbars_:
         scrollbar.scale = Vector2(Globals.app_scale, Globals.app_scale)
 
-    main.notification(Control.NOTIFICATION_THEME_CHANGED)
-    update_size(main)
+    main_.notification(Control.NOTIFICATION_THEME_CHANGED)
+    update_size_(main_)
 
     (func():
-        for window in windows:
+        for window in windows_:
             window.size = Vector2i(
                 roundi(window.get_meta("width") * Globals.app_scale),
                 roundi(window.get_meta("height") * Globals.app_scale))
     ).call_deferred()
 
 
-func update_stylebox(box: StyleBox) -> void:
+func update_stylebox_(box: StyleBox) -> void:
     box.set_block_signals(true)
 
     box.content_margin_left = roundi(box.get_meta("content_margin_left") * Globals.app_scale)
@@ -215,7 +215,7 @@ func update_stylebox(box: StyleBox) -> void:
     box.set_block_signals(false)
 
 
-func update_theme_constant(theme: Theme, theme_type: String, constant_name: String) -> void:
+func update_theme_constant_(theme: Theme, theme_type: String, constant_name: String) -> void:
     var meta_name: String = theme_type + "_" + constant_name
     if theme.has_meta(meta_name):
         theme.set_constant(
@@ -223,7 +223,7 @@ func update_theme_constant(theme: Theme, theme_type: String, constant_name: Stri
             roundi(theme.get_meta(meta_name) * Globals.app_scale))
 
 
-func update_theme_icon(theme: Theme, theme_type: String, icon_name: String) -> void:
+func update_theme_icon_(theme: Theme, theme_type: String, icon_name: String) -> void:
     var meta_name: String = theme_type + "_" + icon_name
     if theme.has_meta(meta_name):
         theme.set_icon(
@@ -231,19 +231,19 @@ func update_theme_icon(theme: Theme, theme_type: String, icon_name: String) -> v
             theme.get_meta(meta_name).get_texture(Globals.app_scale))
 
 
-func update_constant_override(control: Control, override_name: String) -> void:
+func update_constant_override_(control: Control, override_name: String) -> void:
     if control.has_meta(override_name):
         control.add_theme_constant_override(
             override_name,
             roundi(control.get_meta(override_name) * Globals.app_scale))
 
 
-func update_size(control: Control) -> void:
+func update_size_(control: Control) -> void:
     for child: Node in control.get_children(true):
         if child is Control:
-            update_size(child)
+            update_size_(child)
 
     control.update_minimum_size()
 
-    for anchor_keeper in anchor_keepers:
+    for anchor_keeper in anchor_keepers_:
         anchor_keeper.fix()

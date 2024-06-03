@@ -70,9 +70,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_fs5va")
 wait_time = 10.0
 one_shot = true
 
-[connection signal="mouse_entered" from="." to="." method="start_hovering"]
-[connection signal="mouse_exited" from="." to="." method="stop_hovering"]
+[connection signal="mouse_entered" from="." to="." method="start_hovering_"]
+[connection signal="mouse_exited" from="." to="." method="stop_hovering_"]
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="value_changed" from="GridContainer/VScrollPanel/Control/VScroll" to="." method="_on_v_scroll_value_changed"]
 [connection signal="value_changed" from="GridContainer/HScrollPanel/Control/HScroll" to="." method="_on_h_scroll_value_changed"]
-[connection signal="timeout" from="DrawTimer" to="." method="stop_drawing"]
+[connection signal="timeout" from="DrawTimer" to="." method="stop_drawing_"]

@@ -71,4 +71,4 @@ use_native_dialog = true
 [connection signal="index_pressed" from="View" to="." method="_on_view_index_pressed"]
 [connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
-[connection signal="file_selected" from="ExportDialog" to="." method="export"]
+[connection signal="file_selected" from="ExportDialog" to="." method="export_"]

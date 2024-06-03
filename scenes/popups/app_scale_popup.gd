@@ -3,7 +3,7 @@ extends Window
 ## text gets smaller, but node size and anchors don't adjust. This could be
 ## fixed with custom controls.
 
-var dragging = false
+var dragging_ = false
 
 
 func _ready() -> void:
@@ -11,11 +11,11 @@ func _ready() -> void:
 
 
 func _on_app_scale_slider_drag_started() -> void:
-    dragging = true
+    dragging_ = true
 
 
 func _on_app_scale_slider_drag_ended(_value_changed: bool) -> void:
-    dragging = false
+    dragging_ = false
 
     if %AppScaleSlider.value != Globals.app_scale:
         Globals.app_scale = %AppScaleSlider.value
@@ -24,7 +24,7 @@ func _on_app_scale_slider_drag_ended(_value_changed: bool) -> void:
 func _on_app_scale_slider_value_changed(value: float) -> void:
     %AppScaleLabel.text = String.num(value)
 
-    if not dragging:
+    if not dragging_:
         Globals.app_scale = %AppScaleSlider.value
 
 

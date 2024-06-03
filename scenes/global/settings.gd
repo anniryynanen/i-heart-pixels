@@ -2,11 +2,11 @@ extends Node
 
 const SETTINGS_PATH = "user://settings.cfg"
 
-var file: ConfigFile = ConfigFile.new()
+var file_: ConfigFile = ConfigFile.new()
 
 
 func load_settings() -> void:
-    var err: Error = file.load(SETTINGS_PATH)
+    var err: Error = file_.load(SETTINGS_PATH)
 
     if err and err != ERR_FILE_NOT_FOUND:
         OS.alert("Couldn't load settings from %s (%s)" %
@@ -15,7 +15,7 @@ func load_settings() -> void:
 
 
 func save_settings() -> void:
-    var err: Error = file.save(SETTINGS_PATH)
+    var err: Error = file_.save(SETTINGS_PATH)
     $SaveTimer.stop()
 
     if err:
@@ -25,11 +25,11 @@ func save_settings() -> void:
 
 
 func has_value(section: String, key: String) -> bool:
-    return file.has_section_key(section, key)
+    return file_.has_section_key(section, key)
 
 
 func set_value(section: String, key: String, value: Variant) -> void:
-    file.set_value(section, key, value)
+    file_.set_value(section, key, value)
     $SaveTimer.start()
 
 
@@ -39,4 +39,4 @@ func set_if_missing(section: String, key: String, value: Variant) -> void:
 
 
 func get_value(section: String, key: String, default: Variant = null) -> Variant:
-    return file.get_value(section, key, default)
+    return file_.get_value(section, key, default)

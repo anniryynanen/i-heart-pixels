@@ -8,23 +8,23 @@ var color: OKColor = OKColor.new():
         color = value.duplicate()
         color.a = 1.0 # ColorEditor only deals with opaque colors
 
-        strips.map(func(s): s.color = color)
-        handles.map(func(h): h.color = color)
+        strips_.map(func(s): s.color = color)
+        handles_.map(func(h): h.color = color)
 
-var strips: Array[ColorStrip]
-var handles: Array[ColorHandle]
+var strips_: Array[ColorStrip]
+var handles_: Array[ColorHandle]
 
 
 func _ready() -> void:
-    strips.append(%HueStrip)
-    strips.append(%SaturationStrip)
-    strips.append(%LightnessStrip)
+    strips_.append(%HueStrip)
+    strips_.append(%SaturationStrip)
+    strips_.append(%LightnessStrip)
 
-    handles.append(%HueHandle)
-    handles.append(%SaturationHandle)
-    handles.append(%LightnessHandle)
+    handles_.append(%HueHandle)
+    handles_.append(%SaturationHandle)
+    handles_.append(%LightnessHandle)
 
-    handles.map(func(h): h.color_changed.connect(self._on_handle_color_changed))
+    handles_.map(func(h): h.color_changed.connect(self._on_handle_color_changed))
     Globals.pen_color_changed.connect(_on_pen_color_changed)
 
 
