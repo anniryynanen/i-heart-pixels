@@ -6,6 +6,10 @@ var settings_applied_ = false
 func _enter_tree() -> void:
     Settings.load_settings()
     set_default_settings_()
+    update_title_()
+
+    Globals.unsaved_changes_changed.connect(func(_u): update_title_())
+    Globals.current_path_changed.connect(func(_p): update_title_())
 
     get_tree().auto_accept_quit = false
 
@@ -92,6 +96,22 @@ func apply_settings_() -> void:
     Globals.apply_settings()
     settings_applied_ = true
     AppScale.start.call_deferred()
+
+
+func update_title_() -> void:
+    var title: String = ""
+
+    if Globals.current_path:
+        var separator: String = "\\" if DisplayServer.get_name() == "Windows" else "/"
+        title += Globals.current_path.rsplit(separator, false, 1)[-1]
+    else:
+        title += "[not saved]"
+
+    if Globals.image.unsaved_changes:
+        title += "*"
+
+    title += " - " + ProjectSettings.get_setting("application/config/name")
+    get_window().title = title
 
 
 func quit_() -> void:

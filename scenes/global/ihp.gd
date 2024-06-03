@@ -1,6 +1,8 @@
 class_name IHP
 extends RefCounted
 
+signal unsaved_changes_changed(unsaved_changes: bool)
+
 const FORMAT = Image.FORMAT_RGBA8
 
 var size: Vector2i
@@ -12,6 +14,7 @@ var unsaved_changes = false:
     set(value):
         unsaved_changes = value
         untouched = false
+        unsaved_changes_changed.emit(unsaved_changes)
 
 var layers_by_id_: Dictionary = {}
 var next_layer_id_: int = -1
@@ -78,7 +81,7 @@ static func load_ihp_(path: String) -> IHP:
         return null
 
     var ihp: IHP = IHP.new(Vector2(dict["width"], dict["height"]))
-    ihp.next_layer_id = dict["next_layer_id"]
+    ihp.next_layer_id_ = dict["next_layer_id"]
 
     var first = true
     for layer_dict: Dictionary in dict["layers"]:
@@ -94,9 +97,9 @@ static func load_ihp_(path: String) -> IHP:
         layer.name = layer_dict["name"]
         layer.image.load_png_from_buffer(file.get_var())
 
-        ihp.layers_by_id[layer.id] = layer
+        ihp.layers_by_id_[layer.id] = layer
 
-    ihp.current_layer = ihp.layers_by_id[int(dict["current_layer_id"])]
+    ihp.current_layer = ihp.layers_by_id_[int(dict["current_layer_id"])]
     ihp.untouched = false
     return ihp
 

@@ -80,7 +80,9 @@ func _on_open_dialog_file_selected(path: String) -> void:
         var image: IHP = IHP.load_from_file(path)
         if image:
             Globals.image = image
-            Globals.current_path = path
+
+            if path.to_lower().ends_with(".ihp"):
+                Globals.current_path = path
     else:
         OS.create_instance(["--", path])
 
