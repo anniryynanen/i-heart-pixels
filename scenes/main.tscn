@@ -1,12 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://dpqpbds16fmgh"]
+[gd_scene load_steps=13 format=3 uid="uid://dpqpbds16fmgh"]
 
 [ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_0c86d"]
 [ext_resource type="PackedScene" uid="uid://dwl8qyprnb8is" path="res://scenes/color_editor/color_editor.tscn" id="1_ntfhl"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_qg5aj"]
 [ext_resource type="PackedScene" uid="uid://clr3rba3j2bsb" path="res://scenes/canvas.tscn" id="2_hvaxd"]
 [ext_resource type="PackedScene" uid="uid://dcjw6gcgty4km" path="res://scenes/color_bar.tscn" id="4_5abg1"]
-[ext_resource type="PackedScene" uid="uid://cq54mhhpfawor" path="res://scenes/popups/main_menu.tscn" id="4_7m4tl"]
+[ext_resource type="PackedScene" uid="uid://cq54mhhpfawor" path="res://scenes/main_menu.tscn" id="4_7m4tl"]
+[ext_resource type="Texture2D" uid="uid://dss4svsixp0b7" path="res://icons/phosphor/resize-duotone.svg" id="7_66l3u"]
 [ext_resource type="PackedScene" uid="uid://b0gtifc3o4sq" path="res://scenes/popups/unsaved_changes_popup.tscn" id="7_j86ne"]
+[ext_resource type="PackedScene" uid="uid://686ef6jcvfk3" path="res://scenes/popups/resize_canvas_popup.tscn" id="9_qj57f"]
 
 [sub_resource type="Gradient" id="Gradient_lodis"]
 colors = PackedColorArray(0.73535, 0.73535, 0.73535, 1, 1, 1, 1, 1)
@@ -67,11 +69,46 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 260)
 layout_mode = 2
 
+[node name="Spacer" type="Control" parent="MainSplit/RightPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MainSplit/RightPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainSplit/RightPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MainSplit/RightPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+
+[node name="ImageSize" type="Label" parent="MainSplit/RightPanel/MarginContainer/HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "16x16"
+
+[node name="Resize" type="Button" parent="MainSplit/RightPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Resize canvas"
+theme_type_variation = &"IconButton"
+icon = ExtResource("7_66l3u")
+
 [node name="UnsavedChangesPopup" parent="." instance=ExtResource("7_j86ne")]
 size = Vector2i(300, 78)
 visible = false
 
+[node name="ResizeCanvasPopup" parent="." instance=ExtResource("9_qj57f")]
+visible = false
+
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="dragged" from="MainSplit" to="." method="_on_main_split_dragged"]
+[connection signal="pressed" from="MainSplit/RightPanel/MarginContainer/HBoxContainer/Resize" to="ResizeCanvasPopup" method="popup_centered"]
 [connection signal="quit" from="UnsavedChangesPopup" to="." method="quit_"]
 [connection signal="save" from="UnsavedChangesPopup" to="." method="_on_unsaved_changes_popup_save"]

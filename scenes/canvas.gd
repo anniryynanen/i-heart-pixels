@@ -21,9 +21,6 @@ func _ready() -> void:
     Globals.app_scale_changed.connect(_on_app_scale_changed)
     Globals.focus_lost.connect(_on_focus_lost)
 
-    current_layer_ = Globals.image.current_layer.image
-    texture_ = ImageTexture.create_from_image(current_layer_)
-
 
 func _process(delta: float) -> void:
     # Don't pan if some UI element has focus

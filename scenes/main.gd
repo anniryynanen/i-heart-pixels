@@ -6,10 +6,12 @@ var settings_applied_ = false
 func _enter_tree() -> void:
     Settings.load_settings()
     set_default_settings_()
-    update_title_()
 
+    Globals.image_changed.connect(_on_image_changed)
     Globals.unsaved_changes_changed.connect(func(_u): update_title_())
     Globals.current_path_changed.connect(func(_p): update_title_())
+    Globals.pen_color_changed.connect(_on_pen_color_changed)
+    Globals.app_scale_changed.connect(_on_app_scale_changed)
 
     get_tree().auto_accept_quit = false
 
@@ -17,10 +19,8 @@ func _enter_tree() -> void:
 func _ready() -> void:
     %ColorEditor.color_changed.connect(func(c): Globals.pen_color = c)
 
-    Globals.app_scale_changed.connect(_on_app_scale_changed)
-    Globals.pen_color_changed.connect(_on_pen_color_changed)
-
     apply_settings_()
+    update_title_()
 
     var args: PackedStringArray = OS.get_cmdline_user_args()
     if args.size() > 0:
@@ -53,6 +53,10 @@ func _on_resized() -> void:
     Settings.set_value("window", "mode", get_window().mode)
 
 
+func _on_image_changed(image: IHP) -> void:
+    %ImageSize.text = "%sx%s" % [image.size.x, image.size.y]
+
+
 func _on_pen_color_changed(pen_color: OKColor) -> void:
     %ColorEditor.color = pen_color
 
@@ -71,13 +75,13 @@ func _on_app_scale_changed(app_scale: float) -> void:
 
 
 func _on_unsaved_changes_popup_save() -> void:
-    %MainMenu.save_unsaved_changes(quit_)
+    %MainMenu.save_unsaved_changes_(quit_)
 
 
 func set_default_settings_() -> void:
     Settings.set_if_missing("app", "scale", 1.0)
     Settings.set_if_missing("panels", "right_width", 300.0)
-    Settings.set_if_missing("pen", "color", OKColor.new(155.0 / 359.0, 0.77, 0.68))
+    Settings.set_if_missing("pen", "color", OKColor.new(185.0 / 359.0, 0.4, 0.69))
 
 
 func apply_settings_() -> void:
@@ -102,8 +106,7 @@ func update_title_() -> void:
     var title: String = ""
 
     if Globals.current_path:
-        var separator: String = "\\" if DisplayServer.get_name() == "Windows" else "/"
-        title += Globals.current_path.rsplit(separator, false, 1)[-1]
+        title += Globals.current_path.get_file()
     else:
         title += "[not saved]"
 

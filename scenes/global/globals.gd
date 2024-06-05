@@ -37,16 +37,14 @@ var app_scale: float:
         app_scale_changed.emit(app_scale)
 
 
-func _init() -> void:
-    image = IHP.new(Vector2i(16, 16))
-
-
 func _notification(what: int) -> void:
     if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
         focus_lost.emit()
 
 
 func apply_settings() -> void:
+    image = IHP.new(Vector2i(16, 16))
+
     pen_color = Settings.get_value("pen", "color")
     app_scale = Settings.get_value("app", "scale")
 

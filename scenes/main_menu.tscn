@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cq54mhhpfawor"]
 
-[ext_resource type="Script" path="res://scenes/popups/main_menu.gd" id="1_jivql"]
+[ext_resource type="Script" path="res://scenes/main_menu.gd" id="1_jivql"]
 [ext_resource type="PackedScene" uid="uid://c4votcijhmgs3" path="res://scenes/popups/app_scale_popup.tscn" id="2_c6cku"]
 
 [node name="MainMenu" type="MenuBar"]

@@ -29,9 +29,8 @@ func _init(size_: Vector2i) -> void:
     current_layer = layer
 
 
-func get_next_layer_id_() -> int:
-    next_layer_id_ += 1
-    return next_layer_id_
+func resize_canvas(new_size: Vector2i, offset: Vector2i) -> void:
+    pass
 
 
 func save_to_file(path: String) -> bool:
@@ -66,6 +65,11 @@ static func load_from_file(path: String) -> IHP:
         return load_ihp_(path)
     else:
         return import_image_(path)
+
+
+func get_next_layer_id_() -> int:
+    next_layer_id_ += 1
+    return next_layer_id_
 
 
 static func load_ihp_(path: String) -> IHP:
