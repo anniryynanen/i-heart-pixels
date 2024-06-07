@@ -12,7 +12,7 @@
 [node name="ResizeCanvasPopup" type="Window"]
 title = "Resize Canvas"
 initial_position = 2
-size = Vector2i(268, 197)
+size = Vector2i(260, 197)
 wrap_controls = true
 transient = true
 exclusive = true
@@ -164,22 +164,22 @@ theme_override_constants/margin_top = 6
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer2"]
+[node name="BottomButtons" type="HBoxContainer" parent="VBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="Cancel" type="Button" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
+[node name="Cancel" type="Button" parent="VBoxContainer/MarginContainer2/BottomButtons"]
 layout_mode = 2
 text = "Cancel"
 
-[node name="Spacer" type="Control" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
+[node name="Spacer" type="Control" parent="VBoxContainer/MarginContainer2/BottomButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Resize" type="Button" parent="VBoxContainer/MarginContainer2/HBoxContainer"]
+[node name="Resize" type="Button" parent="VBoxContainer/MarginContainer2/BottomButtons"]
 unique_name_in_owner = true
 layout_mode = 2
-disabled = true
 text = "Resize"
 
 [connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
@@ -192,5 +192,5 @@ text = "Resize"
 [connection signal="pressed" from="VBoxContainer/MarginContainer/GridContainer/VAlignButtons/AlignTop" to="." method="_on_align_top_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/GridContainer/VAlignButtons/AlignCenterV" to="." method="_on_align_center_v_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/GridContainer/VAlignButtons/AlignBottom" to="." method="_on_align_bottom_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer2/HBoxContainer/Cancel" to="." method="hide"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer2/HBoxContainer/Resize" to="." method="_on_resize_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer2/BottomButtons/Cancel" to="." method="hide"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer2/BottomButtons/Resize" to="." method="_on_resize_pressed"]

@@ -97,6 +97,7 @@ text = "16x16"
 [node name="Resize" type="Button" parent="MainSplit/RightPanel/MarginContainer/HBoxContainer"]
 layout_mode = 2
 tooltip_text = "Resize canvas"
+focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("7_66l3u")
 

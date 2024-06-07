@@ -1,6 +1,11 @@
 extends Window
 
 
+func _ready() -> void:
+    if DisplayServer.get_name() == "Windows":
+        Utils.reverse_children(%BottomButtons)
+
+
 func _on_about_to_popup() -> void:
     %Width.value = Globals.image.size.x
     %Height.value = Globals.image.size.y
@@ -35,9 +40,10 @@ func _on_align_center_v_pressed() -> void:
 
 
 func _on_resize_pressed() -> void:
-    Globals.image.resize_canvas(
+    await Globals.image.resize_canvas(
         Vector2i(roundi(%Width.value), roundi(%Height.value)),
         Vector2i(roundi(%XOffset.value), roundi(%YOffset.value)))
+    Globals.image_changed.emit(Globals.image)
     hide()
 
 

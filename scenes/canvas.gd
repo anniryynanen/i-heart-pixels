@@ -23,8 +23,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-    # Don't pan if some UI element has focus
-    if get_viewport().gui_get_focus_owner() != null:
+    # Don't pan if some other UI element has focus
+    var window_has_focus = DisplayServer.window_is_focused(get_window().get_window_id())
+    if not window_has_focus or get_viewport().gui_get_focus_owner() != null:
         return
 
     if Input.is_key_pressed(KEY_CTRL):
@@ -116,7 +117,7 @@ func _on_resized() -> void:
 
 
 func _on_image_changed(image: IHP) -> void:
-    current_layer_ = Globals.image.current_layer.image
+    current_layer_ = image.current_layer.image
     current_layer_changed_ = true
     texture_ = ImageTexture.create_from_image(current_layer_)
 

@@ -30,7 +30,28 @@ func _init(size_: Vector2i) -> void:
 
 
 func resize_canvas(new_size: Vector2i, offset: Vector2i) -> void:
-    pass
+    size = new_size
+
+    for layer in layers:
+        var viewport: SubViewport = SubViewport.new()
+        viewport.size = new_size
+        viewport.transparent_bg = true
+        viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
+        layer.set_meta("viewport", viewport)
+        Globals.add_child(viewport)
+
+        var texture: TextureRect = TextureRect.new()
+        texture.texture = ImageTexture.create_from_image(layer.image)
+        viewport.add_child(texture)
+        texture.position = offset
+
+    await RenderingServer.frame_post_draw
+
+    for layer in layers:
+        var viewport: SubViewport = layer.get_meta("viewport") as SubViewport
+        layer.image = viewport.get_texture().get_image()
+        layer.remove_meta("viewport")
+        Globals.remove_child(viewport)
 
 
 func save_to_file(path: String) -> bool:
