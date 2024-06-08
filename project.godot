@@ -14,7 +14,7 @@ config/name="I ❤️ Pixels"
 run/main_scene="res://scenes/dummy.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="I Heart Pixels"
-config/features=PackedStringArray("4.2", "Mobile")
+config/features=PackedStringArray("4.3", "Mobile")
 
 [autoload]
 
@@ -29,4 +29,6 @@ window/subwindows/embed_subwindows=false
 
 [rendering]
 
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_clear_color=Color(0.73535, 0.73535, 0.73535, 1)

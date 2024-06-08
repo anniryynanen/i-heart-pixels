@@ -4,3 +4,8 @@
 
 [node name="Signals" type="Node"]
 script = ExtResource("1_2hb6d")
+
+[node name="CheckKeyboard" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="timeout" from="CheckKeyboard" to="." method="_on_check_keyboard_timeout"]

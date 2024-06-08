@@ -10,17 +10,18 @@ func _enter_tree() -> void:
     Globals.image_changed.connect(_on_image_changed)
     Globals.unsaved_changes_changed.connect(func(_u): update_title_())
     Globals.current_path_changed.connect(func(_p): update_title_())
-    Globals.pen_color_changed.connect(_on_pen_color_changed)
+    Globals.tool_color_changed.connect(_on_tool_color_changed)
     Globals.app_scale_changed.connect(_on_app_scale_changed)
 
     get_tree().auto_accept_quit = false
 
 
 func _ready() -> void:
-    %ColorEditor.color_changed.connect(func(c): Globals.pen_color = c)
+    %ColorEditor.color_changed.connect(func(c): Globals.tool_color = c)
 
     apply_settings_()
     update_title_()
+    Globals.tool = Tools.PEN
 
     var args: PackedStringArray = OS.get_cmdline_user_args()
     if args.size() > 0:
@@ -57,12 +58,16 @@ func _on_image_changed(image: IHP) -> void:
     %ImageSize.text = "%sx%s" % [image.size.x, image.size.y]
 
 
-func _on_pen_color_changed(pen_color: OKColor) -> void:
-    %ColorEditor.color = pen_color
+func _on_color_editor_color_changed(color: OKColor) -> void:
+    Globals.tool_color = color
+
+
+func _on_tool_color_changed(tool_color: OKColor) -> void:
+    %ColorEditor.color = tool_color
 
     var style_box: StyleBoxTexture = %Gradient.get_theme_stylebox("panel") as StyleBoxTexture
     var texture: GradientTexture1D = style_box.texture as GradientTexture1D
-    texture.gradient.set_color(1, pen_color.to_rgb())
+    texture.gradient.set_color(1, tool_color.to_rgb())
 
 
 func _on_main_split_dragged(offset: int) -> void:
@@ -81,7 +86,7 @@ func _on_unsaved_changes_popup_save() -> void:
 func set_default_settings_() -> void:
     Settings.set_if_missing("app", "scale", 1.0)
     Settings.set_if_missing("panels", "right_width", 300.0)
-    Settings.set_if_missing("pen", "color", OKColor.new(185.0 / 359.0, 0.4, 0.69))
+    Settings.set_if_missing("tool", "color", OKColor.new(185.0 / 359.0, 0.4, 0.69))
 
 
 func apply_settings_() -> void:

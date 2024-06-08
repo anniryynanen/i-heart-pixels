@@ -16,7 +16,7 @@ var unsaved_changes = false:
         untouched = false
         unsaved_changes_changed.emit(unsaved_changes)
 
-var layers_by_id_: Dictionary = {}
+var layers_by_id_: Dictionary
 var next_layer_id_: int = -1
 
 

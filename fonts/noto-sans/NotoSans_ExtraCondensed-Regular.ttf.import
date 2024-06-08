@@ -2,19 +2,20 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://b38kkef63j7c7"
-path="res://.godot/imported/NotoSans-Regular.ttf-4f87f9c9088451523be8bbdafdacd6a5.fontdata"
+uid="uid://c1wr0ejvh1ea7"
+path="res://.godot/imported/NotoSans_ExtraCondensed-Regular.ttf-62dcd796584e7d0ef337b6e58b732423.fontdata"
 
 [deps]
 
-source_file="res://fonts/noto_sans/NotoSans-Regular.ttf"
-dest_files=["res://.godot/imported/NotoSans-Regular.ttf-4f87f9c9088451523be8bbdafdacd6a5.fontdata"]
+source_file="res://fonts/noto-sans/NotoSans_ExtraCondensed-Regular.ttf"
+dest_files=["res://.godot/imported/NotoSans_ExtraCondensed-Regular.ttf-62dcd796584e7d0ef337b6e58b732423.fontdata"]
 
 [params]
 
 Rendering=null
-antialiasing=2
+antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48
@@ -27,12 +28,7 @@ Fallbacks=null
 fallbacks=[]
 Compress=null
 compress=true
-preload=[{
-"chars": [],
-"glyphs": [],
-"name": "New Configuration",
-"size": Vector2i(16, 0)
-}]
+preload=[]
 language_support={}
 script_support={}
 opentype_features={}

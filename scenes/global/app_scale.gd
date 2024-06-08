@@ -1,7 +1,7 @@
 extends Node
 
 var main_: Control
-var themes_: Dictionary = {}
+var themes_: Dictionary
 var windows_: Array[Window]
 var anchor_keepers_: Array[AnchorKeeper]
 var min_sizes_: Array[Control]
@@ -86,6 +86,13 @@ func save_themes_() -> void:
 
                 save_stylebox_(theme.get_stylebox(box_name, theme_type))
 
+        for theme_type: String in theme.get_font_size_type_list():
+            for font_size_name: String in theme.get_font_size_list(theme_type):
+
+                theme.set_meta(
+                    theme_type + "_" + font_size_name,
+                    theme.get_font_size(font_size_name, theme_type))
+
         for theme_type: String in theme.get_constant_type_list():
             for constant_name: String in theme.get_constant_list(theme_type):
 
@@ -119,6 +126,11 @@ func save_stylebox_(box: StyleBox) -> void:
         flat_box.set_meta("border_width_top", flat_box.border_width_top)
         flat_box.set_meta("border_width_bottom", flat_box.border_width_bottom)
 
+        flat_box.set_meta("expand_margin_left", flat_box.expand_margin_left)
+        flat_box.set_meta("expand_margin_right", flat_box.expand_margin_right)
+        flat_box.set_meta("expand_margin_top", flat_box.expand_margin_top)
+        flat_box.set_meta("expand_margin_bottom", flat_box.expand_margin_bottom)
+
     elif box is StyleBoxLine:
         var line_box: StyleBoxLine = box as StyleBoxLine
         line_box.set_meta("grow_begin", line_box.grow_begin)
@@ -133,6 +145,8 @@ func update_scale_() -> void:
         for theme_type: String in theme.get_stylebox_type_list():
             for box_name: String in theme.get_stylebox_list(theme_type):
                 update_stylebox_(theme.get_stylebox(box_name, theme_type))
+
+        update_theme_font_size_(theme, "KeyHintLabel", "font_size")
 
         update_theme_constant_(theme, "HBoxContainer", "separation")
         update_theme_constant_(theme, "VBoxContainer", "separation")
@@ -207,6 +221,15 @@ func update_stylebox_(box: StyleBox) -> void:
         flat_box.border_width_bottom \
             = roundi(box.get_meta("border_width_bottom") * Globals.app_scale)
 
+        flat_box.expand_margin_left \
+            = roundi(box.get_meta("expand_margin_left") * Globals.app_scale)
+        flat_box.expand_margin_right \
+            = roundi(box.get_meta("expand_margin_right") * Globals.app_scale)
+        flat_box.expand_margin_top \
+            = roundi(box.get_meta("expand_margin_top") * Globals.app_scale)
+        flat_box.expand_margin_bottom \
+            = roundi(box.get_meta("expand_margin_bottom") * Globals.app_scale)
+
     elif box is StyleBoxLine:
         var line_box: StyleBoxLine = box as StyleBoxLine
         line_box.grow_begin = roundi(box.get_meta("grow_begin") * Globals.app_scale)
@@ -214,6 +237,14 @@ func update_stylebox_(box: StyleBox) -> void:
         line_box.thickness = roundi(box.get_meta("thickness") * Globals.app_scale)
 
     box.set_block_signals(false)
+
+
+func update_theme_font_size_(theme: Theme, theme_type: String, font_size_name: String) -> void:
+    var meta_name: String = theme_type + "_" + font_size_name
+    if theme.has_meta(meta_name):
+        theme.set_font_size(
+            font_size_name, theme_type,
+            roundi(theme.get_meta(meta_name) * Globals.app_scale))
 
 
 func update_theme_constant_(theme: Theme, theme_type: String, constant_name: String) -> void:

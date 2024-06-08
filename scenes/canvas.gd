@@ -58,6 +58,7 @@ func _gui_input(event: InputEvent) -> void:
         _on_motion_event(event as InputEventMouseMotion)
 
 
+@warning_ignore("standalone_ternary")
 func _on_button_event(button: InputEventMouseButton) -> void:
     match button.button_index:
         MOUSE_BUTTON_LEFT:
@@ -193,7 +194,12 @@ func update_current_pixel_(mouse_pos: Vector2) -> bool:
 
 func draw_pixel_(pixel: Vector2i) -> void:
     if pixel_in_image_(pixel):
-        current_layer_.set_pixel(pixel.x, pixel.y, Globals.pen_color.to_rgb())
+        var color: OKColor = Globals.tool_color
+
+        if Globals.tool == Tools.ERASER:
+            color = OKColor.new(0.0, 0.0, 0.0, 0.0)
+
+        current_layer_.set_pixel(pixel.x, pixel.y, color.to_rgb())
         current_layer_changed_ = true
         queue_redraw()
 

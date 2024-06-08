@@ -1,0 +1,92 @@
+[gd_scene load_steps=8 format=3 uid="uid://80q74pk3rmx1"]
+
+[ext_resource type="Texture2D" uid="uid://xj58x63vdis2" path="res://icons/phosphor/eraser-duotone.svg" id="1_qk125"]
+[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_x65cp"]
+[ext_resource type="Texture2D" uid="uid://bpcldmwp6pkqc" path="res://icons/phosphor/pen-duotone.svg" id="2_08u8w"]
+[ext_resource type="Script" path="res://scenes/tools.gd" id="2_hktuk"]
+[ext_resource type="PackedScene" uid="uid://cq1hokpb34037" path="res://scenes/key_hint.tscn" id="4_6jvjk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glc07"]
+bg_color = Color(0.598309, 0.598309, 0.598309, 0)
+border_width_left = 1
+border_width_bottom = 2
+border_color = Color(0.598309, 0.598309, 0.598309, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83hf3"]
+bg_color = Color(0.598309, 0.598309, 0.598309, 0)
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.598309, 0.598309, 0.598309, 1)
+
+[node name="Toolbar" type="MarginContainer"]
+theme = ExtResource("1_x65cp")
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 5
+script = ExtResource("2_hktuk")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="PenPanel" type="PanelContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ToolPanelInactive"
+
+[node name="Pen" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer/PenPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Pen"
+focus_mode = 0
+theme_type_variation = &"IconButton"
+theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+icon = ExtResource("2_08u8w")
+
+[node name="EraserPanel" type="PanelContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ToolPanelInactive"
+
+[node name="Eraser" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer/EraserPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Eraser"
+focus_mode = 0
+theme_type_variation = &"IconButton"
+theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+icon = ExtResource("1_qk125")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Panel" type="Panel" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_glc07")
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="PenHint" parent="HBoxContainer/VBoxContainer/HBoxContainer2/CenterContainer" instance=ExtResource("4_6jvjk")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_83hf3")

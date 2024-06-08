@@ -2,19 +2,20 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bny6ttbd3ne51"
-path="res://.godot/imported/SofiaSansCondensed-Regular.ttf-579cf13f1d254da5e1f5caae7b8c68a2.fontdata"
+uid="uid://b38kkef63j7c7"
+path="res://.godot/imported/NotoSans-Regular.ttf-f3e42101c856384ea97103233c31e511.fontdata"
 
 [deps]
 
-source_file="res://fonts/sofia_sans_condensed/SofiaSansCondensed-Regular.ttf"
-dest_files=["res://.godot/imported/SofiaSansCondensed-Regular.ttf-579cf13f1d254da5e1f5caae7b8c68a2.fontdata"]
+source_file="res://fonts/noto-sans/NotoSans-Regular.ttf"
+dest_files=["res://.godot/imported/NotoSans-Regular.ttf-f3e42101c856384ea97103233c31e511.fontdata"]
 
 [params]
 
 Rendering=null
 antialiasing=2
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://dwl8qyprnb8is"]
+[gd_scene load_steps=7 format=3 uid="uid://dwl8qyprnb8is"]
 
+[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_h7y4f"]
 [ext_resource type="Script" path="res://scenes/color_editor/color_editor.gd" id="1_pcwig"]
-[ext_resource type="FontFile" uid="uid://bny6ttbd3ne51" path="res://fonts/sofia_sans_condensed/SofiaSansCondensed-Regular.ttf" id="2_bi8ge"]
 [ext_resource type="PackedScene" uid="uid://dl1hwv3q6do0e" path="res://scenes/color_editor/color_strip.tscn" id="2_oesjs"]
+[ext_resource type="FontFile" uid="uid://c1wr0ejvh1ea7" path="res://fonts/noto-sans/NotoSans_ExtraCondensed-Regular.ttf" id="3_nvgas"]
 [ext_resource type="PackedScene" uid="uid://cuvv0ttrqqef3" path="res://scenes/color_editor/color_handle.tscn" id="5_fqclp"]
 
 [sub_resource type="Theme" id="Theme_e7lmp"]
-default_font = ExtResource("2_bi8ge")
+default_font = ExtResource("3_nvgas")
 default_font_size = 17
 
 [node name="ColorEditor" type="Control"]
@@ -17,6 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_h7y4f")
 script = ExtResource("1_pcwig")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -68,16 +70,16 @@ layout_mode = 2
 size_flags_vertical = 3
 color_param = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/Control"]
+[node name="OKHSL" type="Label" parent="HBoxContainer/Control"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -41.0
-offset_top = -22.0
-offset_right = -2.0
+offset_left = -43.0
+offset_top = -24.0
+offset_right = -3.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = SubResource("Theme_e7lmp")
