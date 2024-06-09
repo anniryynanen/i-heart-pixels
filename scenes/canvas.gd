@@ -10,6 +10,7 @@ var pan_step_: float = BASE_PAN_STEP
 var dragging_ = false
 var hovering_ = false
 var drawing_ = false
+var cursors_: Dictionary
 
 var current_layer_: Image
 var current_layer_changed_ = false
@@ -17,6 +18,13 @@ var texture_: ImageTexture
 
 
 func _ready() -> void:
+    cursors_[Tools.PEN] = ScalableSVG.new(load(
+        "res://icons/phosphor/cursor/cursor-28px-pen-duotone.svg"))
+    cursors_[Tools.ERASER] = ScalableSVG.new(load(
+        "res://icons/phosphor/cursor/cursor-28px-eraser-duotone.svg"))
+    cursors_[Tools.COLOR_PICKER] = ScalableSVG.new(load(
+        "res://icons/phosphor/cursor/cursor-28px-eyedropper-duotone.svg"))
+
     Globals.image_changed.connect(_on_image_changed)
     Globals.tool_changed.connect(func(_t): update_cursor_())
     Globals.app_scale_changed.connect(_on_app_scale_changed)
@@ -128,6 +136,7 @@ func _on_image_changed(image: IHP) -> void:
 
 func _on_app_scale_changed(app_scale: float) -> void:
     pan_step_ = BASE_PAN_STEP * app_scale
+    update_cursor_()
     update_position_()
 
 
@@ -184,31 +193,6 @@ func stop_drawing_() -> void:
     $DrawTimer.stop()
 
 
-func update_cursor_() -> void:
-    var cursor: Resource = null
-
-    if hovering_:
-        match Globals.tool:
-            Tools.PEN:
-                cursor = load("res://icons/phosphor/cursor/cursor-28px-pen-duotone.svg")
-            Tools.ERASER:
-                cursor = load("res://icons/phosphor/cursor/cursor-28px-eraser-duotone.svg")
-            Tools.COLOR_PICKER:
-                cursor = load("res://icons/phosphor/cursor/cursor-28px-eyedropper-duotone.svg")
-
-    Input.set_custom_mouse_cursor(cursor)
-    queue_redraw()
-
-
-func update_current_pixel_(mouse_pos: Vector2) -> bool:
-    var mouse_pixel: Vector2i = ((mouse_pos + top_left_) / pixel_width_).floor()
-    if mouse_pixel != current_pixel_:
-        current_pixel_ = mouse_pixel
-        queue_redraw()
-        return true
-    return false
-
-
 func draw_pixel_(pixel: Vector2i) -> void:
     if not pixel_in_image_(pixel):
         return
@@ -234,8 +218,22 @@ func pixel_in_image_(pixel: Vector2i) -> bool:
     return Rect2i(Vector2i(0, 0), current_layer_.get_size()).has_point(pixel)
 
 
-func get_image_size_() -> Vector2:
-    return Vector2(pixel_width_, pixel_width_) * texture_.get_size()
+func update_cursor_() -> void:
+    var cursor: Resource = null
+    if hovering_:
+        cursor = cursors_[Globals.tool].get_texture(Globals.app_scale)
+
+    Input.set_custom_mouse_cursor(cursor)
+    queue_redraw()
+
+
+func update_current_pixel_(mouse_pos: Vector2) -> bool:
+    var mouse_pixel: Vector2i = ((mouse_pos + top_left_) / pixel_width_).floor()
+    if mouse_pixel != current_pixel_:
+        current_pixel_ = mouse_pixel
+        queue_redraw()
+        return true
+    return false
 
 
 func update_position_() -> void:
@@ -261,6 +259,10 @@ func update_position_() -> void:
     ).call_deferred()
 
     queue_redraw()
+
+
+func get_image_size_() -> Vector2:
+    return Vector2(pixel_width_, pixel_width_) * texture_.get_size()
 
 
 func _draw() -> void:

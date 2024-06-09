@@ -9,24 +9,20 @@ script = ExtResource("1_jivql")
 [node name="File" type="PopupMenu" parent="."]
 item_count = 10
 item_0/text = "New"
-item_0/id = 0
 item_1/text = "Open..."
 item_1/id = 1
-item_2/text = ""
 item_2/id = 7
 item_2/separator = true
 item_3/text = "Save"
 item_3/id = 2
 item_4/text = "Save As..."
 item_4/id = 3
-item_5/text = ""
 item_5/id = 8
 item_5/separator = true
 item_6/text = "Export"
 item_6/id = 4
 item_7/text = "Export As..."
 item_7/id = 5
-item_8/text = ""
 item_8/id = 9
 item_8/separator = true
 item_9/text = "Quit"
@@ -35,13 +31,13 @@ item_9/id = 6
 [node name="View" type="PopupMenu" parent="."]
 item_count = 1
 item_0/text = "App Scale..."
-item_0/id = 0
 
 [node name="AppScalePopup" parent="." instance=ExtResource("2_c6cku")]
 visible = false
 
 [node name="OpenDialog" type="FileDialog" parent="."]
 title = "Open"
+size = Vector2i(324, 180)
 ok_button_text = "Open"
 mode_overrides_title = false
 file_mode = 0
@@ -51,7 +47,7 @@ use_native_dialog = true
 
 [node name="SaveDialog" type="FileDialog" parent="."]
 title = "Save"
-size = Vector2i(312, 154)
+size = Vector2i(352, 180)
 ok_button_text = "Save"
 mode_overrides_title = false
 access = 2
@@ -60,7 +56,7 @@ use_native_dialog = true
 
 [node name="ExportDialog" type="FileDialog" parent="."]
 title = "Export"
-size = Vector2i(312, 154)
+size = Vector2i(352, 180)
 ok_button_text = "Save"
 mode_overrides_title = false
 access = 2
