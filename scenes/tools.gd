@@ -4,11 +4,13 @@ extends MarginContainer
 enum ToolType {
     NONE,
     PEN,
-    ERASER
+    ERASER,
+    COLOR_PICKER
 }
 const NONE = ToolType.NONE
 const PEN = ToolType.PEN
 const ERASER = ToolType.ERASER
+const COLOR_PICKER = ToolType.COLOR_PICKER
 
 var last_tool_: ToolType = ToolType.NONE
 var tool_buttons_: Dictionary
@@ -27,6 +29,10 @@ func _ready() -> void:
     tool_panels_[ERASER] = %EraserPanel
     %Eraser.pressed.connect(func(): Globals.tool = ERASER)
 
+    tool_buttons_[COLOR_PICKER] = %ColorPicker
+    tool_panels_[COLOR_PICKER] = %ColorPickerPanel
+    %ColorPicker.pressed.connect(func(): Globals.tool = COLOR_PICKER)
+
     Globals.tool_changed.connect(_on_tool_changed)
     Globals.keyboard_layout_changed.connect(_on_keyboard_layout_changed)
 
@@ -43,6 +49,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
                 Globals.tool = ERASER
             else:
                 Globals.tool = PEN
+        KEY_R:
+            Globals.tool = COLOR_PICKER
 
 
 func _on_tool_changed(tool: Tools.ToolType) -> void:
@@ -58,3 +66,6 @@ func _on_keyboard_layout_changed():
     %PenHint.physical_keycode = KEY_E
     %Pen.tooltip_text = "Pen (" + %PenHint.get_label() + ")"
     %Eraser.tooltip_text = "Eraser (" + %PenHint.get_label() + ")"
+
+    %ColorPickerHint.physical_keycode = KEY_R
+    %ColorPicker.tooltip_text = "Color Picker (" + %ColorPickerHint.get_label() + ")"

@@ -18,6 +18,7 @@ var texture_: ImageTexture
 
 func _ready() -> void:
     Globals.image_changed.connect(_on_image_changed)
+    Globals.tool_changed.connect(func(_t): update_cursor_())
     Globals.app_scale_changed.connect(_on_app_scale_changed)
     Globals.focus_lost.connect(_on_focus_lost)
 
@@ -152,12 +153,12 @@ func restore_mouse_pos_(mouse_pos: Vector2, rel_mouse_pos: Vector2) -> void:
 
 func start_hovering_() -> void:
     hovering_ = true
-    queue_redraw()
+    update_cursor_()
 
 
 func stop_hovering_() -> void:
     hovering_ = false
-    queue_redraw()
+    update_cursor_()
 
 
 func start_dragging_() -> void:
@@ -183,6 +184,22 @@ func stop_drawing_() -> void:
     $DrawTimer.stop()
 
 
+func update_cursor_() -> void:
+    var cursor: Resource = null
+
+    if hovering_:
+        match Globals.tool:
+            Tools.PEN:
+                cursor = load("res://icons/phosphor/cursor/cursor-28px-pen-duotone.svg")
+            Tools.ERASER:
+                cursor = load("res://icons/phosphor/cursor/cursor-28px-eraser-duotone.svg")
+            Tools.COLOR_PICKER:
+                cursor = load("res://icons/phosphor/cursor/cursor-28px-eyedropper-duotone.svg")
+
+    Input.set_custom_mouse_cursor(cursor)
+    queue_redraw()
+
+
 func update_current_pixel_(mouse_pos: Vector2) -> bool:
     var mouse_pixel: Vector2i = ((mouse_pos + top_left_) / pixel_width_).floor()
     if mouse_pixel != current_pixel_:
@@ -193,7 +210,10 @@ func update_current_pixel_(mouse_pos: Vector2) -> bool:
 
 
 func draw_pixel_(pixel: Vector2i) -> void:
-    if pixel_in_image_(pixel):
+    if not pixel_in_image_(pixel):
+        return
+
+    if Globals.tool == Tools.PEN or Globals.tool == Tools.ERASER:
         var color: OKColor = Globals.tool_color
 
         if Globals.tool == Tools.ERASER:
@@ -204,6 +224,10 @@ func draw_pixel_(pixel: Vector2i) -> void:
         queue_redraw()
 
         Globals.image.unsaved_changes = true
+
+    elif Globals.tool == Tools.COLOR_PICKER:
+        Globals.tool_color = OKColor.from_rgb(current_layer_.get_pixel(
+            current_pixel_.x, current_pixel_.y)).opaque()
 
 
 func pixel_in_image_(pixel: Vector2i) -> bool:
