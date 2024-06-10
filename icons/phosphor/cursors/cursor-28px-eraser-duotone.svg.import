@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dlu2edwp3hycu"
-path="res://.godot/imported/cursor-28px-eraser-duotone.svg-433c943170043e3c09c3f4e0f5cb61c9.ctex"
+path="res://.godot/imported/cursor-28px-eraser-duotone.svg-134202929c05463f72046d526192401b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icons/phosphor/cursor/cursor-28px-eraser-duotone.svg"
-dest_files=["res://.godot/imported/cursor-28px-eraser-duotone.svg-433c943170043e3c09c3f4e0f5cb61c9.ctex"]
+source_file="res://icons/phosphor/cursors/cursor-28px-eraser-duotone.svg"
+dest_files=["res://.godot/imported/cursor-28px-eraser-duotone.svg-134202929c05463f72046d526192401b.ctex"]
 
 [params]
 

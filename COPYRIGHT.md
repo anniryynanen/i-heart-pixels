@@ -1,4 +1,4 @@
-Most of `ok_color.gd` is Copyright (c) 2021 Björn Ottosson (MIT license)
+The sRGB to OKHSL conversion in `ok_color.gd` is Copyright (c) 2021 Björn Ottosson (MIT license)
 
 Icons in `phosphor` folder are Copyright (c) 2023 Phosphor Icons (MIT license)
 

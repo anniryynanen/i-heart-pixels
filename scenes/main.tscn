@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dcjw6gcgty4km" path="res://scenes/color_bar.tscn" id="4_5abg1"]
 [ext_resource type="PackedScene" uid="uid://cq54mhhpfawor" path="res://scenes/main_menu.tscn" id="4_7m4tl"]
 [ext_resource type="Texture2D" uid="uid://dss4svsixp0b7" path="res://icons/phosphor/resize-duotone.svg" id="7_66l3u"]
-[ext_resource type="PackedScene" uid="uid://80q74pk3rmx1" path="res://scenes/tools.tscn" id="7_0363p"]
+[ext_resource type="PackedScene" uid="uid://80q74pk3rmx1" path="res://scenes/toolbar.tscn" id="7_0363p"]
 [ext_resource type="PackedScene" uid="uid://b0gtifc3o4sq" path="res://scenes/popups/unsaved_changes_popup.tscn" id="7_j86ne"]
 [ext_resource type="PackedScene" uid="uid://686ef6jcvfk3" path="res://scenes/popups/resize_canvas_popup.tscn" id="9_qj57f"]
 
@@ -70,7 +70,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 260)
 layout_mode = 2
 
-[node name="Tools" parent="MainSplit/RightPanel" instance=ExtResource("7_0363p")]
+[node name="Toolbar" parent="MainSplit/RightPanel" instance=ExtResource("7_0363p")]
 layout_mode = 2
 
 [node name="Spacer" type="Control" parent="MainSplit/RightPanel"]

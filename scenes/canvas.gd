@@ -3,14 +3,18 @@ extends Control
 const ZOOM_STEP = 1.4
 const BASE_PAN_STEP = 1.0
 
-var pixel_width_: float = 80.0
 var top_left_: Vector2 = Vector2(0.0, 0.0)
 var current_pixel_: Vector2i = Vector2i(-1, -1)
-var pan_step_: float = BASE_PAN_STEP
-var dragging_ = false
+var last_tool_: Tool.Type
 var hovering_ = false
+var panning_ = false
 var drawing_ = false
+
+var pixel_width_: float = 80.0
+var pan_step_: float = BASE_PAN_STEP
 var cursors_: Dictionary
+var pan_cursor_: ScalableSVG = ScalableSVG.new(load(
+    "res://icons/phosphor/cursors/cursor-28px-hand-grabbing.svg"))
 
 var current_layer_: Image
 var current_layer_changed_ = false
@@ -18,45 +22,17 @@ var texture_: ImageTexture
 
 
 func _ready() -> void:
-    cursors_[Tools.PEN] = ScalableSVG.new(load(
-        "res://icons/phosphor/cursor/cursor-28px-pen-duotone.svg"))
-    cursors_[Tools.ERASER] = ScalableSVG.new(load(
-        "res://icons/phosphor/cursor/cursor-28px-eraser-duotone.svg"))
-    cursors_[Tools.COLOR_PICKER] = ScalableSVG.new(load(
-        "res://icons/phosphor/cursor/cursor-28px-eyedropper-duotone.svg"))
+    cursors_[Tool.PEN] = ScalableSVG.new(load(
+        "res://icons/phosphor/cursors/cursor-28px-pen-duotone.svg"))
+    cursors_[Tool.ERASER] = ScalableSVG.new(load(
+        "res://icons/phosphor/cursors/cursor-28px-eraser-duotone.svg"))
+    cursors_[Tool.COLOR_PICKER] = ScalableSVG.new(load(
+        "res://icons/phosphor/cursors/cursor-28px-eyedropper-duotone.svg"))
 
     Globals.image_changed.connect(_on_image_changed)
     Globals.tool_changed.connect(func(_t): update_cursor_())
     Globals.app_scale_changed.connect(_on_app_scale_changed)
     Globals.focus_lost.connect(_on_focus_lost)
-
-
-func _process(delta: float) -> void:
-    # Don't pan if some other UI element has focus
-    var window_has_focus = DisplayServer.window_is_focused(get_window().get_window_id())
-    if not window_has_focus or get_viewport().gui_get_focus_owner() != null:
-        return
-
-    if Input.is_key_pressed(KEY_CTRL):
-        return
-
-    var distance: float = delta * pan_step_ * (size.x / pixel_width_) * pixel_width_
-
-    if Input.is_physical_key_pressed(KEY_W) or Input.is_physical_key_pressed(KEY_UP):
-        top_left_.y -= distance
-        update_position_()
-
-    if Input.is_physical_key_pressed(KEY_S) or Input.is_physical_key_pressed(KEY_DOWN):
-        top_left_.y += distance
-        update_position_()
-
-    if Input.is_physical_key_pressed(KEY_A) or Input.is_physical_key_pressed(KEY_LEFT):
-        top_left_.x -= distance
-        update_position_()
-
-    if Input.is_physical_key_pressed(KEY_D) or Input.is_physical_key_pressed(KEY_RIGHT):
-        top_left_.x += distance
-        update_position_()
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -65,6 +41,20 @@ func _gui_input(event: InputEvent) -> void:
 
     elif event is InputEventMouseMotion:
         _on_motion_event(event as InputEventMouseMotion)
+
+
+func _unhandled_key_input(event: InputEvent) -> void:
+    var key: InputEventKey = event as InputEventKey
+
+    if key.physical_keycode == KEY_ALT and not key.is_echo():
+        if key.pressed:
+            last_tool_ = Globals.tool
+            Globals.tool = Tool.COLOR_PICKER
+
+        elif last_tool_:
+            Globals.tool = last_tool_
+
+        update_cursor_()
 
 
 @warning_ignore("standalone_ternary")
@@ -93,13 +83,13 @@ func _on_button_event(button: InputEventMouseButton) -> void:
                 update_position_()
 
         MOUSE_BUTTON_MIDDLE:
-            start_dragging_() if button.pressed else stop_dragging_()
+            start_panning_() if button.pressed else stop_panning_()
 
 
 func _on_motion_event(motion: InputEventMouseMotion) -> void:
     var pixel_moved = update_current_pixel_(motion.position)
 
-    if dragging_:
+    if panning_:
         top_left_ -= motion.relative
         update_position_()
 
@@ -144,8 +134,8 @@ func _on_focus_lost() -> void:
     if drawing_:
         stop_drawing_()
 
-    if dragging_:
-        stop_dragging_()
+    if panning_:
+        stop_panning_()
 
     if hovering_:
         stop_hovering_()
@@ -170,12 +160,15 @@ func stop_hovering_() -> void:
     update_cursor_()
 
 
-func start_dragging_() -> void:
-    dragging_ = true
+func start_panning_() -> void:
+    panning_ = true
+    update_cursor_()
 
 
-func stop_dragging_() -> void:
-    dragging_ = false
+func stop_panning_() -> void:
+    if panning_:
+        panning_ = false
+        update_cursor_()
 
 
 func start_drawing_(mouse_pos: Vector2) -> void:
@@ -188,19 +181,20 @@ func start_drawing_(mouse_pos: Vector2) -> void:
 
 
 func stop_drawing_() -> void:
-    drawing_ = false
-    Input.use_accumulated_input = true
-    $DrawTimer.stop()
+    if drawing_:
+        drawing_ = false
+        Input.use_accumulated_input = true
+        $DrawTimer.stop()
 
 
 func draw_pixel_(pixel: Vector2i) -> void:
     if not pixel_in_image_(pixel):
         return
 
-    if Globals.tool == Tools.PEN or Globals.tool == Tools.ERASER:
+    if Globals.tool == Tool.PEN or Globals.tool == Tool.ERASER:
         var color: OKColor = Globals.tool_color
 
-        if Globals.tool == Tools.ERASER:
+        if Globals.tool == Tool.ERASER:
             color = OKColor.new(0.0, 0.0, 0.0, 0.0)
 
         current_layer_.set_pixel(pixel.x, pixel.y, color.to_rgb())
@@ -209,7 +203,7 @@ func draw_pixel_(pixel: Vector2i) -> void:
 
         Globals.image.unsaved_changes = true
 
-    elif Globals.tool == Tools.COLOR_PICKER:
+    elif Globals.tool == Tool.COLOR_PICKER:
         Globals.tool_color = OKColor.from_rgb(current_layer_.get_pixel(
             current_pixel_.x, current_pixel_.y)).opaque()
 
@@ -220,10 +214,20 @@ func pixel_in_image_(pixel: Vector2i) -> bool:
 
 func update_cursor_() -> void:
     var cursor: Resource = null
-    if hovering_:
-        cursor = cursors_[Globals.tool].get_texture(Globals.app_scale)
+    var hotspot: Vector2
 
-    Input.set_custom_mouse_cursor(cursor)
+    if hovering_:
+        if panning_:
+            cursor = pan_cursor_.get_texture(Globals.app_scale)
+            hotspot = Vector2(2.0, 2.0) * Globals.app_scale
+        else:
+            cursor = cursors_[Globals.tool].get_texture(Globals.app_scale)
+
+    if cursor:
+        Input.set_custom_mouse_cursor(cursor, Input.CURSOR_ARROW, hotspot)
+    else:
+        Input.set_custom_mouse_cursor(null)
+
     queue_redraw()
 
 

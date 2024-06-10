@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cq6kwu8bsd3r6"
-path="res://.godot/imported/eyedropper-duotone.svg-068e9205c922997366ee12e7278f12c5.ctex"
+uid="uid://xj58x63vdis2"
+path="res://.godot/imported/eraser-duotone.svg-34f48dfabe44cd2f447f7bc6c4ec4a12.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icons/phosphor/eyedropper-duotone.svg"
-dest_files=["res://.godot/imported/eyedropper-duotone.svg-068e9205c922997366ee12e7278f12c5.ctex"]
+source_file="res://icons/phosphor/tools/eraser-duotone.svg"
+dest_files=["res://.godot/imported/eraser-duotone.svg-34f48dfabe44cd2f447f7bc6c4ec4a12.ctex"]
 
 [params]
 

@@ -21,7 +21,7 @@ func _ready() -> void:
 
     apply_settings_()
     update_title_()
-    Globals.tool = Tools.PEN
+    Globals.tool = Tool.PEN
 
     var args: PackedStringArray = OS.get_cmdline_user_args()
     if args.size() > 0:

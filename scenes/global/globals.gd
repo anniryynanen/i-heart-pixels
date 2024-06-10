@@ -4,7 +4,7 @@ signal image_changed(image: IHP)
 signal unsaved_changes_changed(unsaved_changes: bool)
 signal current_path_changed(current_path: String)
 
-signal tool_changed(tool: Tools.ToolType)
+signal tool_changed(tool: Tool.Type)
 signal tool_color_changed(pen_color: OKColor)
 signal app_scale_changed(app_scale: float)
 signal keyboard_layout_changed
@@ -26,7 +26,7 @@ var current_path: String:
         current_path = value
         current_path_changed.emit(current_path)
 
-var tool: Tools.ToolType:
+var tool: Tool.Type:
     set(value):
         tool = value
         tool_changed.emit(tool)
@@ -43,7 +43,7 @@ var app_scale: float:
         Settings.set_value("app", "scale", app_scale)
         app_scale_changed.emit(app_scale)
 
-var last_keyboard_layout_: int = -1
+var last_keyboard_layout_: String
 
 
 func _notification(what: int) -> void:
@@ -52,7 +52,9 @@ func _notification(what: int) -> void:
 
 
 func _on_check_keyboard_timeout() -> void:
-    var new_layout: int = DisplayServer.keyboard_get_current_layout()
+    var new_layout: String = DisplayServer.keyboard_get_layout_name(
+        DisplayServer.keyboard_get_current_layout())
+
     if new_layout != last_keyboard_layout_:
         last_keyboard_layout_ = new_layout
         keyboard_layout_changed.emit()
