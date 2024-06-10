@@ -8,4 +8,4 @@ script = ExtResource("1_ieomr")
 [node name="SaveTimer" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="timeout" from="SaveTimer" to="." method="save"]
+[connection signal="timeout" from="SaveTimer" to="." method="save_settings"]
