@@ -284,7 +284,7 @@ func _draw() -> void:
 
 
 func draw_background_alpha_() -> void:
-    var square_size: Vector2 = Vector2(pixel_width_, pixel_width_) * Globals.app_scale
+    var square_size: Vector2 = Vector2(pixel_width_, pixel_width_)
 
     while square_size.x < 10.0 * Globals.app_scale:
         square_size *= 2.0
