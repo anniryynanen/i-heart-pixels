@@ -14,6 +14,10 @@ enum View {
     APP_SCALE = 0
 }
 
+enum Info {
+    CONTROLS = 0
+}
+
 var on_saved_: Callable
 
 
@@ -73,6 +77,12 @@ func _on_view_index_pressed(index: int) -> void:
     match index:
         View.APP_SCALE:
             $AppScalePopup.popup_centered()
+
+
+func _on_info_index_pressed(index: int) -> void:
+    match index:
+        Info.CONTROLS:
+            $ControlsInfoPopup.popup_centered()
 
 
 func _on_open_dialog_file_selected(path: String) -> void:

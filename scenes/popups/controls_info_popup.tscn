@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3 uid="uid://6i5h1tdoctk6"]
+
+[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_86snt"]
+
+[node name="ControlsInfoPopup" type="Window"]
+title = "Controls"
+initial_position = 2
+size = Vector2i(368, 184)
+wrap_controls = true
+transient = true
+exclusive = true
+unresizable = true
+popup_window = true
+theme = ExtResource("1_86snt")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="PanLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]Pan[/b] the canvas: Drag with middle mouse button"
+fit_content = true
+autowrap_mode = 0
+
+[node name="ZoomLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]Zoom[/b] the canvas: Scroll with mouse wheel"
+fit_content = true
+autowrap_mode = 0
+
+[node name="PenAndEraserLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Select [b]pen[/b] or switch between [b]pen[/b] and [b]eraser:[/b] E"
+fit_content = true
+autowrap_mode = 0
+
+[node name="ColorPickerLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Activate [b]color picker:[/b] Hold down ALT"
+fit_content = true
+autowrap_mode = 0
+
+[connection signal="close_requested" from="." to="." method="hide"]

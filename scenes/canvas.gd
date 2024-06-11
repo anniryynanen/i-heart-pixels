@@ -29,6 +29,9 @@ func _ready() -> void:
     cursors_[Tool.COLOR_PICKER] = ScalableSVG.new(load(
         "res://icons/phosphor/cursors/cursor-28px-eyedropper-duotone.svg"))
 
+    get_window().focus_entered.connect(update_cursor_)
+    get_window().focus_exited.connect(update_cursor_)
+
     Globals.image_changed.connect(_on_image_changed)
     Globals.tool_changed.connect(func(_t): update_cursor_())
     Globals.app_scale_changed.connect(_on_app_scale_changed)
@@ -216,7 +219,8 @@ func update_cursor_() -> void:
     var cursor: Resource = null
     var hotspot: Vector2
 
-    if hovering_:
+    var window_has_focus = DisplayServer.window_is_focused(get_window().get_window_id())
+    if hovering_ and window_has_focus:
         if panning_:
             cursor = pan_cursor_.get_texture(Globals.app_scale)
             hotspot = Vector2(2.0, 2.0) * Globals.app_scale

@@ -1,8 +1,9 @@
-[gd_resource type="Theme" load_steps=37 format=3 uid="uid://bp7ntkss4y7ms"]
+[gd_resource type="Theme" load_steps=38 format=3 uid="uid://bp7ntkss4y7ms"]
 
 [ext_resource type="Texture2D" uid="uid://c685fxh0dy8li" path="res://icons/h-split-handle.svg" id="1_bpwql"]
 [ext_resource type="Texture2D" uid="uid://2rssgnqp7kde" path="res://icons/phosphor/caret-up-down-small.svg" id="2_8jnlo"]
 [ext_resource type="FontFile" uid="uid://ddl7kojosp4sj" path="res://fonts/roboto/Roboto-Medium.ttf" id="2_omr0o"]
+[ext_resource type="FontFile" uid="uid://bmin1ykm7syfj" path="res://fonts/noto-sans/NotoSans-Bold.ttf" id="3_neeoh"]
 [ext_resource type="FontFile" uid="uid://b38kkef63j7c7" path="res://fonts/noto-sans/NotoSans-Regular.ttf" id="4_dfwtg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_14mll"]
@@ -341,6 +342,9 @@ PopupMenu/constants/v_separation = 6
 PopupMenu/styles/hover = SubResource("StyleBoxFlat_0cgrj")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_vrwf3")
 PopupMenu/styles/separator = SubResource("StyleBoxLine_hgwdl")
+RichTextLabel/colors/default_color = Color(0, 0, 0, 1)
+RichTextLabel/fonts/bold_font = ExtResource("3_neeoh")
+RichTextLabel/fonts/normal_font = ExtResource("4_dfwtg")
 SpinBox/icons/updown = ExtResource("2_8jnlo")
 ToolPanelActive/base_type = &"Panel"
 ToolPanelActive/styles/panel = SubResource("StyleBoxFlat_f1qhe")

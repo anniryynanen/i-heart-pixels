@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cq54mhhpfawor"]
+[gd_scene load_steps=4 format=3 uid="uid://cq54mhhpfawor"]
 
 [ext_resource type="Script" path="res://scenes/main_menu.gd" id="1_jivql"]
 [ext_resource type="PackedScene" uid="uid://c4votcijhmgs3" path="res://scenes/popups/app_scale_popup.tscn" id="2_c6cku"]
+[ext_resource type="PackedScene" uid="uid://6i5h1tdoctk6" path="res://scenes/popups/controls_info_popup.tscn" id="3_vg75b"]
 
 [node name="MainMenu" type="MenuBar"]
 script = ExtResource("1_jivql")
@@ -32,7 +33,14 @@ item_9/id = 6
 item_count = 1
 item_0/text = "App Scale..."
 
+[node name="Info" type="PopupMenu" parent="."]
+item_count = 1
+item_0/text = "Controls..."
+
 [node name="AppScalePopup" parent="." instance=ExtResource("2_c6cku")]
+visible = false
+
+[node name="ControlsInfoPopup" parent="." instance=ExtResource("3_vg75b")]
 visible = false
 
 [node name="OpenDialog" type="FileDialog" parent="."]
@@ -65,6 +73,7 @@ use_native_dialog = true
 
 [connection signal="index_pressed" from="File" to="." method="_on_file_index_pressed"]
 [connection signal="index_pressed" from="View" to="." method="_on_view_index_pressed"]
+[connection signal="index_pressed" from="Info" to="." method="_on_info_index_pressed"]
 [connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_save_dialog_file_selected"]
 [connection signal="file_selected" from="ExportDialog" to="." method="export_"]
