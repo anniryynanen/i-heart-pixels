@@ -17,18 +17,13 @@ theme_override_constants/separation = 0
 [node name="Pen" parent="VBoxContainer" instance=ExtResource("6_mws6c")]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Pen"
-physical_key = 69
 
 [node name="Eraser" parent="VBoxContainer" instance=ExtResource("6_mws6c")]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Eraser"
 tool = 1
-physical_key = 69
 
 [node name="ColorSampler" parent="VBoxContainer" instance=ExtResource("6_mws6c")]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Color Sampler"
 tool = 2

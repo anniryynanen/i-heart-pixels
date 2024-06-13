@@ -51,7 +51,7 @@ func _notification(what: int) -> void:
         focus_lost.emit()
 
 
-func _on_check_keyboard_timeout() -> void:
+func _on_keyboard_timer_timeout() -> void:
     var new_layout: String = DisplayServer.keyboard_get_layout_name(
         DisplayServer.keyboard_get_current_layout())
 
@@ -66,8 +66,8 @@ func apply_settings() -> void:
     tool_color = Settings.get_value("tool", "color")
     app_scale = Settings.get_value("app", "scale")
 
-    $CheckKeyboard.timeout.emit()
-    $CheckKeyboard.start()
+    $KeyboardTimer.timeout.emit()
+    $KeyboardTimer.start()
 
 
 func emit_unsaved_changes_changed_(unsaved_changes: bool) -> void:

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://6i5h1tdoctk6"]
+[gd_scene load_steps=3 format=3 uid="uid://6i5h1tdoctk6"]
 
 [ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_86snt"]
+[ext_resource type="Script" path="res://scenes/popups/controls_info_popup.gd" id="2_rjsrv"]
 
 [node name="ControlsInfoPopup" type="Window"]
 title = "Controls"
@@ -12,6 +13,7 @@ exclusive = true
 unresizable = true
 popup_window = true
 theme = ExtResource("1_86snt")
+script = ExtResource("2_rjsrv")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 offset_right = 40.0
@@ -26,37 +28,42 @@ layout_mode = 2
 theme_override_constants/separation = 18
 
 [node name="PanLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 bbcode_enabled = true
-text = "[b]Pan[/b] the canvas: Drag with middle mouse button"
+text = "Pan!"
 fit_content = true
 autowrap_mode = 0
 
 [node name="ZoomLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 bbcode_enabled = true
-text = "[b]Zoom[/b] the canvas: Scroll with mouse wheel"
+text = "Zoom!"
 fit_content = true
 autowrap_mode = 0
 
 [node name="PenAndEraserLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 bbcode_enabled = true
-text = "Select [b]pen[/b] or switch between [b]pen[/b] and [b]eraser:[/b] E"
+text = "Pen and eraser!"
 fit_content = true
 autowrap_mode = 0
 
 [node name="ColorSamplerLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 bbcode_enabled = true
-text = "Activate [b]color sampler:[/b] Hold down ALT"
+text = "Color sampler!"
 fit_content = true
 autowrap_mode = 0
 
 [node name="ColorPickerLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 bbcode_enabled = true
-text = "Open [b]color picker:[/b] D"
+text = "Color picker!"
 fit_content = true
 autowrap_mode = 0
 

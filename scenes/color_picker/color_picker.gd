@@ -11,8 +11,6 @@ var color: OKColor = OKColor.new():
         strips_.map(func(s): s.color = color)
         handles_.map(func(h): h.color = color)
 
-var close_key: Key
-
 var strips_: Array[ColorStrip]
 var handles_: Array[ColorHandle]
 
@@ -33,7 +31,7 @@ func _ready() -> void:
 func _unhandled_key_input(event: InputEvent) -> void:
     var key: InputEventKey = event as InputEventKey
 
-    if key.pressed and key.physical_keycode == close_key:
+    if key.pressed and key.physical_keycode == Controls.COLOR_PICKER:
         hide()
         get_viewport().set_input_as_handled()
 

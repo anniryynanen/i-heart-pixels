@@ -1,10 +1,7 @@
 extends Control
 
-var picker_key_: Key = KEY_D
-
 
 func _ready() -> void:
-    $ColorPicker.close_key = picker_key_
     $ColorPicker.color_changed.connect(func(c): Globals.tool_color = c)
 
     Globals.tool_color_changed.connect(_on_tool_color_changed)
@@ -14,10 +11,8 @@ func _ready() -> void:
 func _unhandled_key_input(event: InputEvent) -> void:
     var key: InputEventKey = event as InputEventKey
 
-    if key.pressed and key.physical_keycode == picker_key_:
-        if $ColorPicker.visible:
-            $ColorPicker.hide()
-        else:
+    if key.pressed and key.physical_keycode == Controls.COLOR_PICKER:
+        if not $ColorPicker.visible:
             popup_color_picker_()
 
         get_viewport().set_input_as_handled()
@@ -29,8 +24,8 @@ func _on_tool_color_changed(tool_color: OKColor) -> void:
 
 
 func _on_keyboard_layout_changed():
-    %Buttons/ColorPicker.tooltip_text = "Color Picker (%s)" % \
-        OS.get_keycode_string(DisplayServer.keyboard_get_label_from_physical(picker_key_))
+    var label: String = Controls.get_key_label(Controls.COLOR_PICKER)
+    %Buttons/ColorPicker.tooltip_text = "Color Picker (%s)" % label
 
 
 func popup_color_picker_() -> void:

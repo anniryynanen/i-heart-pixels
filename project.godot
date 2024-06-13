@@ -15,11 +15,13 @@ run/main_scene="res://scenes/dummy.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="I Heart Pixels"
 config/features=PackedStringArray("4.3", "Mobile")
+run/max_fps=60
 
 [autoload]
 
 Cache="*res://scenes/global/cache.tscn"
 Settings="*res://scenes/global/settings.tscn"
+Controls="*res://scenes/global/controls.tscn"
 Globals="*res://scenes/global/globals.tscn"
 AppScale="*res://scenes/global/app_scale.tscn"
 

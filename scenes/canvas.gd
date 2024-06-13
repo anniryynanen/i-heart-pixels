@@ -53,8 +53,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
         if key.pressed:
             last_tool_ = Globals.tool
             Globals.tool = Tool.COLOR_SAMPLER
-
-        elif last_tool_:
+        else:
             Globals.tool = last_tool_
 
         update_cursor_()
