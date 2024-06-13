@@ -117,4 +117,4 @@ func _draw() -> void:
     %ValueAnchor.anchor_bottom = (handle_top + handle_size.y) / size.y
 
     %Value.text = String.num(color.get_param_in_steps(color_param))
-    %Value.add_theme_color_override("font_color", ColorEditor.get_text_color(color).to_rgb())
+    %Value.add_theme_color_override("font_color", IHPColorPicker.get_text_color(color).to_rgb())

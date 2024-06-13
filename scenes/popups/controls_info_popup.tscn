@@ -5,7 +5,7 @@
 [node name="ControlsInfoPopup" type="Window"]
 title = "Controls"
 initial_position = 2
-size = Vector2i(368, 184)
+size = Vector2i(368, 222)
 wrap_controls = true
 transient = true
 exclusive = true
@@ -46,10 +46,17 @@ text = "Select [b]pen[/b] or switch between [b]pen[/b] and [b]eraser:[/b] E"
 fit_content = true
 autowrap_mode = 0
 
+[node name="ColorSamplerLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Activate [b]color sampler:[/b] Hold down ALT"
+fit_content = true
+autowrap_mode = 0
+
 [node name="ColorPickerLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 bbcode_enabled = true
-text = "Activate [b]color picker:[/b] Hold down ALT"
+text = "Open [b]color picker:[/b] D"
 fit_content = true
 autowrap_mode = 0
 

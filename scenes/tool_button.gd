@@ -15,7 +15,7 @@ func _ready() -> void:
             $Button.icon = load("res://icons/phosphor/tools/pen-duotone.svg")
         Tool.ERASER:
             $Button.icon = load("res://icons/phosphor/tools/eraser-duotone.svg")
-        Tool.COLOR_PICKER:
+        Tool.COLOR_SAMPLER:
             $Button.icon = load("res://icons/phosphor/tools/eyedropper-duotone.svg")
 
     Globals.tool_changed.connect(_on_tool_changed)

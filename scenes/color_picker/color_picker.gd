@@ -1,15 +1,17 @@
-class_name ColorEditor
-extends Control
+class_name IHPColorPicker
+extends Window
 
 signal color_changed(color: OKColor)
 
 var color: OKColor = OKColor.new():
     set(value):
         color = value.duplicate()
-        color.a = 1.0 # ColorEditor only deals with opaque colors
+        color.a = 1.0 # Color picker only deals with opaque colors
 
         strips_.map(func(s): s.color = color)
         handles_.map(func(h): h.color = color)
+
+var close_key: Key
 
 var strips_: Array[ColorStrip]
 var handles_: Array[ColorHandle]
@@ -26,6 +28,14 @@ func _ready() -> void:
 
     handles_.map(func(h): h.color_changed.connect(self._on_handle_color_changed))
     Globals.tool_color_changed.connect(_on_tool_color_changed)
+
+
+func _unhandled_key_input(event: InputEvent) -> void:
+    var key: InputEventKey = event as InputEventKey
+
+    if key.pressed and key.physical_keycode == close_key:
+        hide()
+        get_viewport().set_input_as_handled()
 
 
 func _on_handle_color_changed(handle_color: OKColor) -> void:

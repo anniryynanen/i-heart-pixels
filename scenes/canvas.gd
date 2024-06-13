@@ -26,7 +26,7 @@ func _ready() -> void:
         "res://icons/phosphor/cursors/cursor-28px-pen-duotone.svg"))
     cursors_[Tool.ERASER] = ScalableSVG.new(load(
         "res://icons/phosphor/cursors/cursor-28px-eraser-duotone.svg"))
-    cursors_[Tool.COLOR_PICKER] = ScalableSVG.new(load(
+    cursors_[Tool.COLOR_SAMPLER] = ScalableSVG.new(load(
         "res://icons/phosphor/cursors/cursor-28px-eyedropper-duotone.svg"))
 
     get_window().focus_entered.connect(update_cursor_)
@@ -52,7 +52,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
     if key.physical_keycode == KEY_ALT and not key.is_echo():
         if key.pressed:
             last_tool_ = Globals.tool
-            Globals.tool = Tool.COLOR_PICKER
+            Globals.tool = Tool.COLOR_SAMPLER
 
         elif last_tool_:
             Globals.tool = last_tool_
@@ -206,7 +206,7 @@ func draw_pixel_(pixel: Vector2i) -> void:
 
         Globals.image.unsaved_changes = true
 
-    elif Globals.tool == Tool.COLOR_PICKER:
+    elif Globals.tool == Tool.COLOR_SAMPLER:
         Globals.tool_color = OKColor.from_rgb(current_layer_.get_pixel(
             current_pixel_.x, current_pixel_.y)).opaque()
 
@@ -346,4 +346,4 @@ func draw_hover_highlight_() -> void:
     var hl_size: Vector2 = Vector2(pixel_width_ - line_width, pixel_width_ - line_width)
 
     draw_rect(Rect2(hl_pos, hl_size),
-        ColorEditor.get_line_color(pixel_color).to_rgb(), false, line_width)
+        IHPColorPicker.get_line_color(pixel_color).to_rgb(), false, line_width)

@@ -1,34 +1,34 @@
 [gd_scene load_steps=3 format=3 uid="uid://80q74pk3rmx1"]
 
-[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_x65cp"]
+[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_87uw6"]
 [ext_resource type="PackedScene" uid="uid://bjhsmo6khhqpe" path="res://scenes/tool_button.tscn" id="6_mws6c"]
 
-[node name="Toolbar" type="MarginContainer"]
-theme = ExtResource("1_x65cp")
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+[node name="Toolbar" type="PanelContainer"]
+clip_contents = true
+offset_right = 30.0
+offset_bottom = 96.0
+theme = ExtResource("1_87uw6")
+theme_type_variation = &"Toolbar"
 
-[node name="Buttons" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
-theme_override_constants/separation = 2
+theme_override_constants/separation = 0
 
-[node name="Pen" parent="Buttons" instance=ExtResource("6_mws6c")]
+[node name="Pen" parent="VBoxContainer" instance=ExtResource("6_mws6c")]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Pen"
 physical_key = 69
 
-[node name="Eraser" parent="Buttons" instance=ExtResource("6_mws6c")]
+[node name="Eraser" parent="VBoxContainer" instance=ExtResource("6_mws6c")]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Eraser"
 tool = 1
 physical_key = 69
 
-[node name="ColorPicker" parent="Buttons" instance=ExtResource("6_mws6c")]
+[node name="ColorSampler" parent="VBoxContainer" instance=ExtResource("6_mws6c")]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Color Picker"
+tooltip_text = "Color Sampler"
 tool = 2

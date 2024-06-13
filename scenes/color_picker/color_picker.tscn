@@ -1,28 +1,25 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwl8qyprnb8is"]
+[gd_scene load_steps=6 format=3 uid="uid://dwl8qyprnb8is"]
 
-[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_h7y4f"]
-[ext_resource type="Script" path="res://scenes/color_editor/color_editor.gd" id="1_pcwig"]
-[ext_resource type="PackedScene" uid="uid://dl1hwv3q6do0e" path="res://scenes/color_editor/color_strip.tscn" id="2_oesjs"]
+[ext_resource type="Script" path="res://scenes/color_picker/color_picker.gd" id="1_pcwig"]
+[ext_resource type="PackedScene" uid="uid://dl1hwv3q6do0e" path="res://scenes/color_picker/color_strip.tscn" id="2_oesjs"]
 [ext_resource type="FontFile" uid="uid://c1wr0ejvh1ea7" path="res://fonts/noto-sans/NotoSans_ExtraCondensed-Regular.ttf" id="3_nvgas"]
-[ext_resource type="PackedScene" uid="uid://cuvv0ttrqqef3" path="res://scenes/color_editor/color_handle.tscn" id="5_fqclp"]
+[ext_resource type="PackedScene" uid="uid://cuvv0ttrqqef3" path="res://scenes/color_picker/color_handle.tscn" id="5_fqclp"]
 
 [sub_resource type="Theme" id="Theme_e7lmp"]
 default_font = ExtResource("3_nvgas")
 default_font_size = 17
 
-[node name="ColorEditor" type="Control"]
-clip_contents = true
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_h7y4f")
+[node name="ColorPicker" type="Window"]
+title = "Color Picker"
+size = Vector2i(300, 300)
+wrap_controls = true
+transient = true
+exclusive = true
+unresizable = true
+popup_window = true
 script = ExtResource("1_pcwig")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -112,6 +109,7 @@ layout_mode = 2
 size_flags_vertical = 3
 color_param = 2
 
+[connection signal="close_requested" from="." to="." method="hide"]
 [connection signal="handle_left_changed" from="HBoxContainer/Control/Strips/HueStrip" to="HBoxContainer/Control/Handles/HueHandle" method="set_handle_left"]
 [connection signal="handle_left_changed" from="HBoxContainer/Control/Strips/SaturationStrip" to="HBoxContainer/Control/Handles/SaturationHandle" method="set_handle_left"]
 [connection signal="handle_left_changed" from="HBoxContainer/Control/Strips/LightnessStrip" to="HBoxContainer/Control/Handles/LightnessHandle" method="set_handle_left"]

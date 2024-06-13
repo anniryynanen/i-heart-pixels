@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://b7kxhlrp3gtms"]
+
+[ext_resource type="Script" path="res://scenes/palette.gd" id="1_7kf47"]
+[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_8ld5c"]
+[ext_resource type="Texture2D" uid="uid://dcxj3b6xdhhdj" path="res://icons/phosphor/palette-duotone.svg" id="3_lnho7"]
+[ext_resource type="PackedScene" uid="uid://dwl8qyprnb8is" path="res://scenes/color_picker/color_picker.tscn" id="4_6c1x4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_je00t"]
+
+[node name="Palette" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7kf47")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_8ld5c")
+theme_override_constants/separation = 0
+
+[node name="Color" type="Panel" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_je00t")
+
+[node name="Spacer" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Buttons" type="HBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ColorPicker" type="Button" parent="VBoxContainer/Buttons"]
+layout_mode = 2
+theme_type_variation = &"IconButton"
+icon = ExtResource("3_lnho7")
+
+[node name="ColorPicker" parent="." instance=ExtResource("4_6c1x4")]
+visible = false
+
+[connection signal="pressed" from="VBoxContainer/Buttons/ColorPicker" to="." method="popup_color_picker_"]

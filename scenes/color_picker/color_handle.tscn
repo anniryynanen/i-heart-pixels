@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cuvv0ttrqqef3"]
 
-[ext_resource type="Script" path="res://scenes/color_editor/color_handle.gd" id="1_f7go5"]
+[ext_resource type="Script" path="res://scenes/color_picker/color_handle.gd" id="1_f7go5"]
 [ext_resource type="FontFile" uid="uid://c1wr0ejvh1ea7" path="res://fonts/noto-sans/NotoSans_ExtraCondensed-Regular.ttf" id="2_6wk07"]
 
 [sub_resource type="Theme" id="Theme_s76h8"]

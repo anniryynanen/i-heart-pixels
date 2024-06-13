@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqrbvd1sumtgq"
-path="res://.godot/imported/clipboard-duotone.svg-ba076e5f058f4b53a095937bb12331a1.ctex"
+uid="uid://b28jtaavnh8vt"
+path="res://.godot/imported/v-split-handle.svg-04c7e4f6a14289fc6aed82a82fc25fe7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icons/phosphor/clipboard-duotone.svg"
-dest_files=["res://.godot/imported/clipboard-duotone.svg-ba076e5f058f4b53a095937bb12331a1.ctex"]
+source_file="res://icons/v-split-handle.svg"
+dest_files=["res://.godot/imported/v-split-handle.svg-04c7e4f6a14289fc6aed82a82fc25fe7.ctex"]
 
 [params]
 

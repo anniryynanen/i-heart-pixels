@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dl1hwv3q6do0e"]
 
-[ext_resource type="Script" path="res://scenes/color_editor/color_strip.gd" id="1_4a146"]
+[ext_resource type="Script" path="res://scenes/color_picker/color_strip.gd" id="1_4a146"]
 
 [node name="ColorStrip" type="Control"]
 layout_mode = 3

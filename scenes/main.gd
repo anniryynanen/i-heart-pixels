@@ -1,24 +1,24 @@
 extends Control
 
 var settings_applied_ = false
+var toolbar_orig_y_: float
 
 
 func _enter_tree() -> void:
     Settings.load_settings()
     set_default_settings_()
 
+    toolbar_orig_y_ = %Toolbar.position.y
+
     Globals.image_changed.connect(_on_image_changed)
     Globals.unsaved_changes_changed.connect(func(_u): update_title_())
     Globals.current_path_changed.connect(func(_p): update_title_())
-    Globals.tool_color_changed.connect(_on_tool_color_changed)
     Globals.app_scale_changed.connect(_on_app_scale_changed)
 
     get_tree().auto_accept_quit = false
 
 
 func _ready() -> void:
-    %ColorEditor.color_changed.connect(func(c): Globals.tool_color = c)
-
     apply_settings_()
     update_title_()
     Globals.tool = Tool.PEN
@@ -58,25 +58,23 @@ func _on_image_changed(image: IHP) -> void:
     %ImageSize.text = "%sx%s" % [image.size.x, image.size.y]
 
 
-func _on_color_editor_color_changed(color: OKColor) -> void:
-    Globals.tool_color = color
-
-
-func _on_tool_color_changed(tool_color: OKColor) -> void:
-    %ColorEditor.color = tool_color
-
-    var style_box: StyleBoxTexture = %Gradient.get_theme_stylebox("panel") as StyleBoxTexture
-    var texture: GradientTexture1D = style_box.texture as GradientTexture1D
-    texture.gradient.set_color(1, tool_color.to_rgb())
-
-
 func _on_main_split_dragged(offset: int) -> void:
     Settings.set_value("panels", "right_width", roundi(-offset / Globals.app_scale))
 
 
+func _on_right_split_dragged(offset: int) -> void:
+    Settings.set_value("panels", "right_height", roundi(-offset / Globals.app_scale))
+
+
 func _on_app_scale_changed(app_scale: float) -> void:
+    %Toolbar.position.y = toolbar_orig_y_ * Globals.app_scale
+    %Toolbar.reset_size.call_deferred()
+
     %MainSplit.split_offset = roundi(
         -Settings.get_value("panels", "right_width") * Globals.app_scale)
+
+    %RightSplit.split_offset = roundi(
+        -Settings.get_value("panels", "right_height") * Globals.app_scale)
 
 
 func _on_unsaved_changes_popup_save() -> void:
@@ -85,7 +83,8 @@ func _on_unsaved_changes_popup_save() -> void:
 
 func set_default_settings_() -> void:
     Settings.set_if_missing("app", "scale", 1.0)
-    Settings.set_if_missing("panels", "right_width", 300.0)
+    Settings.set_if_missing("panels", "right_width", 200.0)
+    Settings.set_if_missing("panels", "right_height", -200.0)
     Settings.set_if_missing("tool", "color", OKColor.new(185.0 / 359.0, 0.4, 0.69))
 
 
@@ -101,6 +100,7 @@ func apply_settings_() -> void:
     get_window().mode = Settings.get_value("window", "mode", Window.Mode.MODE_MAXIMIZED)
 
     %MainSplit.split_offset = -Settings.get_value("panels", "right_width")
+    %RightSplit.split_offset = -Settings.get_value("panels", "right_height")
 
     Globals.apply_settings()
     settings_applied_ = true

@@ -152,12 +152,15 @@ func update_scale_() -> void:
         update_theme_constant_(theme, "VBoxContainer", "separation")
         update_theme_constant_(theme, "HSplitContainer", "minimum_grap_thickness")
         update_theme_constant_(theme, "HSplitContainer", "separation")
+        update_theme_constant_(theme, "VSplitContainer", "minimum_grap_thickness")
+        update_theme_constant_(theme, "VSplitContainer", "separation")
         update_theme_constant_(theme, "MenuBar", "h_separation")
         update_theme_constant_(theme, "PopupMenu", "item_start_padding")
         update_theme_constant_(theme, "PopupMenu", "end_padding")
         update_theme_constant_(theme, "PopupMenu", "v_separation")
 
         update_theme_icon_(theme, "HSplitContainer", "grabber")
+        update_theme_icon_(theme, "VSplitContainer", "grabber")
         update_theme_icon_(theme, "SpinBox", "updown")
 
     for control in min_sizes_:
