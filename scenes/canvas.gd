@@ -49,7 +49,7 @@ func _gui_input(event: InputEvent) -> void:
 func _unhandled_key_input(event: InputEvent) -> void:
     var key: InputEventKey = event as InputEventKey
 
-    if key.physical_keycode == KEY_ALT and not key.is_echo():
+    if key.physical_keycode == Controls.COLOR_SAMPLER and not key.is_echo():
         if key.pressed:
             last_tool_ = Globals.tool
             Globals.tool = Tool.COLOR_SAMPLER

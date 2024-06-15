@@ -1,4 +1,4 @@
-extends Window
+extends ClosingPopup
 ## Minimum app scale is 1.0 because smaller scales break text positioning. The
 ## text gets smaller, but node size and anchors don't adjust. This could be
 ## fixed with custom controls.

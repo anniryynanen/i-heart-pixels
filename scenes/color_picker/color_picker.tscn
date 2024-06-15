@@ -1,9 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://dwl8qyprnb8is"]
+[gd_scene load_steps=10 format=3 uid="uid://dwl8qyprnb8is"]
 
 [ext_resource type="Script" path="res://scenes/color_picker/color_picker.gd" id="1_pcwig"]
 [ext_resource type="PackedScene" uid="uid://dl1hwv3q6do0e" path="res://scenes/color_picker/color_strip.tscn" id="2_oesjs"]
+[ext_resource type="Texture2D" uid="uid://c1iqjcrtfqki6" path="res://icons/phosphor/warning-duotone.svg" id="2_q3cpo"]
 [ext_resource type="FontFile" uid="uid://c1wr0ejvh1ea7" path="res://fonts/noto-sans/NotoSans_ExtraCondensed-Regular.ttf" id="3_nvgas"]
 [ext_resource type="PackedScene" uid="uid://cuvv0ttrqqef3" path="res://scenes/color_picker/color_handle.tscn" id="5_fqclp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ghqsa"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x127q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1salt"]
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Theme" id="Theme_e7lmp"]
 default_font = ExtResource("3_nvgas")
@@ -11,7 +20,8 @@ default_font_size = 17
 
 [node name="ColorPicker" type="Window"]
 title = "Color Picker"
-size = Vector2i(300, 300)
+position = Vector2i(0, 36)
+size = Vector2i(584, 300)
 wrap_controls = true
 transient = true
 exclusive = true
@@ -27,15 +37,67 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="Color" type="ColorRect" parent="HBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(48, 0)
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ghqsa")
 
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer"]
-custom_minimum_size = Vector2(7, 0)
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer"]
 layout_mode = 2
-color = Color(0, 0, 0, 1)
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Color" type="PanelContainer" parent="HBoxContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_x127q")
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer/MarginContainer/Color"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/MarginContainer/Color/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="LastColor" type="Button" parent="HBoxContainer/PanelContainer/MarginContainer/Color/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 2
+focus_mode = 0
+theme_override_styles/hover = SubResource("StyleBoxFlat_1salt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1salt")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1salt")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/MarginContainer/Color/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer/MarginContainer/Color/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 2
+
+[node name="Warning" type="TextureRect" parent="HBoxContainer/PanelContainer/MarginContainer/Color/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_q3cpo")
+
+[node name="Hex" type="LineEdit" parent="HBoxContainer/PanelContainer/MarginContainer/Color/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(78, 0)
+layout_mode = 2
+theme_type_variation = &"LineEditColor"
+text = "#888888"
 
 [node name="Control" type="Control" parent="HBoxContainer"]
 layout_mode = 2
@@ -109,7 +171,9 @@ layout_mode = 2
 size_flags_vertical = 3
 color_param = 2
 
-[connection signal="close_requested" from="." to="." method="hide"]
+[connection signal="pressed" from="HBoxContainer/PanelContainer/MarginContainer/Color/MarginContainer/VBoxContainer/LastColor" to="." method="_on_last_color_pressed"]
+[connection signal="focus_exited" from="HBoxContainer/PanelContainer/MarginContainer/Color/MarginContainer/VBoxContainer/HBoxContainer/Hex" to="." method="_on_hex_focus_exited"]
+[connection signal="text_submitted" from="HBoxContainer/PanelContainer/MarginContainer/Color/MarginContainer/VBoxContainer/HBoxContainer/Hex" to="." method="_on_hex_text_submitted"]
 [connection signal="handle_left_changed" from="HBoxContainer/Control/Strips/HueStrip" to="HBoxContainer/Control/Handles/HueHandle" method="set_handle_left"]
 [connection signal="handle_left_changed" from="HBoxContainer/Control/Strips/SaturationStrip" to="HBoxContainer/Control/Handles/SaturationHandle" method="set_handle_left"]
 [connection signal="handle_left_changed" from="HBoxContainer/Control/Strips/LightnessStrip" to="HBoxContainer/Control/Handles/LightnessHandle" method="set_handle_left"]

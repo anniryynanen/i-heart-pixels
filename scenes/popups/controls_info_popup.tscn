@@ -66,5 +66,3 @@ bbcode_enabled = true
 text = "Color picker!"
 fit_content = true
 autowrap_mode = 0
-
-[connection signal="close_requested" from="." to="." method="hide"]

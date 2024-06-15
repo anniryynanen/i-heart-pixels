@@ -1,4 +1,4 @@
-extends Window
+extends ClosingPopup
 
 signal save
 signal quit

@@ -1,7 +1,8 @@
 extends Node
 
 const PEN = KEY_E
-const COLOR_PICKER = KEY_D
+const COLOR_SAMPLER = KEY_ALT
+const COLOR_PICKER = KEY_F
 
 
 func get_key_label(key: Key) -> String:

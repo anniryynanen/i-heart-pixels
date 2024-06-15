@@ -57,7 +57,6 @@ layout_mode = 2
 text = "Save"
 
 [connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
-[connection signal="close_requested" from="." to="." method="hide"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Cancel" to="." method="hide"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Save" to="." method="_on_save_pressed"]

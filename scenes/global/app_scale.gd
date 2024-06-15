@@ -8,6 +8,7 @@ var min_sizes_: Array[Control]
 var margin_overrides_: Array[MarginContainer]
 var box_overrides_: Array[BoxContainer]
 var svg_buttons_: Array[Button]
+var svg_rects_: Array[TextureRect]
 var sliders_: Array[Slider]
 var scrollbars_: Array[ScrollBar]
 
@@ -61,6 +62,13 @@ func scan_nodes_(node: Node) -> void:
             if button.icon and button.icon.resource_path.ends_with(".svg"):
                 button.set_meta("icon", ScalableSVG.new(button.icon))
                 svg_buttons_.append(button)
+
+        elif control is TextureRect:
+            var rect: TextureRect = control as TextureRect
+
+            if rect.texture.resource_path.ends_with(".svg"):
+                rect.set_meta("texture", ScalableSVG.new(rect.texture))
+                svg_rects_.append(rect)
 
         elif control is Slider:
             sliders_.append(control as Slider)
@@ -177,6 +185,9 @@ func update_scale_() -> void:
 
     for button in svg_buttons_:
         button.icon = button.get_meta("icon").get_texture(Globals.app_scale)
+
+    for rect in svg_rects_:
+        rect.texture = rect.get_meta("texture").get_texture(Globals.app_scale)
 
     for slider in sliders_:
         slider.scale = Vector2(Globals.app_scale, Globals.app_scale)

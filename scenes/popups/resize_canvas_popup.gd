@@ -1,4 +1,4 @@
-extends Window
+extends ClosingPopup
 
 
 func _ready() -> void:

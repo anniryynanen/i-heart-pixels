@@ -49,4 +49,4 @@ icon = ExtResource("3_lnho7")
 [node name="ColorPicker" parent="." instance=ExtResource("4_6c1x4")]
 visible = false
 
-[connection signal="pressed" from="VBoxContainer/Buttons/ColorPicker" to="." method="popup_color_picker_"]
+[connection signal="pressed" from="VBoxContainer/Buttons/ColorPicker" to="." method="_on_color_picker_pressed"]

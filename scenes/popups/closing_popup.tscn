@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://lph50a4u4xdy"]
+
+[ext_resource type="Script" path="res://scenes/popups/closing_popup.gd" id="1_g2b4g"]
+
+[node name="ClosingPopup" type="Window"]
+script = ExtResource("1_g2b4g")

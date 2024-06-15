@@ -78,8 +78,9 @@ func stop_dragging_(button: InputEventMouseButton = null) -> void:
         var handle_width: float = ColorHandle.get_handle_size(size).x
         var full_dist: float = size.x - handle_width
         var moved: int = roundi((button.position.x - drag_start_x_) / full_dist * steps_)
+        var deadzone: int = roundi(2.0 * Globals.app_scale)
 
-        if moved == 0:
+        if moved < deadzone:
             var value: int = color.get_param_in_steps(color_param)
 
             var diff: float = 0.0

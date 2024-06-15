@@ -14,6 +14,10 @@ enum View {
     APP_SCALE = 0
 }
 
+enum Image_ {
+    RESIZE_CANVAS = 0
+}
+
 enum Info {
     CONTROLS = 0
 }
@@ -77,6 +81,12 @@ func _on_view_index_pressed(index: int) -> void:
     match index:
         View.APP_SCALE:
             $AppScalePopup.popup_centered()
+
+
+func _on_image_index_pressed(index: int) -> void:
+    match index:
+        Image_.RESIZE_CANVAS:
+            $ResizeCanvasPopup.popup_centered()
 
 
 func _on_info_index_pressed(index: int) -> void:
