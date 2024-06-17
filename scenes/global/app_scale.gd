@@ -4,13 +4,8 @@ var main_: Control
 var themes_: Dictionary
 var windows_: Array[Window]
 var anchor_keepers_: Array[AnchorKeeper]
-var min_sizes_: Array[Control]
-var margin_overrides_: Array[MarginContainer]
-var box_overrides_: Array[BoxContainer]
-var svg_buttons_: Array[Button]
-var svg_rects_: Array[TextureRect]
-var sliders_: Array[Slider]
-var scrollbars_: Array[ScrollBar]
+var controls_: Array[Control]
+var transient_controls_: Array[Control]
 
 
 func start() -> void:
@@ -22,9 +17,29 @@ func start() -> void:
     Globals.app_scale_changed.connect(func(_s): update_scale_())
 
 
-func scan_nodes_(node: Node) -> void:
+func add_transient(control: Control) -> void:
+    var new_controls: Array[Control] = scan_nodes_(control, true)
+
+    for new_control in new_controls:
+        update_control_(new_control)
+
+    update_size_(control)
+
+
+func remove_transient(control: Control) -> void:
+    for child in control.get_children(true):
+        remove_transient(child)
+
+    var index: int = transient_controls_.find(control)
+    if index != -1:
+        transient_controls_.remove_at(index)
+
+
+func scan_nodes_(node: Node, transient: bool = false) -> Array[Control]:
     if node is FileDialog:
-        return
+        return []
+
+    var new_controls: Array[Control] = []
 
     if node is Window and not node is PopupMenu:
         var window: Window = node as Window
@@ -35,49 +50,55 @@ func scan_nodes_(node: Node) -> void:
     elif node is Control:
         var control: Control = node as Control
 
-        if control.theme and control.theme.get_instance_id() not in themes_:
-            themes_[control.theme.get_instance_id()] = control.theme
+        if not transient:
+            if control.theme and control.theme.get_instance_id() not in themes_:
+                themes_[control.theme.get_instance_id()] = control.theme
 
-        if control.has_meta("keep_anchors") and control.get_meta("keep_anchors") == true:
-            anchor_keepers_.append(AnchorKeeper.new(control))
+            if control.has_meta("keep_anchors") and control.get_meta("keep_anchors") == true:
+                anchor_keepers_.append(AnchorKeeper.new(control))
 
         if control.custom_minimum_size != Vector2():
-            control.set_meta("custom_minimum_size", control.custom_minimum_size)
-            min_sizes_.append(control)
+            if not control.has_meta("custom_minimum_size"):
+                control.set_meta("custom_minimum_size", control.custom_minimum_size)
+                new_controls.append(control)
 
         if control is MarginContainer:
             save_constant_override_(control, "margin_left")
             save_constant_override_(control, "margin_right")
             save_constant_override_(control, "margin_top")
             save_constant_override_(control, "margin_bottom")
-            margin_overrides_.append(control)
+            new_controls.append(control)
 
         elif control is BoxContainer:
             save_constant_override_(control, "separation")
-            box_overrides_.append(control)
+            new_controls.append(control)
 
         elif control is Button:
             var button: Button = control as Button
 
             if button.icon and button.icon.resource_path.ends_with(".svg"):
                 button.set_meta("icon", ScalableSVG.new(button.icon))
-                svg_buttons_.append(button)
+                new_controls.append(button)
 
         elif control is TextureRect:
             var rect: TextureRect = control as TextureRect
 
             if rect.texture.resource_path.ends_with(".svg"):
                 rect.set_meta("texture", ScalableSVG.new(rect.texture))
-                svg_rects_.append(rect)
+                new_controls.append(rect)
 
         elif control is Slider:
-            sliders_.append(control as Slider)
+            new_controls.append(control)
 
-        elif control is ScrollBar:
-            scrollbars_.append(control as ScrollBar)
+    if transient:
+        transient_controls_.append_array(new_controls)
+    else:
+        controls_.append_array(new_controls)
 
     for child in node.get_children(true):
-        scan_nodes_(child)
+        new_controls.append_array(scan_nodes_(child, transient))
+
+    return new_controls
 
 
 func save_constant_override_(control: Control, constant_name: String) -> void:
@@ -145,6 +166,17 @@ func save_stylebox_(box: StyleBox) -> void:
         line_box.set_meta("grow_end", line_box.grow_end)
         line_box.set_meta("thickness", line_box.thickness)
 
+    elif box is StyleBoxTexture:
+        var texture_box: StyleBoxTexture = box as StyleBoxTexture
+
+        if texture_box.texture.resource_path.ends_with(".svg"):
+            texture_box.set_meta("texture", ScalableSVG.new(texture_box.texture))
+
+        texture_box.set_meta("texture_margin_left", texture_box.texture_margin_left)
+        texture_box.set_meta("texture_margin_right", texture_box.texture_margin_right)
+        texture_box.set_meta("texture_margin_top", texture_box.texture_margin_top)
+        texture_box.set_meta("texture_margin_bottom", texture_box.texture_margin_bottom)
+
 
 func update_scale_() -> void:
     for theme: Theme in themes_.values():
@@ -171,29 +203,11 @@ func update_scale_() -> void:
         update_theme_icon_(theme, "VSplitContainer", "grabber")
         update_theme_icon_(theme, "SpinBox", "updown")
 
-    for control in min_sizes_:
-        control.custom_minimum_size = control.get_meta("custom_minimum_size") * Globals.app_scale
+    for control in controls_:
+        update_control_(control)
 
-    for control in margin_overrides_:
-        update_constant_override_(control, "margin_left")
-        update_constant_override_(control, "margin_right")
-        update_constant_override_(control, "margin_top")
-        update_constant_override_(control, "margin_bottom")
-
-    for control in box_overrides_:
-        update_constant_override_(control, "separation")
-
-    for button in svg_buttons_:
-        button.icon = button.get_meta("icon").get_texture(Globals.app_scale)
-
-    for rect in svg_rects_:
-        rect.texture = rect.get_meta("texture").get_texture(Globals.app_scale)
-
-    for slider in sliders_:
-        slider.scale = Vector2(Globals.app_scale, Globals.app_scale)
-
-    for scrollbar in scrollbars_:
-        scrollbar.scale = Vector2(Globals.app_scale, Globals.app_scale)
+    for control in transient_controls_:
+        update_control_(control)
 
     main_.notification(Control.NOTIFICATION_THEME_CHANGED)
     update_size_(main_)
@@ -250,6 +264,21 @@ func update_stylebox_(box: StyleBox) -> void:
         line_box.grow_end = roundi(box.get_meta("grow_end") * Globals.app_scale)
         line_box.thickness = roundi(box.get_meta("thickness") * Globals.app_scale)
 
+    elif box is StyleBoxTexture:
+        var texture_box: StyleBoxTexture = box as StyleBoxTexture
+
+        if texture_box.has_meta("texture"):
+            texture_box.texture = box.get_meta("texture").get_texture(Globals.app_scale)
+
+        texture_box.texture_margin_left \
+            = roundi(box.get_meta("texture_margin_left") * Globals.app_scale)
+        texture_box.texture_margin_right \
+            = roundi(box.get_meta("texture_margin_right") * Globals.app_scale)
+        texture_box.texture_margin_top \
+            = roundi(box.get_meta("texture_margin_top") * Globals.app_scale)
+        texture_box.texture_margin_bottom \
+            = roundi(box.get_meta("texture_margin_bottom") * Globals.app_scale)
+
     box.set_block_signals(false)
 
 
@@ -282,6 +311,30 @@ func update_constant_override_(control: Control, override_name: String) -> void:
         control.add_theme_constant_override(
             override_name,
             roundi(control.get_meta(override_name) * Globals.app_scale))
+
+
+func update_control_(control: Control) -> void:
+    if control.has_meta("custom_minimum_size"):
+        control.custom_minimum_size = \
+            control.get_meta("custom_minimum_size") * Globals.app_scale
+
+    if control is MarginContainer:
+        update_constant_override_(control, "margin_left")
+        update_constant_override_(control, "margin_right")
+        update_constant_override_(control, "margin_top")
+        update_constant_override_(control, "margin_bottom")
+
+    elif control is BoxContainer:
+        update_constant_override_(control, "separation")
+
+    elif control is Button and control.has_meta("icon"):
+        control.icon = control.get_meta("icon").get_texture(Globals.app_scale)
+
+    elif control is TextureRect and control.has_meta("texture"):
+        control.texture = control.get_meta("texture").get_texture(Globals.app_scale)
+
+    elif control is Slider:
+        control.scale = Vector2(Globals.app_scale, Globals.app_scale)
 
 
 func update_size_(control: Control) -> void:

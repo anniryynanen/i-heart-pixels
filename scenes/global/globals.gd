@@ -5,7 +5,8 @@ signal unsaved_changes_changed(unsaved_changes: bool)
 signal current_path_changed(current_path: String)
 
 signal tool_changed(tool: Tool.Type)
-signal tool_color_changed(pen_color: OKColor)
+@warning_ignore("unused_signal")
+signal color_sampled(color: OKColor)
 signal app_scale_changed(app_scale: float)
 signal keyboard_layout_changed
 signal focus_lost
@@ -31,11 +32,7 @@ var tool: Tool.Type:
         tool = value
         tool_changed.emit(tool)
 
-var tool_color: OKColor:
-    set(value):
-        tool_color = value
-        Settings.set_value("tool", "color", tool_color)
-        tool_color_changed.emit(tool_color)
+var tool_color: OKColor
 
 var app_scale: float:
     set(value):
@@ -62,8 +59,6 @@ func _on_keyboard_timer_timeout() -> void:
 
 func apply_settings() -> void:
     image = IHP.new(Vector2i(16, 16))
-
-    tool_color = Settings.get_value("tool", "color")
     app_scale = Settings.get_value("app", "scale")
 
     $KeyboardTimer.timeout.emit()

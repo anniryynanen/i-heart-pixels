@@ -14,7 +14,7 @@ var pixel_width_: float = 80.0
 var pan_step_: float = BASE_PAN_STEP
 var cursors_: Dictionary
 var pan_cursor_: ScalableSVG = ScalableSVG.new(load(
-    "res://icons/phosphor/cursors/cursor-28px-hand-grabbing.svg"))
+    "res://icons/phosphor/cursors/cursor-hand-grabbing.svg"))
 
 var current_layer_: Image
 var current_layer_changed_ = false
@@ -23,11 +23,11 @@ var texture_: ImageTexture
 
 func _ready() -> void:
     cursors_[Tool.PEN] = ScalableSVG.new(load(
-        "res://icons/phosphor/cursors/cursor-28px-pen-duotone.svg"))
+        "res://icons/phosphor/cursors/cursor-pen-duotone.svg"))
     cursors_[Tool.ERASER] = ScalableSVG.new(load(
-        "res://icons/phosphor/cursors/cursor-28px-eraser-duotone.svg"))
+        "res://icons/phosphor/cursors/cursor-eraser-duotone.svg"))
     cursors_[Tool.COLOR_SAMPLER] = ScalableSVG.new(load(
-        "res://icons/phosphor/cursors/cursor-28px-eyedropper-duotone.svg"))
+        "res://icons/phosphor/cursors/cursor-eyedropper-duotone.svg"))
 
     get_window().focus_entered.connect(update_cursor_)
     get_window().focus_exited.connect(update_cursor_)
@@ -206,8 +206,8 @@ func draw_pixel_(pixel: Vector2i) -> void:
         Globals.image.unsaved_changes = true
 
     elif Globals.tool == Tool.COLOR_SAMPLER:
-        Globals.tool_color = OKColor.from_rgb(current_layer_.get_pixel(
-            current_pixel_.x, current_pixel_.y)).opaque()
+        Globals.color_sampled.emit(OKColor.from_rgb(
+            current_layer_.get_pixel(current_pixel_.x, current_pixel_.y)).opaque())
 
 
 func pixel_in_image_(pixel: Vector2i) -> bool:
@@ -259,11 +259,6 @@ func update_position_() -> void:
     %VScroll.max_value = max_top_left.y + size.y
     %VScroll.page = size.y
     %VScroll.set_value_no_signal(top_left_.y)
-
-    (func():
-        %HScroll.size.x = (size.x - %Corner.size.x) / Globals.app_scale
-        %VScroll.size.y = (size.y - %Corner.size.y) / Globals.app_scale
-    ).call_deferred()
 
     queue_redraw()
 

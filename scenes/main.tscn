@@ -34,6 +34,7 @@ size_flags_horizontal = 3
 
 [node name="RightSplit" type="VSplitContainer" parent="MainSplit"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
 [node name="Palette" parent="MainSplit/RightSplit" instance=ExtResource("4_oo74j")]

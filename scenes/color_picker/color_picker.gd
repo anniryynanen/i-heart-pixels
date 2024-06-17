@@ -49,11 +49,16 @@ func _on_hex_focus_exited() -> void:
     if not visible:
         return
 
-    if %Hex.text.is_valid_html_color():
-        set_color_(OKColor.from_rgb(Color(%Hex.text)))
-        %Warning.visible = false
-    else:
-        %Warning.visible = true
+    submit_hex_()
+
+
+func _on_copy_pressed() -> void:
+    DisplayServer.clipboard_set(%Hex.text)
+
+
+func _on_paste_pressed() -> void:
+    %Hex.text = DisplayServer.clipboard_get()
+    submit_hex_()
 
 
 func _on_app_scale_changed(app_scale: float) -> void:
@@ -64,6 +69,14 @@ func _on_app_scale_changed(app_scale: float) -> void:
 func popup_color(color: OKColor) -> void:
     set_color_(color, false, true)
     popup_centered()
+
+
+func submit_hex_() -> void:
+    if %Hex.text.is_valid_html_color():
+        set_color_(OKColor.from_rgb(Color(%Hex.text)))
+        %Warning.visible = false
+    else:
+        %Warning.visible = true
 
 
 func set_color_(color: OKColor, emit: bool = true, update_last = false) -> void:
@@ -83,17 +96,36 @@ func set_color_(color: OKColor, emit: bool = true, update_last = false) -> void:
     %Hex.text = "#" + color.to_hex()
     %Warning.visible = false
 
+    %Hex.set_block_signals(true)
+    %Hex.release_focus()
+    %Hex.set_block_signals(false)
+
     var text_color: OKColor = IHPColorPicker.get_text_color(color)
     %Hex.add_theme_color_override("font_color", text_color.to_rgb())
 
     var bg_color: OKColor = text_color.duplicate()
     var border_color: OKColor = text_color.duplicate()
-    bg_color.a = 0.08
-    border_color.a = 0.18
+    bg_color.a = 0.07
+    border_color.a = 0.68
 
     var stylebox: StyleBoxFlat = %Hex.get_theme_stylebox("normal", "LineEdit")
     stylebox.bg_color = bg_color.to_rgb()
     stylebox.border_color = border_color.to_rgb()
+
+    var hover_color: OKColor
+    if text_color.l == 0.0:
+        hover_color = OKColor.new(0.0, 0.0, 0.0, 0.2)
+    else:
+        hover_color = OKColor.new(0.0, 0.0, 1.0, 0.26)
+
+    %Copy.visible = text_color.l == 0.0
+    %Paste.visible = text_color.l == 0.0
+    %CopyLight.visible = text_color.l == 1.0
+    %PasteLight.visible = text_color.l == 1.0
+
+    %Copy.get_theme_stylebox("hover").bg_color = hover_color.to_rgb()
+    hover_color.a *= 1.8
+    %Copy.get_theme_stylebox("pressed").bg_color = hover_color.to_rgb()
 
     if emit:
         color_changed.emit(color.duplicate())

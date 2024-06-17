@@ -25,6 +25,13 @@ func _to_string() -> String:
     return "(%s, %s, %s, %s)" % [h, s, l, a]
 
 
+func equals(other: OKColor) -> bool:
+    return is_equal_approx(h, other.h) \
+        and is_equal_approx(s, other.s) \
+        and is_equal_approx(l, other.l) \
+        and is_equal_approx(a, other.a)
+
+
 func to_hex() -> String:
     return to_rgb().to_html(false)
 

@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://de2uwgewps8ys"]
+
+[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_o3psl"]
+[ext_resource type="Script" path="res://scenes/color_bar.gd" id="2_iwf5p"]
+[ext_resource type="Texture2D" uid="uid://bkqsbpimlxpoy" path="res://icons/phosphor/16px/asterisk-duotone.svg" id="3_bje7w"]
+[ext_resource type="Texture2D" uid="uid://4l4edp28xie0" path="res://icons/phosphor/16px/asterisk-duotone-light.svg" id="4_7n7ne"]
+
+[node name="ColorBar" type="Button"]
+custom_minimum_size = Vector2(26, 26)
+offset_right = 8.0
+offset_bottom = 8.0
+theme = ExtResource("1_o3psl")
+flat = true
+script = ExtResource("2_iwf5p")
+
+[node name="Panel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+
+[node name="Asterisk" type="TextureRect" parent="Panel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("3_bje7w")
+
+[node name="AsteriskLight" type="TextureRect" parent="Panel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("4_7n7ne")

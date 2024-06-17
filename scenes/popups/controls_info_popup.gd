@@ -14,7 +14,10 @@ func _on_keyboard_layout_changed() -> void:
         Controls.get_key_label(Controls.PEN)
 
     %ColorSamplerLabel.text = "Activate [b]color sampler:[/b] Hold down " + \
-        Controls.get_key_label(Controls.COLOR_SAMPLER).to_upper()
+        Controls.get_key_label(Controls.COLOR_SAMPLER)
 
     %ColorPickerLabel.text = "Open [b]color picker:[/b] " + \
         Controls.get_key_label(Controls.COLOR_PICKER)
+
+    %NextPrevColorLabel.text = "[b]Select[/b] previous or next [b]color:[/b] %s and %s" % [
+        Controls.get_key_label(Controls.PREV_COLOR), Controls.get_key_label(Controls.NEXT_COLOR)]

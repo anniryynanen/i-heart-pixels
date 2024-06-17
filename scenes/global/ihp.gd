@@ -53,6 +53,8 @@ func resize_canvas(new_size: Vector2i, offset: Vector2i) -> void:
         layer.remove_meta("viewport")
         Globals.remove_child(viewport)
 
+    unsaved_changes = true
+
 
 func save_to_file(path: String) -> bool:
     var dict: Dictionary = {

@@ -83,9 +83,8 @@ func _on_unsaved_changes_popup_save() -> void:
 
 func set_default_settings_() -> void:
     Settings.set_if_missing("app", "scale", 1.0)
-    Settings.set_if_missing("panels", "right_width", 200.0)
+    Settings.set_if_missing("panels", "right_width", 180.0)
     Settings.set_if_missing("panels", "right_height", -200.0)
-    Settings.set_if_missing("tool", "color", OKColor.new(185.0 / 359.0, 0.4, 0.69))
 
 
 func apply_settings_() -> void:

@@ -2,17 +2,17 @@
 
 [ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_611gt"]
 [ext_resource type="Script" path="res://scenes/popups/resize_canvas_popup.gd" id="2_qsco1"]
-[ext_resource type="Texture2D" uid="uid://dsd44oh4tuyog" path="res://icons/phosphor/align-left-simple-duotone.svg" id="3_rfqlm"]
-[ext_resource type="Texture2D" uid="uid://dm68yfk5qlav1" path="res://icons/phosphor/align-center-horizontal-simple-duotone.svg" id="4_wj8qi"]
-[ext_resource type="Texture2D" uid="uid://bwpgqpo0fqn2o" path="res://icons/phosphor/align-right-simple-duotone.svg" id="5_t4u5d"]
-[ext_resource type="Texture2D" uid="uid://dsfvtog4sov5o" path="res://icons/phosphor/align-top-simple-duotone.svg" id="6_34ejp"]
-[ext_resource type="Texture2D" uid="uid://xqrryehmnae3" path="res://icons/phosphor/align-center-vertical-simple-duotone.svg" id="7_60xlc"]
-[ext_resource type="Texture2D" uid="uid://dn3i3egs5hatq" path="res://icons/phosphor/align-bottom-simple-duotone.svg" id="8_rygop"]
+[ext_resource type="Texture2D" uid="uid://xn3cyxqic3sl" path="res://icons/phosphor/20px/align-left-simple-duotone.svg" id="3_q2jg2"]
+[ext_resource type="Texture2D" uid="uid://cltbx7npu02dx" path="res://icons/phosphor/20px/align-center-horizontal-simple-duotone.svg" id="4_tjmbn"]
+[ext_resource type="Texture2D" uid="uid://ddxfiqgf6mcag" path="res://icons/phosphor/20px/align-right-simple-duotone.svg" id="5_32gtx"]
+[ext_resource type="Texture2D" uid="uid://cx6wxqsmk2kvx" path="res://icons/phosphor/20px/align-top-simple-duotone.svg" id="6_asv3r"]
+[ext_resource type="Texture2D" uid="uid://b0wgodoru4fj5" path="res://icons/phosphor/20px/align-center-vertical-simple-duotone.svg" id="7_ahbqn"]
+[ext_resource type="Texture2D" uid="uid://coj2mioacjp07" path="res://icons/phosphor/20px/align-bottom-simple-duotone.svg" id="8_k00qm"]
 
 [node name="ResizeCanvasPopup" type="Window"]
 title = "Resize Canvas"
 initial_position = 2
-size = Vector2i(260, 197)
+size = Vector2i(251, 197)
 wrap_controls = true
 transient = true
 exclusive = true
@@ -85,6 +85,7 @@ update_on_text_changed = true
 
 [node name="HAlignButtons" type="HBoxContainer" parent="VBoxContainer/MarginContainer/GridContainer"]
 layout_mode = 2
+theme_override_constants/separation = 7
 
 [node name="Spacer" type="Control" parent="VBoxContainer/MarginContainer/GridContainer/HAlignButtons"]
 layout_mode = 2
@@ -95,7 +96,7 @@ layout_mode = 2
 tooltip_text = "Snap to left edge"
 focus_mode = 0
 theme_type_variation = &"IconButton"
-icon = ExtResource("3_rfqlm")
+icon = ExtResource("3_q2jg2")
 
 [node name="AlignCenterH" type="Button" parent="VBoxContainer/MarginContainer/GridContainer/HAlignButtons"]
 unique_name_in_owner = true
@@ -103,7 +104,7 @@ layout_mode = 2
 tooltip_text = "Center horizontally"
 focus_mode = 0
 theme_type_variation = &"IconButton"
-icon = ExtResource("4_wj8qi")
+icon = ExtResource("4_tjmbn")
 
 [node name="AlignRight" type="Button" parent="VBoxContainer/MarginContainer/GridContainer/HAlignButtons"]
 unique_name_in_owner = true
@@ -111,7 +112,7 @@ layout_mode = 2
 tooltip_text = "Snap to right edge"
 focus_mode = 0
 theme_type_variation = &"IconButton"
-icon = ExtResource("5_t4u5d")
+icon = ExtResource("5_32gtx")
 
 [node name="YOffsetLabel" type="Label" parent="VBoxContainer/MarginContainer/GridContainer"]
 layout_mode = 2
@@ -126,6 +127,7 @@ update_on_text_changed = true
 
 [node name="VAlignButtons" type="HBoxContainer" parent="VBoxContainer/MarginContainer/GridContainer"]
 layout_mode = 2
+theme_override_constants/separation = 7
 
 [node name="Spacer" type="Control" parent="VBoxContainer/MarginContainer/GridContainer/VAlignButtons"]
 layout_mode = 2
@@ -136,7 +138,7 @@ layout_mode = 2
 tooltip_text = "Snap to top edge"
 focus_mode = 0
 theme_type_variation = &"IconButton"
-icon = ExtResource("6_34ejp")
+icon = ExtResource("6_asv3r")
 
 [node name="AlignCenterV" type="Button" parent="VBoxContainer/MarginContainer/GridContainer/VAlignButtons"]
 unique_name_in_owner = true
@@ -144,7 +146,7 @@ layout_mode = 2
 tooltip_text = "Center vertically"
 focus_mode = 0
 theme_type_variation = &"IconButton"
-icon = ExtResource("7_60xlc")
+icon = ExtResource("7_ahbqn")
 
 [node name="AlignBottom" type="Button" parent="VBoxContainer/MarginContainer/GridContainer/VAlignButtons"]
 unique_name_in_owner = true
@@ -152,7 +154,7 @@ layout_mode = 2
 tooltip_text = "Snap to bottom edge"
 focus_mode = 0
 theme_type_variation = &"IconButton"
-icon = ExtResource("8_rygop")
+icon = ExtResource("8_k00qm")
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2

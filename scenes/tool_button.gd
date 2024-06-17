@@ -9,13 +9,13 @@ func _ready() -> void:
     match tool:
         Tool.PEN:
             key_ = Controls.PEN
-            $Button.icon = load("res://icons/phosphor/tools/pen-duotone.svg")
+            $Button.icon = load("res://icons/phosphor/24px/pen-duotone.svg")
         Tool.ERASER:
             key_ = Controls.PEN
-            $Button.icon = load("res://icons/phosphor/tools/eraser-duotone.svg")
+            $Button.icon = load("res://icons/phosphor/24px/eraser-duotone.svg")
         Tool.COLOR_SAMPLER:
             key_ = Controls.COLOR_SAMPLER
-            $Button.icon = load("res://icons/phosphor/tools/eyedropper-duotone.svg")
+            $Button.icon = load("res://icons/phosphor/24px/eyedropper-duotone.svg")
 
     Globals.tool_changed.connect(_on_tool_changed)
     Globals.keyboard_layout_changed.connect(_on_keyboard_layout_changed)
