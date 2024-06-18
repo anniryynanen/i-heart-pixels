@@ -6,6 +6,7 @@ const BASE_PAN_STEP = 1.0
 var top_left_: Vector2 = Vector2(0.0, 0.0)
 var current_pixel_: Vector2i = Vector2i(-1, -1)
 var last_tool_: Tool.Type
+var first_resize_ = true
 var hovering_ = false
 var panning_ = false
 var drawing_ = false
@@ -112,8 +113,23 @@ func _on_v_scroll_value_changed(value: float) -> void:
 
 
 func _on_resized() -> void:
-    if not current_layer_:
-        return
+    if first_resize_:
+        first_resize_ = false
+
+        # It takes two frames for canvas size to update
+        await RenderingServer.frame_post_draw
+        await RenderingServer.frame_post_draw
+
+        var image_size: Vector2 = get_image_size_()
+        if image_size.x > size.x:
+            top_left_.x = -get_tree().root.find_child("Toolbar", true, false).size.x - 1
+        else:
+            top_left_.x = (image_size.x - size.x) / 2.0
+
+        if image_size.y > size.y:
+            top_left_.y = -get_tree().root.find_child("TopBar", true, false).size.y - 1
+        else:
+            top_left_.y = (image_size.y - size.y) / 2.0
 
     update_position_()
 
