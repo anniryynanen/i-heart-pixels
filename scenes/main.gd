@@ -23,19 +23,19 @@ func _ready() -> void:
     update_title_()
     Globals.tool = Tool.PEN
 
-    var args: PackedStringArray = OS.get_cmdline_user_args()
-    if args.size() > 0:
-        var path: String = args[0]
-        var image: IHP = IHP.load_from_file(path)
-        if image:
-            Globals.image = image
-            Globals.current_path = path
+    for arg in OS.get_cmdline_user_args():
+        if not arg.begins_with("-"):
+            var image: IHP = IHP.load_from_file(arg)
+            if image:
+                Globals.image = image
+                Globals.current_path = arg
+            break
 
 
 func _notification(what: int) -> void:
     # The app is quitting
     if what == NOTIFICATION_WM_CLOSE_REQUEST:
-        if Globals.image.unsaved_changes:
+        if Globals.image.unsaved_changes and not TestRunner.quitting:
             $UnsavedChangesPopup.popup_centered()
         else:
             quit_()
@@ -127,4 +127,4 @@ func quit_() -> void:
         Settings.set_value("window", "y", get_window().position.y)
 
     Settings.save_settings()
-    get_tree().quit()
+    get_tree().quit(TestRunner.exit_code if TestRunner.quitting else 0)

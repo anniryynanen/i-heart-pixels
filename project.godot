@@ -19,6 +19,7 @@ run/max_fps=60
 
 [autoload]
 
+TestRunner="*res://tests/support/test_runner.tscn"
 Cache="*res://scenes/global/cache.tscn"
 Settings="*res://scenes/global/settings.tscn"
 Controls="*res://scenes/global/controls.tscn"

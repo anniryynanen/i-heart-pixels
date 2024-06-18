@@ -6,6 +6,10 @@ var file_: ConfigFile = ConfigFile.new()
 
 
 func load_settings() -> void:
+    # Tests start with an empty settings file
+    if TestRunner.testing:
+        return
+
     var err: Error = file_.load(SETTINGS_PATH)
 
     if err and err != ERR_FILE_NOT_FOUND:
@@ -15,6 +19,10 @@ func load_settings() -> void:
 
 
 func save_settings() -> void:
+    # Tests don't save settings to file
+    if TestRunner.testing:
+        return
+
     var err: Error = file_.save(SETTINGS_PATH)
     $SaveTimer.stop()
 
