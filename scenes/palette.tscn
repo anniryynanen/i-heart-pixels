@@ -47,29 +47,30 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="ButtonContainer" type="MarginContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/margin_left = 1
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 4
 
-[node name="Buttons" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+[node name="Buttons" type="HBoxContainer" parent="VBoxContainer/ButtonContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="ColorPicker" type="Button" parent="VBoxContainer/MarginContainer/Buttons"]
+[node name="ColorPicker" type="Button" parent="VBoxContainer/ButtonContainer/Buttons"]
 layout_mode = 2
 focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("3_edb32")
 
-[node name="Spacer" type="Control" parent="VBoxContainer/MarginContainer/Buttons"]
+[node name="Spacer" type="Control" parent="VBoxContainer/ButtonContainer/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Add" type="Button" parent="VBoxContainer/MarginContainer/Buttons"]
+[node name="Add" type="Button" parent="VBoxContainer/ButtonContainer/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Add color"
@@ -77,7 +78,7 @@ focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("4_u7t87")
 
-[node name="MoveUp" type="Button" parent="VBoxContainer/MarginContainer/Buttons"]
+[node name="MoveUp" type="Button" parent="VBoxContainer/ButtonContainer/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Move color up"
@@ -85,7 +86,7 @@ focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("5_2m7bc")
 
-[node name="MoveDown" type="Button" parent="VBoxContainer/MarginContainer/Buttons"]
+[node name="MoveDown" type="Button" parent="VBoxContainer/ButtonContainer/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Move color down"
@@ -93,11 +94,11 @@ focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("6_cts40")
 
-[node name="Spacer2" type="Control" parent="VBoxContainer/MarginContainer/Buttons"]
+[node name="Spacer2" type="Control" parent="VBoxContainer/ButtonContainer/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Delete" type="Button" parent="VBoxContainer/MarginContainer/Buttons"]
+[node name="Delete" type="Button" parent="VBoxContainer/ButtonContainer/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Delete color"
@@ -108,9 +109,9 @@ icon = ExtResource("9_t77ok")
 [node name="ColorPicker" parent="." instance=ExtResource("4_6c1x4")]
 visible = false
 
-[connection signal="pressed" from="VBoxContainer/MarginContainer/Buttons/ColorPicker" to="." method="_on_color_picker_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/Buttons/Add" to="." method="_on_add_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/Buttons/MoveUp" to="." method="move_color_up_"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/Buttons/MoveDown" to="." method="move_color_down_"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/Buttons/Delete" to="." method="delete_color_"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/ColorPicker" to="." method="_on_color_picker_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/Add" to="." method="_on_add_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/MoveUp" to="." method="move_color_up_"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/MoveDown" to="." method="move_color_down_"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/Delete" to="." method="delete_color_"]
 [connection signal="color_changed" from="ColorPicker" to="." method="set_current_color_"]

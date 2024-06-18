@@ -2,6 +2,7 @@ extends Control
 
 var settings_applied_ = false
 var toolbar_orig_y_: float
+var notification_tween_: Tween
 
 
 func _enter_tree() -> void:
@@ -14,6 +15,8 @@ func _enter_tree() -> void:
     Globals.unsaved_changes_changed.connect(func(_u): update_title_())
     Globals.current_path_changed.connect(func(_p): update_title_())
     Globals.app_scale_changed.connect(_on_app_scale_changed)
+
+    Globals.show_notification.connect(show_notification_)
 
     get_tree().auto_accept_quit = false
 
@@ -119,6 +122,29 @@ func update_title_() -> void:
 
     title += " - " + ProjectSettings.get_setting("application/config/name")
     get_window().title = title
+
+
+func show_notification_(message: String) -> void:
+    if notification_tween_ and notification_tween_.is_running():
+        notification_tween_.stop()
+
+    %Notification.text = message
+    %Notification.reset_size()
+    %Notification.position.x = size.x / 2.0 - %Notification.size.x / 2.0
+    %Notification.position.y = size.y
+    %Notification.visible = true
+
+    var distance: float = %Notification.size.y * 1.7
+
+    notification_tween_ = create_tween()
+    notification_tween_.tween_property(%Notification, "position", Vector2.UP * distance, 0.12) \
+        .as_relative().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+
+    notification_tween_.tween_interval(1.2)
+    notification_tween_.tween_property(%Notification, "position", Vector2.DOWN * distance, 0.12) \
+        .as_relative().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
+
+    notification_tween_.tween_callback(func(): %Notification.visible = false)
 
 
 func quit_() -> void:

@@ -140,3 +140,5 @@ func export_(path: String) -> void:
 
     if Globals.current_path:
         Cache.set_export_path(Globals.current_path, path)
+
+    Globals.show_notification.emit("Exported")

@@ -80,6 +80,7 @@ func save_to_file(path: String) -> bool:
     file.store_var(current_layer.image.save_png_to_buffer())
 
     unsaved_changes = false
+    Globals.show_notification.emit("Saved")
     return true
 
 

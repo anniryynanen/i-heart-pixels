@@ -6,6 +6,8 @@ var current_index_: int = -1
 func _ready() -> void:
     load_colors_()
 
+    custom_minimum_size.y = %ColorBars.get_child(0).size.y + %ButtonContainer.size.y
+
     Globals.color_sampled.connect(_on_color_sampled)
     Globals.keyboard_layout_changed.connect(_on_keyboard_layout_changed)
 

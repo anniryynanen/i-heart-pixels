@@ -11,6 +11,9 @@ signal app_scale_changed(app_scale: float)
 signal keyboard_layout_changed
 signal focus_lost
 
+@warning_ignore("unused_signal")
+signal show_notification(message: String)
+
 const ERROR_TITLE = ":("
 
 var image: IHP:

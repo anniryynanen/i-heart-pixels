@@ -11,7 +11,10 @@ func _ready() -> void:
 
 
 func get_export_path(save_path: String) -> String:
-    return export_paths_[save_path]
+    if save_path in export_paths_:
+        return export_paths_[save_path]
+
+    return ""
 
 
 func set_export_path(save_path: String, export_path: String) -> void:

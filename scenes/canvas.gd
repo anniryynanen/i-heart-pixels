@@ -113,6 +113,9 @@ func _on_v_scroll_value_changed(value: float) -> void:
 
 
 func _on_resized() -> void:
+    if not texture_:
+        return
+
     if first_resize_:
         first_resize_ = false
 
