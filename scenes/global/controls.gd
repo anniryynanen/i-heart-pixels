@@ -1,7 +1,8 @@
 extends Node
 
-const PEN = KEY_W
+const PEN = KEY_E
 const COLOR_SAMPLER = KEY_SPACE
+const COLOR_REPLACER = KEY_V
 
 const COLOR_PICKER = KEY_F
 const NEXT_COLOR = KEY_D

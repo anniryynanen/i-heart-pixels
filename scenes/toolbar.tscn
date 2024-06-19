@@ -6,13 +6,13 @@
 [node name="Toolbar" type="PanelContainer"]
 clip_contents = true
 offset_right = 32.0
-offset_bottom = 102.0
+offset_bottom = 134.0
 theme = ExtResource("1_87uw6")
 theme_type_variation = &"Toolbar"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
-theme_override_constants/separation = 1
+theme_override_constants/separation = 0
 
 [node name="Pen" parent="VBoxContainer" instance=ExtResource("6_mws6c")]
 unique_name_in_owner = true
@@ -27,3 +27,8 @@ tool = 1
 unique_name_in_owner = true
 layout_mode = 2
 tool = 2
+
+[node name="ColorReplacer" parent="VBoxContainer" instance=ExtResource("6_mws6c")]
+unique_name_in_owner = true
+layout_mode = 2
+tool = 3

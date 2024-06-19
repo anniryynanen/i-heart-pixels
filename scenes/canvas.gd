@@ -29,6 +29,8 @@ func _ready() -> void:
         "res://icons/phosphor/cursors/cursor-eraser-duotone.svg"))
     cursors_[Tool.COLOR_SAMPLER] = ScalableSVG.new(load(
         "res://icons/phosphor/cursors/cursor-eyedropper-duotone.svg"))
+    cursors_[Tool.COLOR_REPLACER] = ScalableSVG.new(load(
+        "res://icons/phosphor/cursors/cursor-eyedropper-sample-duotone.svg"))
 
     get_window().focus_entered.connect(update_cursor_)
     get_window().focus_exited.connect(update_cursor_)
@@ -68,21 +70,21 @@ func _on_button_event(button: InputEventMouseButton) -> void:
 
         MOUSE_BUTTON_WHEEL_UP:
             if button.pressed:
-                var rel_mouse_pos: Vector2 = save_mouse_pos_(button.position)
+                var pivot: Vector2 = (size / 2.0 + top_left_) / pixel_width_
 
                 pixel_width_ = minf(pixel_width_ * ZOOM_STEP,
                     DisplayServer.screen_get_size().x / 2.0)
 
-                restore_mouse_pos_(button.position, rel_mouse_pos)
+                top_left_ = pivot * pixel_width_ - (size / 2.0)
                 update_position_()
 
         MOUSE_BUTTON_WHEEL_DOWN:
             if button.pressed:
-                var rel_mouse_pos: Vector2 = save_mouse_pos_(button.position)
+                var pivot: Vector2 = (size / 2.0 + top_left_) / pixel_width_
 
                 pixel_width_ = maxf(pixel_width_ / ZOOM_STEP, 0.1)
 
-                restore_mouse_pos_(button.position, rel_mouse_pos)
+                top_left_ = pivot * pixel_width_ - (size / 2.0)
                 update_position_()
 
         MOUSE_BUTTON_MIDDLE:
@@ -162,15 +164,6 @@ func _on_focus_lost() -> void:
         stop_hovering_()
 
 
-func save_mouse_pos_(mouse_pos: Vector2) -> Vector2:
-     return (mouse_pos + top_left_) / pixel_width_
-
-
-func restore_mouse_pos_(mouse_pos: Vector2, rel_mouse_pos: Vector2) -> void:
-    var new_mouse_pos: Vector2 = rel_mouse_pos * pixel_width_ - top_left_
-    top_left_ += new_mouse_pos - mouse_pos
-
-
 func start_hovering_() -> void:
     hovering_ = true
     update_cursor_()
@@ -193,12 +186,17 @@ func stop_panning_() -> void:
 
 
 func start_drawing_(mouse_pos: Vector2) -> void:
-    drawing_ = true
-    Input.use_accumulated_input = false
-    $DrawTimer.start()
-
     update_current_pixel_(mouse_pos)
-    draw_pixel_(current_pixel_)
+
+    if Globals.tool == Tool.PEN or Globals.tool == Tool.ERASER:
+        drawing_ = true
+        Input.use_accumulated_input = false
+        $DrawTimer.start()
+
+        draw_pixel_(current_pixel_)
+
+    elif pixel_in_image_(current_pixel_):
+        activate_tool_()
 
 
 func stop_drawing_() -> void:
@@ -212,21 +210,37 @@ func draw_pixel_(pixel: Vector2i) -> void:
     if not pixel_in_image_(pixel):
         return
 
-    if Globals.tool == Tool.PEN or Globals.tool == Tool.ERASER:
-        var color: OKColor = Globals.tool_color
+    var color: OKColor = Globals.tool_color
+    if Globals.tool == Tool.ERASER:
+        color = OKColor.new(0.0, 0.0, 0.0, 0.0)
 
-        if Globals.tool == Tool.ERASER:
-            color = OKColor.new(0.0, 0.0, 0.0, 0.0)
+    current_layer_.set_pixel(pixel.x, pixel.y, color.to_rgb())
+    mark_layer_as_changed_()
 
-        current_layer_.set_pixel(pixel.x, pixel.y, color.to_rgb())
-        current_layer_changed_ = true
-        queue_redraw()
 
-        Globals.image.unsaved_changes = true
+func activate_tool_() -> void:
+     match Globals.tool:
+        Tool.COLOR_SAMPLER:
+            var rgb: Color = current_layer_.get_pixel(current_pixel_.x, current_pixel_.y)
+            Globals.color_sampled.emit(OKColor.from_rgb(rgb).opaque())
 
-    elif Globals.tool == Tool.COLOR_SAMPLER:
-        Globals.color_sampled.emit(OKColor.from_rgb(
-            current_layer_.get_pixel(current_pixel_.x, current_pixel_.y)).opaque())
+        Tool.COLOR_REPLACER:
+            var replaced: Color = current_layer_.get_pixel(current_pixel_.x, current_pixel_.y)
+            var tool_color: Color = Globals.tool_color.to_rgb()
+
+            for x in range(current_layer_.get_width()):
+                for y in range(current_layer_.get_height()):
+
+                    if current_layer_.get_pixel(x, y).is_equal_approx(replaced):
+                        current_layer_.set_pixel(x, y, tool_color)
+                        mark_layer_as_changed_()
+
+
+func mark_layer_as_changed_() -> void:
+    current_layer_changed_ = true
+    queue_redraw()
+
+    Globals.image.unsaved_changes = true
 
 
 func pixel_in_image_(pixel: Vector2i) -> bool:
@@ -343,7 +357,7 @@ func draw_image_outline_() -> void:
         -top_left_.y - line_width / 2.0,
         image_size.x + line_width,
         image_size.y + line_width),
-        OKColor.new(0.0, 0.0, 0.6).to_rgb(), false, line_width)
+        OKColor.new(0.0, 0.0, 0.73).to_rgb(), false, line_width)
 
 
 func draw_hover_highlight_() -> void:
