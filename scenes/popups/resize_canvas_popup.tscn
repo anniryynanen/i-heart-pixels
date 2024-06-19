@@ -12,7 +12,7 @@
 [node name="ResizeCanvasPopup" type="Window"]
 title = "Resize Canvas"
 initial_position = 2
-size = Vector2i(251, 197)
+size = Vector2i(262, 213)
 wrap_controls = true
 transient = true
 exclusive = true
@@ -21,76 +21,69 @@ popup_window = true
 theme = ExtResource("1_611gt")
 script = ExtResource("2_qsco1")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 0
+theme_type_variation = &"ButtonPopupMargins"
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 14
-theme_override_constants/margin_top = 11
-theme_override_constants/margin_right = 14
-theme_override_constants/margin_bottom = 10
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/MarginContainer"]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/h_separation = 6
-theme_override_constants/v_separation = 6
 columns = 3
 
-[node name="WidthLabel" type="Label" parent="VBoxContainer/MarginContainer/GridContainer"]
+[node name="WidthLabel" type="Label" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Width:"
 horizontal_alignment = 2
 
-[node name="Width" type="SpinBox" parent="VBoxContainer/MarginContainer/GridContainer"]
+[node name="Width" type="SpinBox" parent="MarginContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 16384.0
 rounded = true
 update_on_text_changed = true
 
-[node name="Spacer" type="Control" parent="VBoxContainer/MarginContainer/GridContainer"]
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 
-[node name="HeightLabel" type="Label" parent="VBoxContainer/MarginContainer/GridContainer"]
+[node name="HeightLabel" type="Label" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Height:"
 horizontal_alignment = 2
 
-[node name="Height" type="SpinBox" parent="VBoxContainer/MarginContainer/GridContainer"]
+[node name="Height" type="SpinBox" parent="MarginContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 16384.0
 rounded = true
 update_on_text_changed = true
 
-[node name="Spacer2" type="Control" parent="VBoxContainer/MarginContainer/GridContainer"]
+[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 
-[node name="XOffsetLabel" type="Label" parent="VBoxContainer/MarginContainer/GridContainer"]
+[node name="XOffsetLabel" type="Label" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "X Offset:"
 horizontal_alignment = 2
 
-[node name="XOffset" type="SpinBox" parent="VBoxContainer/MarginContainer/GridContainer"]
+[node name="XOffset" type="SpinBox" parent="MarginContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 rounded = true
 update_on_text_changed = true
 
-[node name="HAlignButtons" type="HBoxContainer" parent="VBoxContainer/MarginContainer/GridContainer"]
-layout_mode = 2
-theme_override_constants/separation = 7
-
-[node name="Spacer" type="Control" parent="VBoxContainer/MarginContainer/GridContainer/HAlignButtons"]
+[node name="HAlignButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 
-[node name="AlignLeft" type="Button" parent="VBoxContainer/MarginContainer/GridContainer/HAlignButtons"]
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/GridContainer/HAlignButtons"]
+layout_mode = 2
+
+[node name="AlignLeft" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/HAlignButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Snap to left edge"
@@ -98,7 +91,7 @@ focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("3_q2jg2")
 
-[node name="AlignCenterH" type="Button" parent="VBoxContainer/MarginContainer/GridContainer/HAlignButtons"]
+[node name="AlignCenterH" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/HAlignButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Center horizontally"
@@ -106,7 +99,7 @@ focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("4_tjmbn")
 
-[node name="AlignRight" type="Button" parent="VBoxContainer/MarginContainer/GridContainer/HAlignButtons"]
+[node name="AlignRight" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/HAlignButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Snap to right edge"
@@ -114,25 +107,24 @@ focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("5_32gtx")
 
-[node name="YOffsetLabel" type="Label" parent="VBoxContainer/MarginContainer/GridContainer"]
+[node name="YOffsetLabel" type="Label" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Y Offset:"
 horizontal_alignment = 2
 
-[node name="YOffset" type="SpinBox" parent="VBoxContainer/MarginContainer/GridContainer"]
+[node name="YOffset" type="SpinBox" parent="MarginContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 rounded = true
 update_on_text_changed = true
 
-[node name="VAlignButtons" type="HBoxContainer" parent="VBoxContainer/MarginContainer/GridContainer"]
-layout_mode = 2
-theme_override_constants/separation = 7
-
-[node name="Spacer" type="Control" parent="VBoxContainer/MarginContainer/GridContainer/VAlignButtons"]
+[node name="VAlignButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 
-[node name="AlignTop" type="Button" parent="VBoxContainer/MarginContainer/GridContainer/VAlignButtons"]
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/GridContainer/VAlignButtons"]
+layout_mode = 2
+
+[node name="AlignTop" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/VAlignButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Snap to top edge"
@@ -140,7 +132,7 @@ focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("6_asv3r")
 
-[node name="AlignCenterV" type="Button" parent="VBoxContainer/MarginContainer/GridContainer/VAlignButtons"]
+[node name="AlignCenterV" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/VAlignButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Center vertically"
@@ -148,7 +140,7 @@ focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("7_ahbqn")
 
-[node name="AlignBottom" type="Button" parent="VBoxContainer/MarginContainer/GridContainer/VAlignButtons"]
+[node name="AlignBottom" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/VAlignButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Snap to bottom edge"
@@ -156,42 +148,35 @@ focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("8_k00qm")
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 6
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 8
-
-[node name="BottomButtons" type="HBoxContainer" parent="VBoxContainer/MarginContainer2"]
+[node name="BottomButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="Cancel" type="Button" parent="VBoxContainer/MarginContainer2/BottomButtons"]
+[node name="Cancel" type="Button" parent="MarginContainer/VBoxContainer/BottomButtons"]
 layout_mode = 2
 text = "Cancel"
 
-[node name="Spacer" type="Control" parent="VBoxContainer/MarginContainer2/BottomButtons"]
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/BottomButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Resize" type="Button" parent="VBoxContainer/MarginContainer2/BottomButtons"]
+[node name="Resize" type="Button" parent="MarginContainer/VBoxContainer/BottomButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Resize"
 
 [connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
-[connection signal="value_changed" from="VBoxContainer/MarginContainer/GridContainer/Width" to="." method="_on_width_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/MarginContainer/GridContainer/Height" to="." method="_on_height_value_changed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/GridContainer/HAlignButtons/AlignLeft" to="." method="_on_align_left_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/GridContainer/HAlignButtons/AlignCenterH" to="." method="_on_align_center_h_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/GridContainer/HAlignButtons/AlignRight" to="." method="_on_align_right_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/GridContainer/VAlignButtons/AlignTop" to="." method="_on_align_top_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/GridContainer/VAlignButtons/AlignCenterV" to="." method="_on_align_center_v_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/GridContainer/VAlignButtons/AlignBottom" to="." method="_on_align_bottom_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer2/BottomButtons/Cancel" to="." method="hide"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer2/BottomButtons/Resize" to="." method="_on_resize_pressed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/GridContainer/Width" to="." method="_on_width_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/GridContainer/Height" to="." method="_on_height_value_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/HAlignButtons/AlignLeft" to="." method="_on_align_left_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/HAlignButtons/AlignCenterH" to="." method="_on_align_center_h_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/HAlignButtons/AlignRight" to="." method="_on_align_right_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/VAlignButtons/AlignTop" to="." method="_on_align_top_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/VAlignButtons/AlignCenterV" to="." method="_on_align_center_v_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/VAlignButtons/AlignBottom" to="." method="_on_align_bottom_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BottomButtons/Cancel" to="." method="hide"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BottomButtons/Resize" to="." method="_on_resize_pressed"]

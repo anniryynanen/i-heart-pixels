@@ -1,27 +1,24 @@
 [gd_scene load_steps=3 format=3 uid="uid://6i5h1tdoctk6"]
 
-[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_86snt"]
-[ext_resource type="Script" path="res://scenes/popups/controls_info_popup.gd" id="2_rjsrv"]
+[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_uek5m"]
+[ext_resource type="Script" path="res://scenes/popups/controls_popup.gd" id="2_af0oy"]
 
 [node name="ControlsInfoPopup" type="Window"]
 title = "Controls"
 initial_position = 2
-size = Vector2i(368, 260)
+size = Vector2i(368, 245)
 wrap_controls = true
 transient = true
 exclusive = true
 unresizable = true
 popup_window = true
-theme = ExtResource("1_86snt")
-script = ExtResource("2_rjsrv")
+theme = ExtResource("1_uek5m")
+script = ExtResource("2_af0oy")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 25
+theme_type_variation = &"PopupMargins"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2

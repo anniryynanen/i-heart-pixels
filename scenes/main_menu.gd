@@ -19,7 +19,8 @@ enum Image_ {
 }
 
 enum Info {
-    CONTROLS = 0
+    CONTROLS = 0,
+    CREDITS = 1
 }
 
 var on_saved_: Callable
@@ -32,7 +33,7 @@ func _ready() -> void:
     setup_shortcut_(File.SAVE_AS, KEY_S, true)
     setup_shortcut_(File.EXPORT, KEY_E)
     setup_shortcut_(File.EXPORT_AS, KEY_E, true)
-    setup_shortcut_(File.QUIT, KEY_Q,)
+    setup_shortcut_(File.QUIT, KEY_Q)
 
 
 func setup_shortcut_(index: int, keycode: Key, shift_pressed: bool = false) -> void:
@@ -92,7 +93,10 @@ func _on_image_index_pressed(index: int) -> void:
 func _on_info_index_pressed(index: int) -> void:
     match index:
         Info.CONTROLS:
-            $ControlsInfoPopup.popup_centered()
+            $ControlsPopup.popup_centered()
+
+        Info.CREDITS:
+            $CreditsPopup.popup_centered()
 
 
 func _on_open_dialog_file_selected(path: String) -> void:

@@ -50,15 +50,14 @@ theme_override_constants/separation = 0
 [node name="ButtonContainer" type="MarginContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/margin_left = 1
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 3
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 5
 
 [node name="Buttons" type="HBoxContainer" parent="VBoxContainer/ButtonContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 4
 
 [node name="ColorPicker" type="Button" parent="VBoxContainer/ButtonContainer/Buttons"]
 layout_mode = 2

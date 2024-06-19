@@ -1,5 +1,17 @@
 extends Node
 
+const SCALED_CONSTANTS_: Array[String] = [
+    "separation", "h_separation", "v_separation",
+    "margin_left", "margin_right", "margin_top", "margin_bottom",
+    "item_start_padding", "item_end_padding",
+    "shadow_offset_x", "shadow_offset_y",
+    "minimum_grab_thickness",
+    "indent",
+    "outline_size"
+]
+
+const UNSCALED_CONSTANTS_: Array[String] = ["autohide"]
+
 var main_: Control
 var themes_: Dictionary
 var windows_: Array[Window]
@@ -188,16 +200,13 @@ func update_scale_() -> void:
 
         update_theme_font_size_(theme, "KeyHintLabel", "font_size")
 
-        update_theme_constant_(theme, "HBoxContainer", "separation")
-        update_theme_constant_(theme, "VBoxContainer", "separation")
-        update_theme_constant_(theme, "HSplitContainer", "minimum_grap_thickness")
-        update_theme_constant_(theme, "HSplitContainer", "separation")
-        update_theme_constant_(theme, "VSplitContainer", "minimum_grap_thickness")
-        update_theme_constant_(theme, "VSplitContainer", "separation")
-        update_theme_constant_(theme, "MenuBar", "h_separation")
-        update_theme_constant_(theme, "PopupMenu", "item_start_padding")
-        update_theme_constant_(theme, "PopupMenu", "end_padding")
-        update_theme_constant_(theme, "PopupMenu", "v_separation")
+        for theme_type in theme.get_constant_type_list():
+            for constant_name in theme.get_constant_list(theme_type):
+
+                if constant_name in SCALED_CONSTANTS_:
+                    update_theme_constant_(theme, theme_type, constant_name)
+                elif constant_name not in UNSCALED_CONSTANTS_:
+                    push_error("Unknown theme constant: " + constant_name)
 
         update_theme_icon_(theme, "HSplitContainer", "grabber")
         update_theme_icon_(theme, "VSplitContainer", "grabber")
@@ -212,12 +221,22 @@ func update_scale_() -> void:
     main_.notification(Control.NOTIFICATION_THEME_CHANGED)
     update_size_(main_)
 
-    (func():
-        for window in windows_:
-            window.size = Vector2i(
+    for window in windows_:
+        (func():
+            # Can't set window size if it's not visible
+            if not window.visible:
+                await window.visibility_changed
+
+            var new_size: Vector2i = Vector2i(
                 roundi(window.get_meta("width") * Globals.app_scale),
                 roundi(window.get_meta("height") * Globals.app_scale))
-    ).call_deferred()
+
+            if new_size != window.size:
+                (func(): # Deferring is sometimes needed to reduce window size
+                    window.position += (window.size - new_size) / 2
+                    window.size = new_size
+                ).call_deferred()
+        ).call_deferred()
 
 
 func update_stylebox_(box: StyleBox) -> void:
@@ -333,6 +352,10 @@ func update_control_(control: Control) -> void:
     elif control is TextureRect and control.has_meta("texture"):
         control.texture = control.get_meta("texture").get_texture(Globals.app_scale)
 
+    # To scale sliders this way, they need to be inside a Control (not a
+    # Container). Set the slider's size with transform.
+    #
+    # If that becomes too tedious, slider textures can be converted to SVGs.
     elif control is Slider:
         control.scale = Vector2(Globals.app_scale, Globals.app_scale)
 

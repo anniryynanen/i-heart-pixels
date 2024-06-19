@@ -1,0 +1,231 @@
+[gd_scene load_steps=5 format=3 uid="uid://be0bda4j678f"]
+
+[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_gfb8o"]
+[ext_resource type="Script" path="res://scenes/popups/credits_popup.gd" id="2_i3hmq"]
+[ext_resource type="Script" path="res://scenes/popups/closing_popup.gd" id="3_km5qd"]
+[ext_resource type="Texture2D" uid="uid://dp8fh3enx5r6x" path="res://icons/phosphor/20px/arrow-square-out-duotone.svg" id="3_m6xal"]
+
+[node name="CreditsPopup" type="Window"]
+title = "Credits"
+initial_position = 2
+size = Vector2i(374, 236)
+wrap_controls = true
+transient = true
+exclusive = true
+unresizable = true
+popup_window = true
+theme = ExtResource("1_gfb8o")
+script = ExtResource("2_i3hmq")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PopupMargins"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Made by Anni Ryynänen
+using Godot Engine"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="IHP" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+text = "I ❤️ Pixels License"
+
+[node name="Godot" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+text = "Godot Engine License"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 13
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "Also included:"
+
+[node name="HFlowContainer" type="HFlowContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Phosphor" type="Button" parent="MarginContainer/VBoxContainer/HFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+text = "Phosphor Icons License"
+
+[node name="OKHSL" type="Button" parent="MarginContainer/VBoxContainer/HFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+focus_mode = 0
+text = "License of sRGB to OKHSL converter
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HFlowContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="GodotDeps" type="LinkButton" parent="MarginContainer/VBoxContainer/HFlowContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Godot Engine components"
+uri = "https://github.com/godotengine/godot/blob/master/COPYRIGHT.txt"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HFlowContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_m6xal")
+
+[node name="IHPPopup" type="Window" parent="."]
+title = "I ❤️ Pixels License"
+position = Vector2i(0, 36)
+size = Vector2i(642, 446)
+visible = false
+wrap_controls = true
+transient = true
+exclusive = true
+unresizable = true
+popup_window = true
+script = ExtResource("3_km5qd")
+
+[node name="MarginContainer" type="MarginContainer" parent="IHPPopup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PopupMargins"
+
+[node name="Label" type="Label" parent="IHPPopup/MarginContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+text = "Copyright Anni Ryynänen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+autowrap_mode = 2
+
+[node name="GodotPopup" type="Window" parent="."]
+auto_translate_mode = 1
+title = "Godot Engine License"
+visible = false
+wrap_controls = true
+transient = true
+exclusive = true
+unresizable = true
+popup_window = true
+script = ExtResource("3_km5qd")
+
+[node name="MarginContainer" type="MarginContainer" parent="GodotPopup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PopupMargins"
+
+[node name="GodotLabel" type="Label" parent="GodotPopup/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PhosphorPopup" type="Window" parent="."]
+auto_translate_mode = 1
+title = "Phosphor Icons License"
+size = Vector2i(649, 469)
+visible = false
+wrap_controls = true
+transient = true
+exclusive = true
+unresizable = true
+popup_window = true
+script = ExtResource("3_km5qd")
+
+[node name="MarginContainer" type="MarginContainer" parent="PhosphorPopup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PopupMargins"
+
+[node name="Label" type="Label" parent="PhosphorPopup/MarginContainer"]
+layout_mode = 2
+text = "Copyright (c) 2020 Phosphor Icons
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the \"Software\"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE."
+
+[node name="OKHSLPopup" type="Window" parent="."]
+auto_translate_mode = 1
+title = "License of sRGB to OKHSL converter"
+size = Vector2i(642, 446)
+visible = false
+wrap_controls = true
+transient = true
+exclusive = true
+unresizable = true
+popup_window = true
+script = ExtResource("3_km5qd")
+
+[node name="MarginContainer" type="MarginContainer" parent="OKHSLPopup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PopupMargins"
+
+[node name="Label" type="Label" parent="OKHSLPopup/MarginContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+text = "Copyright (c) 2021 Björn Ottosson
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+autowrap_mode = 2
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/IHP" to="IHPPopup" method="popup_centered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Godot" to="GodotPopup" method="popup_centered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HFlowContainer/Phosphor" to="PhosphorPopup" method="popup_centered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HFlowContainer/OKHSL" to="OKHSLPopup" method="popup_centered"]
