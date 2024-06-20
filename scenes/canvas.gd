@@ -248,6 +248,9 @@ func pixel_in_image_(pixel: Vector2i) -> bool:
 
 
 func update_cursor_() -> void:
+    if Globals.loading:
+        await Globals.loading_done
+
     var cursor: Resource = null
     var hotspot: Vector2
 

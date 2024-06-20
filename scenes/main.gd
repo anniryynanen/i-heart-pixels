@@ -1,6 +1,5 @@
 extends Control
 
-var settings_applied_ = false
 var toolbar_orig_y_: float
 var notification_tween_: Tween
 
@@ -45,7 +44,7 @@ func _notification(what: int) -> void:
 
 
 func _on_resized() -> void:
-    if not settings_applied_:
+    if Globals.loading:
         return
 
     if get_window().mode == Window.Mode.MODE_WINDOWED:
@@ -91,6 +90,11 @@ func set_default_settings_() -> void:
 
 
 func apply_settings_() -> void:
+    Globals.apply_settings()
+    AppScale.start.call_deferred()
+
+    await RenderingServer.frame_post_draw
+
     if Settings.has_value("window", "width"):
         get_window().size.x = Settings.get_value("window", "width")
         get_window().size.y = Settings.get_value("window", "height")
@@ -104,9 +108,7 @@ func apply_settings_() -> void:
     %MainSplit.split_offset = -Settings.get_value("panels", "right_width")
     %RightSplit.split_offset = -Settings.get_value("panels", "right_height")
 
-    Globals.apply_settings()
-    settings_applied_ = true
-    AppScale.start.call_deferred()
+    Globals.loading = false
 
 
 func update_title_() -> void:

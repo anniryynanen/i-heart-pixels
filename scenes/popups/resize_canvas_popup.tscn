@@ -174,8 +174,6 @@ layout_mode = 2
 text = "Resize"
 
 [connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
-[connection signal="value_changed" from="MarginContainer/VBoxContainer/GridContainer/Width" to="." method="_on_width_value_changed"]
-[connection signal="value_changed" from="MarginContainer/VBoxContainer/GridContainer/Height" to="." method="_on_height_value_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/HAlignButtons/AlignLeft" to="." method="_on_align_left_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/HAlignButtons/AlignCenterH" to="." method="_on_align_center_h_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/HAlignButtons/AlignRight" to="." method="_on_align_right_pressed"]

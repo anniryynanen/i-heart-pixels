@@ -13,7 +13,11 @@ func _init(texture: Texture2D):
     width_ = texture.get_width()
     height_ = texture.get_height()
 
-    text_ = FileAccess.open(texture.resource_path, FileAccess.READ).get_as_text()
+    if OS.has_feature("editor"):
+        text_ = FileAccess.open(texture.resource_path, FileAccess.READ).get_as_text()
+        SVGKeeper.set_svg_(texture.resource_path, text_)
+    else:
+        text_ = SVGKeeper.get_svg_(texture.resource_path)
 
 
 func get_texture(scale: float) -> ImageTexture:

@@ -15,16 +15,6 @@ func _on_about_to_popup() -> void:
     %Resize.grab_focus()
 
 
-func _on_width_value_changed(_value: float) -> void:
-    %XOffset.min_value = min_x_offset_()
-    %XOffset.max_value = max_x_offset_()
-
-
-func _on_height_value_changed(_value: float) -> void:
-    %YOffset.min_value = min_y_offset_()
-    %YOffset.max_value = max_y_offset_()
-
-
 func _on_align_left_pressed() -> void: %XOffset.value = 0
 func _on_align_right_pressed() -> void: %XOffset.value = %Width.value - Globals.image.size.x
 func _on_align_top_pressed() -> void: %YOffset.value = 0

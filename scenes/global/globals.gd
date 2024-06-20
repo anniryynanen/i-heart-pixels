@@ -1,5 +1,6 @@
 extends Node
 
+signal loading_done
 signal image_changed(image: IHP)
 signal unsaved_changes_changed(unsaved_changes: bool)
 signal current_path_changed(current_path: String)
@@ -15,6 +16,12 @@ signal focus_lost
 signal show_notification(message: String)
 
 const ERROR_TITLE = ":("
+
+var loading = true:
+    set(value):
+        if loading and not value:
+            loading = false
+            loading_done.emit()
 
 var image: IHP:
     set(value):

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://4cuy2tu5miu5"]
+
+[ext_resource type="Script" path="res://scenes/global/svg_keeper.gd" id="1_l8ori"]
+
+[node name="SVGKeeper" type="Node"]
+script = ExtResource("1_l8ori")
+
+[node name="SaveTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="SaveTimer" to="." method="save_json_"]
