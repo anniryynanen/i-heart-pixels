@@ -8,9 +8,6 @@ func _ready() -> void:
 
     custom_minimum_size.y = %ColorBars.get_child(0).size.y + %ButtonContainer.size.y
 
-    Globals.color_sampled.connect(_on_color_sampled)
-    Globals.keyboard_layout_changed.connect(_on_keyboard_layout_changed)
-
 
 func _unhandled_key_input(event: InputEvent) -> void:
     var key: InputEventKey = event as InputEventKey
@@ -18,7 +15,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
     if key.pressed:
         if key.physical_keycode == Controls.COLOR_PICKER:
             if not $ColorPicker.visible:
-                $ColorPicker.popup_color(get_current_bar_().color)
+                $ColorPicker.popup_color(Globals.tool_color)
 
             get_viewport().set_input_as_handled()
 
@@ -35,29 +32,60 @@ func _on_bar_pressed(bar: ColorBar) -> void:
     select_index_(bar.get_index())
 
 
-func _on_bar_double_clicked(bar: ColorBar) -> void:
-    $ColorPicker.popup_color(bar.color)
-
-
-func _on_color_picker_pressed() -> void:
-    $ColorPicker.popup_color(get_current_bar_().color)
+func _on_color_picker_color_changed(color: OKColor) -> void:
+    Globals.tool_color = color
 
 
 func _on_add_pressed() -> void:
-    add_color_()
+    add_bar_(Globals.tool_color)
 
     save_colors_()
     update_buttons_()
     show_current_bar_()
 
 
-func _on_color_sampled(color: OKColor) -> void:
-    set_current_color_(color)
+func _on_set_pressed() -> void:
+    get_current_bar_().color = Globals.tool_color
+    save_colors_()
 
 
-func _on_keyboard_layout_changed():
-    var label: String = Controls.get_key_label(Controls.COLOR_PICKER)
-    %Buttons/ColorPicker.tooltip_text = "Open color picker (%s)" % label
+func _on_move_up_pressed() -> void:
+    if at_beginning_():
+        return
+
+    var index: int = current_index_ - 1
+    %ColorBars.move_child(get_current_bar_(), index)
+    select_index_(index)
+
+
+func _on_move_down_pressed() -> void:
+    if at_end_():
+        return
+
+    var index: int = current_index_ + 1
+    %ColorBars.move_child(get_current_bar_(), index)
+    select_index_(index)
+
+
+func _on_delete_pressed() -> void:
+    if %ColorBars.get_child_count() < 2:
+        return
+
+    var bar: ColorBar = get_current_bar_()
+    if at_end_():
+        current_index_ -= 1
+
+    %ColorBars.remove_child(bar)
+    select_index_(current_index_)
+
+    for connection in bar.get_signal_connection_list("pressed"):
+        bar.pressed.disconnect(connection.callable)
+
+    save_colors_()
+    update_buttons_()
+    show_current_bar_()
+
+    AppScale.remove_transient(bar)
 
 
 func get_current_bar_() -> ColorBar:
@@ -72,10 +100,21 @@ func at_end_() -> bool:
     return current_index_ == %ColorBars.get_child_count() - 1
 
 
-func set_current_color_(color: OKColor) -> void:
-    get_current_bar_().color = color
-    Globals.tool_color = color
-    save_colors_()
+func add_bar_(color: OKColor) -> void:
+    if %ColorBars.get_child_count() > 0:
+        var prev_bar: ColorBar = get_current_bar_()
+        prev_bar.selected = false
+
+    var bar: ColorBar = load("res://scenes/color_bar.tscn").instantiate()
+    bar.color = color
+    bar.selected = true
+    bar.pressed.connect(_on_bar_pressed.bind(bar))
+
+    current_index_ += 1
+    %ColorBars.add_child(bar)
+    %ColorBars.move_child(bar, current_index_)
+
+    AppScale.add_transient.call_deferred(bar)
 
 
 func select_next_() -> void:
@@ -104,72 +143,6 @@ func select_index_(index: int) -> void:
     show_current_bar_()
 
 
-func add_color_() -> void:
-    var color: OKColor
-
-    if %ColorBars.get_child_count() > 0:
-        var prev_bar: ColorBar = get_current_bar_()
-        color = prev_bar.color.duplicate()
-        prev_bar.selected = false
-    else:
-        color = OKColor.new(0.0, 0.0, 0.2)
-
-    var bar: ColorBar = load("res://scenes/color_bar.tscn").instantiate()
-    bar.color = color
-    bar.selected = true
-    bar.pressed.connect(_on_bar_pressed.bind(bar))
-    bar.double_clicked.connect(_on_bar_double_clicked.bind(bar))
-
-    current_index_ += 1
-    %ColorBars.add_child(bar)
-    %ColorBars.move_child(bar, current_index_)
-
-    AppScale.add_transient.call_deferred(bar)
-
-
-func move_color_up_() -> void:
-    if at_beginning_():
-        return
-
-    var index: int = current_index_ - 1
-    %ColorBars.move_child(get_current_bar_(), index)
-    select_index_(index)
-
-
-func move_color_down_() -> void:
-    if at_end_():
-        return
-
-    var index: int = current_index_ + 1
-    %ColorBars.move_child(get_current_bar_(), index)
-    select_index_(index)
-
-
-@warning_ignore("standalone_ternary")
-func delete_color_() -> void:
-    if %ColorBars.get_child_count() < 2:
-        return
-
-    var bar: ColorBar = get_current_bar_()
-    if at_end_():
-        current_index_ -= 1
-
-    %ColorBars.remove_child(bar)
-    select_index_(current_index_)
-
-    for connection in bar.get_signal_connection_list("pressed"):
-        bar.pressed.disconnect(connection.callable)
-
-    for connection in bar.get_signal_connection_list("double_clicked"):
-        bar.double_clicked.disconnect(connection.callable)
-
-    save_colors_()
-    update_buttons_()
-    show_current_bar_()
-
-    AppScale.remove_transient(bar)
-
-
 func update_buttons_() -> void:
     %MoveUp.disabled = at_beginning_()
     %MoveDown.disabled = at_end_()
@@ -184,17 +157,20 @@ func show_current_bar_() -> void:
 func load_colors_() -> void:
     if Settings.has_value("palette", "colors"):
         for color in Settings.get_value("palette", "colors"):
-            add_color_()
-            get_current_bar_().color = OKColor.new(color[0], color[1], color[2])
+            add_bar_(OKColor.new(color[0], color[1], color[2]))
             get_current_bar_().selected = false
 
         current_index_ = Settings.get_value("palette", "current_index", 0)
         current_index_ = clampi(current_index_, 0, %ColorBars.get_child_count() - 1)
         get_current_bar_().selected = true
     else:
-        add_color_()
+        add_bar_(OKColor.new(0.0, 0.0, 0.2))
 
-    Globals.tool_color = get_current_bar_().color
+    if Settings.has_value("tool", "color"):
+        Globals.tool_color = Settings.get_value("tool", "color")
+    else:
+        Globals.tool_color = get_current_bar_().color
+
     update_buttons_()
     show_current_bar_()
 

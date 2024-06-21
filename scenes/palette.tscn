@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://scenes/palette.gd" id="1_7kf47"]
 [ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_8ld5c"]
-[ext_resource type="Texture2D" uid="uid://c4f3xk70t5c6j" path="res://icons/phosphor/20px/palette-duotone.svg" id="3_edb32"]
+[ext_resource type="Texture2D" uid="uid://cfep40epnp028" path="res://icons/phosphor/20px/plus-square-duotone.svg" id="3_fftmp"]
 [ext_resource type="PackedScene" uid="uid://dwl8qyprnb8is" path="res://scenes/color_picker/color_picker.tscn" id="4_6c1x4"]
-[ext_resource type="Texture2D" uid="uid://bpkf4ywylj8jo" path="res://icons/phosphor/20px/rows-plus-bottom-duotone.svg" id="4_u7t87"]
+[ext_resource type="Texture2D" uid="uid://c0jew8gbjut0m" path="res://icons/phosphor/20px/arrow-square-in-duotone.svg" id="4_vsbyl"]
 [ext_resource type="Texture2D" uid="uid://bmit5r07tjbkd" path="res://icons/phosphor/20px/arrow-fat-up-duotone.svg" id="5_2m7bc"]
 [ext_resource type="Texture2D" uid="uid://bxw252h1ki2xb" path="res://icons/phosphor/20px/arrow-fat-down-duotone.svg" id="6_cts40"]
 [ext_resource type="Texture2D" uid="uid://dcxhxup1knasg" path="res://icons/phosphor/20px/trash-duotone.svg" id="9_t77ok"]
@@ -59,23 +59,25 @@ theme_override_constants/margin_bottom = 5
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="ColorPicker" type="Button" parent="VBoxContainer/ButtonContainer/Buttons"]
-layout_mode = 2
-focus_mode = 0
-theme_type_variation = &"IconButton"
-icon = ExtResource("3_edb32")
-
-[node name="Spacer" type="Control" parent="VBoxContainer/ButtonContainer/Buttons"]
-layout_mode = 2
-size_flags_horizontal = 3
-
 [node name="Add" type="Button" parent="VBoxContainer/ButtonContainer/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Add color"
 focus_mode = 0
 theme_type_variation = &"IconButton"
-icon = ExtResource("4_u7t87")
+icon = ExtResource("3_fftmp")
+
+[node name="Spacer" type="Control" parent="VBoxContainer/ButtonContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Set" type="Button" parent="VBoxContainer/ButtonContainer/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Set color"
+focus_mode = 0
+theme_type_variation = &"IconButton"
+icon = ExtResource("4_vsbyl")
 
 [node name="MoveUp" type="Button" parent="VBoxContainer/ButtonContainer/Buttons"]
 unique_name_in_owner = true
@@ -108,9 +110,9 @@ icon = ExtResource("9_t77ok")
 [node name="ColorPicker" parent="." instance=ExtResource("4_6c1x4")]
 visible = false
 
-[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/ColorPicker" to="." method="_on_color_picker_pressed"]
 [connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/Add" to="." method="_on_add_pressed"]
-[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/MoveUp" to="." method="move_color_up_"]
-[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/MoveDown" to="." method="move_color_down_"]
-[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/Delete" to="." method="delete_color_"]
-[connection signal="color_changed" from="ColorPicker" to="." method="set_current_color_"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/Set" to="." method="_on_set_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/MoveUp" to="." method="_on_move_up_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/MoveDown" to="." method="_on_move_down_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/Delete" to="." method="_on_delete_pressed"]
+[connection signal="color_changed" from="ColorPicker" to="." method="_on_color_picker_color_changed"]

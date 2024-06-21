@@ -14,6 +14,7 @@ var drawing_ = false
 var pixel_width_: float = 80.0
 var pan_step_: float = BASE_PAN_STEP
 var cursors_: Dictionary
+var cursor_fills_: Dictionary
 var pan_cursor_: ScalableSVG = ScalableSVG.new(load(
     "res://icons/phosphor/cursors/cursor-hand-grabbing.svg"))
 
@@ -32,11 +33,17 @@ func _ready() -> void:
     cursors_[Tool.COLOR_REPLACER] = ScalableSVG.new(load(
         "res://icons/phosphor/cursors/cursor-eyedropper-sample-duotone.svg"))
 
+    cursor_fills_[Tool.PEN] = ScalableSVG.new(load(
+        "res://icons/phosphor/cursors/cursor-pen-fill-duotone.svg"))
+    cursor_fills_[Tool.COLOR_REPLACER] = ScalableSVG.new(load(
+        "res://icons/phosphor/cursors/cursor-eyedropper-sample-fill-duotone.svg"))
+
     get_window().focus_entered.connect(update_cursor_)
     get_window().focus_exited.connect(update_cursor_)
 
     Globals.image_changed.connect(_on_image_changed)
-    Globals.tool_changed.connect(func(_t): update_cursor_())
+    Globals.tool_changed.connect(func(_a): update_cursor_())
+    Globals.tool_color_changed.connect(func(_a): update_cursor_())
     Globals.app_scale_changed.connect(_on_app_scale_changed)
     Globals.focus_lost.connect(_on_focus_lost)
 
@@ -222,7 +229,7 @@ func activate_tool_() -> void:
      match Globals.tool:
         Tool.COLOR_SAMPLER:
             var rgb: Color = current_layer_.get_pixel(current_pixel_.x, current_pixel_.y)
-            Globals.color_sampled.emit(OKColor.from_rgb(rgb).opaque())
+            Globals.tool_color = OKColor.from_rgb(rgb).opaque()
 
         Tool.COLOR_REPLACER:
             var replaced: Color = current_layer_.get_pixel(current_pixel_.x, current_pixel_.y)
@@ -251,7 +258,7 @@ func update_cursor_() -> void:
     if Globals.loading:
         await Globals.loading_done
 
-    var cursor: Resource = null
+    var cursor: ImageTexture = null
     var hotspot: Vector2
 
     var window_has_focus = DisplayServer.window_is_focused(get_window().get_window_id())
@@ -263,6 +270,18 @@ func update_cursor_() -> void:
             cursor = cursors_[Globals.tool].get_texture(Globals.app_scale)
 
     if cursor:
+        if Globals.tool in cursor_fills_:
+            var fill: ImageTexture = cursor_fills_[Globals.tool].get_texture(
+                Globals.app_scale, Globals.tool_color)
+
+            var combined: Image = Image.create(
+                cursor.get_width(), cursor.get_height(), false, cursor.get_format())
+            var rect: Rect2i = Rect2i(Vector2i(0, 0), cursor.get_size())
+
+            combined.blend_rect(fill.get_image(), rect, rect.position)
+            combined.blend_rect(cursor.get_image(), rect, rect.position)
+            cursor = ImageTexture.create_from_image(combined)
+
         Input.set_custom_mouse_cursor(cursor, Input.CURSOR_ARROW, hotspot)
     else:
         Input.set_custom_mouse_cursor(null)

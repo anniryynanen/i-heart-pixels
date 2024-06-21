@@ -29,6 +29,7 @@ theme_override_constants/margin_left = 4
 
 [node name="Asterisk" type="TextureRect" parent="Panel/MarginContainer"]
 unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.501961)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -36,6 +37,7 @@ texture = ExtResource("3_bje7w")
 
 [node name="AsteriskLight" type="TextureRect" parent="Panel/MarginContainer"]
 unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.501961)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4

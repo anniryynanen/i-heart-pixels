@@ -1,8 +1,6 @@
 class_name ColorBar
 extends Button
 
-signal double_clicked
-
 var color: OKColor:
     set(value):
         color = value
@@ -17,14 +15,6 @@ var selected: bool:
 func _enter_tree() -> void:
     %Panel.add_theme_stylebox_override("panel", StyleBoxFlat.new())
     update_()
-
-
-func _gui_input(event: InputEvent) -> void:
-    if event is InputEventMouseButton:
-        var button: InputEventMouseButton = event as InputEventMouseButton
-
-        if button.button_index == MOUSE_BUTTON_LEFT and button.double_click:
-            double_clicked.emit()
 
 
 func update_() -> void:

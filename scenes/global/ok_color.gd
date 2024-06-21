@@ -26,6 +26,9 @@ func _to_string() -> String:
 
 
 func equals(other: OKColor) -> bool:
+    if other == null:
+        return false
+
     return is_equal_approx(h, other.h) \
         and is_equal_approx(s, other.s) \
         and is_equal_approx(l, other.l) \
