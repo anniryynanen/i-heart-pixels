@@ -43,10 +43,10 @@ text = "Cancel"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
+[node name="Close" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Quit without saving"
+text = "Close without saving"
 
 [node name="Save" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
 unique_name_in_owner = true
@@ -55,5 +55,5 @@ text = "Save"
 
 [connection signal="about_to_popup" from="." to="." method="_on_about_to_popup"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Cancel" to="." method="hide"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Close" to="." method="_on_close_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Save" to="." method="_on_save_pressed"]

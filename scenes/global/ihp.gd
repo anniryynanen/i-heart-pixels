@@ -56,7 +56,11 @@ func resize_canvas(new_size: Vector2i, offset: Vector2i) -> void:
     unsaved_changes = true
 
 
-func save_to_file(path: String) -> bool:
+func can_save_as_png() -> bool:
+    return layers.size() == 1
+
+
+func save_as_ihp(path: String) -> bool:
     var dict: Dictionary = {
         "width": size.x,
         "height": size.y,
@@ -84,16 +88,36 @@ func save_to_file(path: String) -> bool:
     return true
 
 
+func save_as_png(path: String) -> bool:
+    if not can_save_as_png():
+        OS.alert("Can't save as PNG")
+        return false
+
+    var err: Error = Globals.image.current_layer.image.save_png(path)
+    if err:
+        OS.alert("Couldn't save %s (%s)" % [path, error_string(err)], Globals.ERROR_TITLE)
+        return false
+
+    unsaved_changes = false
+    Globals.show_notification.emit("Saved")
+    return true
+
+
+func export(path: String) -> bool:
+    var err: Error = Globals.image.current_layer.image.save_png(path)
+    if err:
+        OS.alert("Couldn't save %s (%s)" % [path, error_string(err)], Globals.ERROR_TITLE)
+        return false
+
+    Globals.show_notification.emit("Exported")
+    return true
+
+
 static func load_from_file(path: String) -> IHP:
     if path.to_lower().ends_with(".ihp"):
         return load_ihp_(path)
     else:
-        return import_image_(path)
-
-
-func get_next_layer_id_() -> int:
-    next_layer_id_ += 1
-    return next_layer_id_
+        return load_image_(path)
 
 
 static func load_ihp_(path: String) -> IHP:
@@ -132,7 +156,7 @@ static func load_ihp_(path: String) -> IHP:
     return ihp
 
 
-static func import_image_(path: String) -> IHP:
+static func load_image_(path: String) -> IHP:
     var image: Image = Image.load_from_file(path)
     if not image:
         OS.alert("Couldn't load " + path)
@@ -145,3 +169,8 @@ static func import_image_(path: String) -> IHP:
     ihp.current_layer.image = image
     ihp.untouched = false
     return ihp
+
+
+func get_next_layer_id_() -> int:
+    next_layer_id_ += 1
+    return next_layer_id_

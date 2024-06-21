@@ -78,5 +78,19 @@ func apply_settings() -> void:
     $KeyboardTimer.start()
 
 
+func load_image(path: String) -> void:
+    var loaded_image: IHP = IHP.load_from_file(path)
+    if loaded_image:
+        image = loaded_image
+
+        if not path.to_lower().ends_with(".png") and not path.to_lower().ends_with(".ihp"):
+            if path.get_file().contains("."):
+                path = path.rsplit(".", false, 1)[0] + ".png"
+            else:
+                path += ".png"
+
+        Globals.current_path = path
+
+
 func emit_unsaved_changes_changed_(unsaved_changes: bool) -> void:
     unsaved_changes_changed.emit(unsaved_changes)

@@ -27,10 +27,7 @@ func _ready() -> void:
 
     for arg in OS.get_cmdline_user_args():
         if not arg.begins_with("-"):
-            var image: IHP = IHP.load_from_file(arg)
-            if image:
-                Globals.image = image
-                Globals.current_path = arg
+            Globals.load_image(arg)
             break
 
 
@@ -80,12 +77,12 @@ func _on_app_scale_changed(app_scale: float) -> void:
 
 
 func _on_unsaved_changes_popup_save() -> void:
-    %MainMenu.save_unsaved_changes_(quit_)
+    %MainMenu.save(Globals.current_path, quit_)
 
 
 func set_default_settings_() -> void:
     Settings.set_if_missing("app", "scale", 1.0)
-    Settings.set_if_missing("panels", "right_width", 180.0)
+    Settings.set_if_missing("panels", "right_width", 200.0)
     Settings.set_if_missing("panels", "right_height", -200.0)
 
 

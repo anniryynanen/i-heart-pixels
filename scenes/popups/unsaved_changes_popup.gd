@@ -1,7 +1,7 @@
 extends ClosingPopup
 
 signal save
-signal quit
+signal close
 
 
 func _ready() -> void:
@@ -18,6 +18,6 @@ func _on_save_pressed() -> void:
     save.emit()
 
 
-func _on_quit_pressed() -> void:
+func _on_close_pressed() -> void:
     hide()
-    quit.emit()
+    close.emit()

@@ -132,16 +132,7 @@ func _on_resized() -> void:
         await RenderingServer.frame_post_draw
         await RenderingServer.frame_post_draw
 
-        var image_size: Vector2 = get_image_size_()
-        if image_size.x > size.x:
-            top_left_.x = -get_tree().root.find_child("Toolbar", true, false).size.x - 1
-        else:
-            top_left_.x = (image_size.x - size.x) / 2.0
-
-        if image_size.y > size.y:
-            top_left_.y = -get_tree().root.find_child("TopBar", true, false).size.y - 1
-        else:
-            top_left_.y = (image_size.y - size.y) / 2.0
+        position_image_()
 
     update_position_()
 
@@ -151,6 +142,7 @@ func _on_image_changed(image: IHP) -> void:
     current_layer_changed_ = true
     texture_ = ImageTexture.create_from_image(current_layer_)
 
+    position_image_()
     update_position_()
 
 
@@ -169,6 +161,19 @@ func _on_focus_lost() -> void:
 
     if hovering_:
         stop_hovering_()
+
+
+func position_image_() -> void:
+    var image_size: Vector2 = get_image_size_()
+    if image_size.x > size.x:
+        top_left_.x = -get_tree().root.find_child("Toolbar", true, false).size.x - 1
+    else:
+        top_left_.x = (image_size.x - size.x) / 2.0
+
+    if image_size.y > size.y:
+        top_left_.y = -get_tree().root.find_child("TopBar", true, false).size.y - 1
+    else:
+        top_left_.y = (image_size.y - size.y) / 2.0
 
 
 func start_hovering_() -> void:

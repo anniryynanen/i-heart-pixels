@@ -32,7 +32,7 @@ item_7/text = "Export As..."
 item_7/id = 5
 item_8/id = 9
 item_8/separator = true
-item_9/text = "Quit"
+item_9/text = "Close"
 item_9/id = 6
 
 [node name="View" type="PopupMenu" parent="."]
@@ -76,7 +76,7 @@ ok_button_text = "Open"
 mode_overrides_title = false
 file_mode = 0
 access = 2
-filters = PackedStringArray("*.ihp, *.png, *.jpg, *.jpeg ; All supported formats (*.ihp, *.png, *.jpg, *.jpeg)", "*.ihp ; I Heart Pixels save (*.ihp)", "*.png ; PNG (*.png)", "*.jpg, *.jpeg ; JPG (*.jpg, *.jpeg)")
+filters = PackedStringArray("*.ihp, *.png, *.jpg, *.jpeg ; All supported formats (*.ihp, *.png, *.jpg, *.jpeg)", "*.ihp ; I Heart Pixels image (*.ihp)", "*.png ; PNG (*.png)", "*.jpg, *.jpeg ; JPG (*.jpg, *.jpeg)")
 use_native_dialog = true
 
 [node name="SaveDialog" type="FileDialog" parent="."]
@@ -85,7 +85,7 @@ size = Vector2i(352, 180)
 ok_button_text = "Save"
 mode_overrides_title = false
 access = 2
-filters = PackedStringArray("*.ihp ; I Heart Pixels save (*.ihp)")
+filters = PackedStringArray("*.ihp ; I Heart Pixels image (*.ihp)", "*.png ; PNG (*.png)")
 use_native_dialog = true
 
 [node name="ExportDialog" type="FileDialog" parent="."]

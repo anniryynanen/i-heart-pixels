@@ -90,5 +90,5 @@ visible = false
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="dragged" from="MainSplit" to="." method="_on_main_split_dragged"]
 [connection signal="dragged" from="MainSplit/RightSplit" to="." method="_on_right_split_dragged"]
-[connection signal="quit" from="UnsavedChangesPopup" to="." method="quit_"]
+[connection signal="close" from="UnsavedChangesPopup" to="." method="quit_"]
 [connection signal="save" from="UnsavedChangesPopup" to="." method="_on_unsaved_changes_popup_save"]
