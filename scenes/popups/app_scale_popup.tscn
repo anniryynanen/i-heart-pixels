@@ -25,17 +25,13 @@ theme_type_variation = &"PopupMargins"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 16
 
-[node name="Control" type="Control" parent="MarginContainer/HBoxContainer"]
+[node name="AppScaleSlider" type="HSlider" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="AppScaleSlider" type="HSlider" parent="MarginContainer/HBoxContainer/Control"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_right = 223.0
-offset_bottom = 20.0
+size_flags_vertical = 4
 min_value = 1.0
 max_value = 3.0
 step = 0.1
@@ -48,6 +44,6 @@ layout_mode = 2
 text = "8.8"
 horizontal_alignment = 1
 
-[connection signal="drag_ended" from="MarginContainer/HBoxContainer/Control/AppScaleSlider" to="." method="_on_app_scale_slider_drag_ended"]
-[connection signal="drag_started" from="MarginContainer/HBoxContainer/Control/AppScaleSlider" to="." method="_on_app_scale_slider_drag_started"]
-[connection signal="value_changed" from="MarginContainer/HBoxContainer/Control/AppScaleSlider" to="." method="_on_app_scale_slider_value_changed"]
+[connection signal="drag_ended" from="MarginContainer/HBoxContainer/AppScaleSlider" to="." method="_on_app_scale_slider_drag_ended"]
+[connection signal="drag_started" from="MarginContainer/HBoxContainer/AppScaleSlider" to="." method="_on_app_scale_slider_drag_started"]
+[connection signal="value_changed" from="MarginContainer/HBoxContainer/AppScaleSlider" to="." method="_on_app_scale_slider_value_changed"]

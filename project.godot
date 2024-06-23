@@ -25,7 +25,7 @@ SVGKeeper="*res://scenes/global/svg_keeper.tscn"
 Cache="*res://scenes/global/cache.tscn"
 Settings="*res://scenes/global/settings.tscn"
 Globals="*res://scenes/global/globals.tscn"
-AppScale="*res://scenes/global/app_scale.tscn"
+AppScaler="*res://scenes/global/app_scaler.tscn"
 
 [display]
 

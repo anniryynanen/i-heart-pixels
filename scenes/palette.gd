@@ -85,7 +85,7 @@ func _on_delete_pressed() -> void:
     update_buttons_()
     show_current_bar_()
 
-    AppScale.remove_transient(bar)
+    AppScaler.remove_transient(bar)
 
 
 func get_current_bar_() -> ColorBar:
@@ -114,7 +114,7 @@ func add_bar_(color: OKColor) -> void:
     %ColorBars.add_child(bar)
     %ColorBars.move_child(bar, current_index_)
 
-    AppScale.add_transient.call_deferred(bar)
+    AppScaler.add_transient.call_deferred(bar)
 
 
 func select_next_() -> void:

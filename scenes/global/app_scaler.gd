@@ -7,10 +7,11 @@ const SCALED_CONSTANTS_: Array[String] = [
     "shadow_offset_x", "shadow_offset_y",
     "minimum_grab_thickness",
     "indent",
-    "outline_size"
+    "outline_size",
+    "grabber_offset"
 ]
 
-const UNSCALED_CONSTANTS_: Array[String] = ["autohide"]
+const UNSCALED_CONSTANTS_: Array[String] = ["autohide", "center_grabber"]
 
 var main_: Control
 var themes_: Dictionary
@@ -99,9 +100,6 @@ func scan_nodes_(node: Node, transient: bool = false) -> Array[Control]:
                 rect.set_meta("texture", ScalableSVG.new(rect.texture))
                 new_controls.append(rect)
 
-        elif control is Slider:
-            new_controls.append(control)
-
     if transient:
         transient_controls_.append_array(new_controls)
     else:
@@ -144,9 +142,9 @@ func save_themes_() -> void:
         for theme_type: String in theme.get_icon_type_list():
             for icon_name: String in theme.get_icon_list(theme_type):
 
-                theme.set_meta(
-                    theme_type + "_" + icon_name,
-                    ScalableSVG.new(theme.get_icon(icon_name, theme_type)))
+                var icon: Texture2D = theme.get_icon(icon_name, theme_type)
+                if icon.resource_path.ends_with(".svg"):
+                    theme.set_meta(theme_type + "_" + icon_name, ScalableSVG.new(icon))
 
 
 func save_stylebox_(box: StyleBox) -> void:
@@ -211,6 +209,12 @@ func update_scale_() -> void:
         update_theme_icon_(theme, "HSplitContainer", "grabber")
         update_theme_icon_(theme, "VSplitContainer", "grabber")
         update_theme_icon_(theme, "SpinBox", "updown")
+        update_theme_icon_(theme, "HSlider", "grabber")
+        update_theme_icon_(theme, "HSlider", "grabber_highlight")
+        update_theme_icon_(theme, "HSlider", "grabber_disabled")
+        update_theme_icon_(theme, "VSlider", "grabber")
+        update_theme_icon_(theme, "VSlider", "grabber_highlight")
+        update_theme_icon_(theme, "VSlider", "grabber_disabled")
 
     for control in controls_:
         update_control_(control)
@@ -351,13 +355,6 @@ func update_control_(control: Control) -> void:
 
     elif control is TextureRect and control.has_meta("texture"):
         control.texture = control.get_meta("texture").get_texture(Globals.app_scale)
-
-    # To scale sliders this way, they need to be inside a Control (not a
-    # Container). Set the slider's size with transform.
-    #
-    # If that becomes too tedious, slider textures can be converted to SVGs.
-    elif control is Slider:
-        control.scale = Vector2(Globals.app_scale, Globals.app_scale)
 
 
 func update_size_(control: Control) -> void:

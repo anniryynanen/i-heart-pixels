@@ -7,6 +7,7 @@ signal current_path_changed(current_path: String)
 
 signal tool_changed(tool: Tool.Type)
 signal tool_color_changed(color: OKColor)
+signal pen_size_changed(pen_size: int)
 signal app_scale_changed(app_scale: float)
 signal keyboard_layout_changed
 signal focus_lost
@@ -47,6 +48,12 @@ var tool_color: OKColor:
         Settings.set_value("tool", "color", tool_color)
         tool_color_changed.emit(tool_color)
 
+var pen_size: int:
+    set(value):
+        pen_size = value
+        Settings.set_value("pen", "size", pen_size)
+        pen_size_changed.emit(pen_size)
+
 var app_scale: float:
     set(value):
         app_scale = value
@@ -72,7 +79,8 @@ func _on_keyboard_timer_timeout() -> void:
 
 func apply_settings() -> void:
     image = IHP.new(Vector2i(16, 16))
-    app_scale = Settings.get_value("app", "scale")
+    pen_size = Settings.get_value("pen", "size", 1)
+    app_scale = Settings.get_value("app", "scale", 1.0)
 
     $KeyboardTimer.timeout.emit()
     $KeyboardTimer.start()

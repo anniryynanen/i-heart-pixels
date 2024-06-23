@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuhhtu4af3gb8"]
+
+[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_360vh"]
+[ext_resource type="Script" path="res://scenes/pen_size.gd" id="2_1pw7s"]
+
+[node name="PenSize" type="VBoxContainer"]
+offset_right = 1152.0
+offset_bottom = 648.0
+theme = ExtResource("1_360vh")
+theme_override_constants/separation = 2
+script = ExtResource("2_1pw7s")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Label"
+
+[node name="Slider" type="HSlider" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_mode = 0
+mouse_force_pass_scroll_events = false
+min_value = 1.0
+max_value = 11.0
+step = 2.0
+value = 1.0
+
+[connection signal="value_changed" from="Slider" to="." method="_on_slider_value_changed"]

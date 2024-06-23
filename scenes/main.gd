@@ -6,7 +6,6 @@ var notification_tween_: Tween
 
 func _enter_tree() -> void:
     Settings.load_settings()
-    set_default_settings_()
 
     toolbar_orig_y_ = %Toolbar.position.y
 
@@ -70,25 +69,19 @@ func _on_app_scale_changed(app_scale: float) -> void:
     %Toolbar.reset_size.call_deferred()
 
     %MainSplit.split_offset = roundi(
-        -Settings.get_value("panels", "right_width") * Globals.app_scale)
+        -Settings.get_value("panels", "right_width", 200.0) * Globals.app_scale)
 
     %RightSplit.split_offset = roundi(
-        -Settings.get_value("panels", "right_height") * Globals.app_scale)
+        -Settings.get_value("panels", "right_height", -200.0) * Globals.app_scale)
 
 
 func _on_unsaved_changes_popup_save() -> void:
     %MainMenu.save(Globals.current_path, quit_)
 
 
-func set_default_settings_() -> void:
-    Settings.set_if_missing("app", "scale", 1.0)
-    Settings.set_if_missing("panels", "right_width", 200.0)
-    Settings.set_if_missing("panels", "right_height", -200.0)
-
-
 func apply_settings_() -> void:
     Globals.apply_settings()
-    AppScale.start.call_deferred()
+    AppScaler.start.call_deferred()
 
     await RenderingServer.frame_post_draw
 
@@ -100,10 +93,7 @@ func apply_settings_() -> void:
         get_window().position.x = Settings.get_value("window", "x")
         get_window().position.y = Settings.get_value("window", "y")
 
-    get_window().mode = Settings.get_value("window", "mode", Window.Mode.MODE_MAXIMIZED)
-
-    %MainSplit.split_offset = -Settings.get_value("panels", "right_width")
-    %RightSplit.split_offset = -Settings.get_value("panels", "right_height")
+    get_window().mode = Settings.get_value("window", "mode", Window.Mode.MODE_WINDOWED)
 
     Globals.loading = false
 

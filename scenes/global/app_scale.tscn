@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c8iwm8vi5cgko"]
-
-[ext_resource type="Script" path="res://scenes/global/app_scale.gd" id="1_xaxnr"]
-
-[node name="AppScale" type="Node"]
-script = ExtResource("1_xaxnr")

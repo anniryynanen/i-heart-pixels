@@ -17,6 +17,7 @@ var cursors_: Dictionary
 var cursor_fills_: Dictionary
 var pan_cursor_: ScalableSVG = ScalableSVG.new(load(
     "res://icons/phosphor/cursors/cursor-hand-grabbing.svg"))
+var pen_tips_: Dictionary
 
 var current_layer_: Image
 var current_layer_changed_ = false
@@ -37,6 +38,11 @@ func _ready() -> void:
         "res://icons/phosphor/cursors/cursor-pen-fill-duotone.svg"))
     cursor_fills_[Tool.COLOR_REPLACER] = ScalableSVG.new(load(
         "res://icons/phosphor/cursors/cursor-eyedropper-sample-fill-duotone.svg"))
+
+    for pen_size in range(3, 12, 2):
+        var bitmask: BitMap = BitMap.new()
+        bitmask.create_from_image_alpha(load("res://images/pen-%spx.png" % pen_size).get_image())
+        pen_tips_[pen_size] = bitmask
 
     get_window().focus_entered.connect(update_cursor_)
     get_window().focus_exited.connect(update_cursor_)
@@ -166,12 +172,12 @@ func _on_focus_lost() -> void:
 func position_image_() -> void:
     var image_size: Vector2 = get_image_size_()
     if image_size.x > size.x:
-        top_left_.x = -get_tree().root.find_child("Toolbar", true, false).size.x - 1
+        top_left_.x = -get_tree().root.find_child("Toolbar", true, false).size.x
     else:
         top_left_.x = (image_size.x - size.x) / 2.0
 
     if image_size.y > size.y:
-        top_left_.y = -get_tree().root.find_child("TopBar", true, false).size.y - 1
+        top_left_.y = -get_tree().root.find_child("TopBar", true, false).size.y
     else:
         top_left_.y = (image_size.y - size.y) / 2.0
 
@@ -226,7 +232,18 @@ func draw_pixel_(pixel: Vector2i) -> void:
     if Globals.tool == Tool.ERASER:
         color = OKColor.new(0.0, 0.0, 0.0, 0.0)
 
-    current_layer_.set_pixel(pixel.x, pixel.y, color.to_rgb())
+    if Globals.pen_size == 1:
+        current_layer_.set_pixel(pixel.x, pixel.y, color.to_rgb())
+    else:
+        var pen_tip: BitMap = pen_tips_[Globals.pen_size]
+        var offset: int = roundi((Globals.pen_size - 1) / 2.0)
+        for x in range(pen_tip.get_size().x):
+            for y in range(pen_tip.get_size().y):
+
+                var point: Vector2i = Vector2i(pixel.x + x - offset, pixel.y + y - offset)
+                if pen_tip.get_bit(x, y) and pixel_in_image_(point):
+                    current_layer_.set_pixel(point.x, point.y, color.to_rgb())
+
     mark_layer_as_changed_()
 
 
@@ -397,7 +414,70 @@ func draw_hover_highlight_() -> void:
 
     var hl_pos: Vector2 = current_pixel_ * pixel_width_ - top_left_
     hl_pos += Vector2(line_width / 2.0, line_width / 2.0)
-    var hl_size: Vector2 = Vector2(pixel_width_ - line_width, pixel_width_ - line_width)
 
-    draw_rect(Rect2(hl_pos, hl_size),
-        IHPColorPicker.get_line_color(pixel_color).to_rgb(), false, line_width)
+    # Outline size 1 pen tip
+    if Globals.pen_size == 1:
+        var hl_size: Vector2 = Vector2(pixel_width_ - line_width, pixel_width_ - line_width)
+        draw_rect(Rect2(hl_pos, hl_size),
+            IHPColorPicker.get_line_color(pixel_color).to_rgb(), false, line_width)
+
+    # Outline larger pen tips with turtle graphics
+    else:
+        var points: PackedVector2Array = PackedVector2Array(
+            [hl_pos + Vector2.UP * (pixel_width_ * (Globals.pen_size - 1) / 2.0)])
+        extend_polyline_(points, Vector2i.RIGHT * pixel_width_ + Vector2.LEFT * line_width)
+
+        var turtle_start: Vector2i = Vector2i(roundi((Globals.pen_size - 1) / 2.0 - 1.0), 0)
+        var turtle_pos: Vector2i = turtle_start + Vector2i.RIGHT
+        var turtle_direction: Vector2i = Vector2i.RIGHT
+
+        var pen_tip: BitMap = pen_tips_[Globals.pen_size]
+        var bounds: Rect2i = Rect2i(Vector2i(), pen_tip.get_size())
+
+        while points.size() == 2 or turtle_pos != turtle_start:
+            var distance: float = pixel_width_
+            var ahead = turtle_pos + turtle_direction
+            var ahead_left = ahead + rotate_left_(turtle_direction)
+
+            if bounds.has_point(ahead) and pen_tip.get_bit(ahead.x, ahead.y):
+                # Turn left
+                if bounds.has_point(ahead_left) and pen_tip.get_bit(ahead_left.x, ahead_left.y):
+                    extend_polyline_(points, turtle_direction * line_width)
+                    turtle_pos += turtle_direction
+                    turtle_direction = rotate_left_(turtle_direction)
+                # Go straight ahead
+                else:
+                    extend_polyline_(points, turtle_direction * distance)
+                    turtle_pos += turtle_direction
+            # Turn right
+            else:
+                turtle_direction = rotate_right_(turtle_direction)
+                extend_polyline_(points, turtle_direction * (distance - line_width))
+
+        points.append(points[0])
+        draw_polyline(points, IHPColorPicker.get_line_color(pixel_color).to_rgb(), line_width)
+
+
+static func extend_polyline_(points: PackedVector2Array, vector: Vector2) -> void:
+    var last_point: Vector2 = points[-1]
+    points.append(last_point + vector)
+
+
+static func rotate_left_(direction: Vector2i) -> Vector2i:
+    match direction:
+        Vector2i.UP: return Vector2i.LEFT
+        Vector2i.RIGHT: return Vector2i.UP
+        Vector2i.DOWN: return Vector2i.RIGHT
+        Vector2i.LEFT: return Vector2i.DOWN
+
+    return Vector2i()
+
+
+static func rotate_right_(direction: Vector2i) -> Vector2i:
+    match direction:
+        Vector2i.UP: return Vector2i.RIGHT
+        Vector2i.RIGHT: return Vector2i.DOWN
+        Vector2i.DOWN: return Vector2i.LEFT
+        Vector2i.LEFT: return Vector2i.UP
+
+    return Vector2i()

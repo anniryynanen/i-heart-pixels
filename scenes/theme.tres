@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=61 format=3 uid="uid://bp7ntkss4y7ms"]
+[gd_resource type="Theme" load_steps=66 format=3 uid="uid://bp7ntkss4y7ms"]
 
 [ext_resource type="Texture2D" uid="uid://c685fxh0dy8li" path="res://icons/h-split-handle.svg" id="1_bpwql"]
 [ext_resource type="Texture2D" uid="uid://dpjb4lrwmancf" path="res://icons/scroll-grabber.svg" id="1_tsh5b"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cs3mdobcbp5rt" path="res://icons/scroll-grabber-pressed.svg" id="3_1d661"]
 [ext_resource type="FontFile" uid="uid://bmin1ykm7syfj" path="res://fonts/noto-sans/NotoSans-Bold.ttf" id="3_neeoh"]
 [ext_resource type="FontFile" uid="uid://b38kkef63j7c7" path="res://fonts/noto-sans/NotoSans-Regular.ttf" id="4_dfwtg"]
+[ext_resource type="Texture2D" uid="uid://jm5sohefbbd1" path="res://icons/slider-grabber.svg" id="5_73xhc"]
 [ext_resource type="Texture2D" uid="uid://2rssgnqp7kde" path="res://icons/phosphor/16px/caret-up-down.svg" id="5_toaxi"]
 [ext_resource type="Texture2D" uid="uid://b28jtaavnh8vt" path="res://icons/v-split-handle.svg" id="6_2t5aa"]
 [ext_resource type="Texture2D" uid="uid://cxiiqyo515qml" path="res://icons/scroll.svg" id="6_g6q28"]
@@ -110,6 +111,23 @@ expand_margin_right = 5.0
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_0iy5j"]
 color = Color(0.577652, 0.577652, 0.577652, 1)
+grow_begin = 0.0
+grow_end = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qhe4h"]
+bg_color = Color(0.273142, 0.273142, 0.273142, 1)
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1eo4w"]
+bg_color = Color(0.273142, 0.273142, 0.273142, 1)
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6cpfc"]
+bg_color = Color(0.619082, 0.619082, 0.619082, 1)
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k1mct"]
 
@@ -316,6 +334,11 @@ color = Color(0.577652, 0.577652, 0.577652, 1)
 grow_begin = -6.0
 grow_end = -6.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jxloo"]
+bg_color = Color(0.619082, 0.619082, 0.619082, 1)
+expand_margin_top = 1.0
+expand_margin_bottom = 2.0
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tesxp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_86v83"]
@@ -447,6 +470,12 @@ HScrollBar/styles/scroll = SubResource("StyleBoxTexture_uwe6r")
 HScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_7xx71")
 HSeparator/constants/separation = 14
 HSeparator/styles/separator = SubResource("StyleBoxLine_0iy5j")
+HSlider/icons/grabber = ExtResource("5_73xhc")
+HSlider/icons/grabber_disabled = ExtResource("5_73xhc")
+HSlider/icons/grabber_highlight = ExtResource("5_73xhc")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_qhe4h")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_1eo4w")
+HSlider/styles/slider = SubResource("StyleBoxFlat_6cpfc")
 HSplitContainer/constants/autohide = 0
 HSplitContainer/constants/minimum_grab_thickness = 5
 HSplitContainer/constants/separation = 5
@@ -517,6 +546,8 @@ RichTextLabel/colors/default_color = Color(0, 0, 0, 1)
 RichTextLabel/fonts/bold_font = ExtResource("3_neeoh")
 RichTextLabel/fonts/normal_font = ExtResource("4_dfwtg")
 SpinBox/icons/updown = ExtResource("5_toaxi")
+TitleDecor/base_type = &"Panel"
+TitleDecor/styles/panel = SubResource("StyleBoxFlat_jxloo")
 ToolButton/base_type = &"Button"
 ToolButton/styles/disabled = SubResource("StyleBoxEmpty_tesxp")
 ToolButton/styles/hover = SubResource("StyleBoxFlat_86v83")

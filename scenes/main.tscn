@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://dpqpbds16fmgh"]
+[gd_scene load_steps=10 format=3 uid="uid://dpqpbds16fmgh"]
 
 [ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_0c86d"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_qg5aj"]
 [ext_resource type="PackedScene" uid="uid://clr3rba3j2bsb" path="res://scenes/canvas.tscn" id="2_hvaxd"]
 [ext_resource type="PackedScene" uid="uid://cq54mhhpfawor" path="res://scenes/main_menu.tscn" id="4_7m4tl"]
 [ext_resource type="PackedScene" uid="uid://b7kxhlrp3gtms" path="res://scenes/palette.tscn" id="4_oo74j"]
+[ext_resource type="PackedScene" uid="uid://cuhhtu4af3gb8" path="res://scenes/pen_size.tscn" id="5_m1cp6"]
+[ext_resource type="PackedScene" uid="uid://dmmnh8ec13bmw" path="res://scenes/title.tscn" id="6_11rqp"]
 [ext_resource type="PackedScene" uid="uid://80q74pk3rmx1" path="res://scenes/toolbar.tscn" id="7_0363p"]
 [ext_resource type="PackedScene" uid="uid://b0gtifc3o4sq" path="res://scenes/popups/unsaved_changes_popup.tscn" id="7_j86ne"]
 
@@ -40,20 +42,41 @@ layout_mode = 2
 [node name="Palette" parent="MainSplit/RightSplit" instance=ExtResource("4_oo74j")]
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MainSplit/RightSplit"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainSplit/RightSplit"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Spacer" type="Control" parent="MainSplit/RightSplit/VBoxContainer2"]
+[node name="MarginContainer" type="MarginContainer" parent="MainSplit/RightSplit/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 5
+
+[node name="PenSize" parent="MainSplit/RightSplit/VBoxContainer/MarginContainer" instance=ExtResource("5_m1cp6")]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MainSplit/RightSplit/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 3
+
+[node name="Title" parent="MainSplit/RightSplit/VBoxContainer/MarginContainer2" instance=ExtResource("6_11rqp")]
+layout_mode = 2
+text = "Layers"
+
+[node name="Spacer" type="Control" parent="MainSplit/RightSplit/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="MainSplit/RightSplit/VBoxContainer2"]
+[node name="MarginContainer3" type="MarginContainer" parent="MainSplit/RightSplit/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_top = 5
+theme_override_constants/margin_top = 3
 theme_override_constants/margin_bottom = 5
 
-[node name="ImageSize" type="Label" parent="MainSplit/RightSplit/VBoxContainer2/MarginContainer"]
+[node name="ImageSize" type="Label" parent="MainSplit/RightSplit/VBoxContainer/MarginContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "16x16"
