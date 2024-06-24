@@ -27,6 +27,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
             select_prev_()
             get_viewport().set_input_as_handled()
 
+        elif key.physical_keycode == Controls.RESELECT_COLOR:
+            Globals.tool_color = get_current_bar_().color
+            get_viewport().set_input_as_handled()
+
 
 func _on_bar_pressed(bar: ColorBar) -> void:
     select_index_(bar.get_index())

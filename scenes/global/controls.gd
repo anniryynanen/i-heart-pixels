@@ -7,6 +7,7 @@ const COLOR_REPLACER = KEY_R
 const COLOR_PICKER = KEY_V
 const NEXT_COLOR = KEY_D
 const PREV_COLOR = KEY_A
+const RESELECT_COLOR = KEY_S
 
 
 static func get_key_label(key: Key) -> String:

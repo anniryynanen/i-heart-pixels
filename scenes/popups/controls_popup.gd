@@ -12,3 +12,4 @@ func _on_keyboard_layout_changed() -> void:
     %PickerControl.text = Controls.get_key_label(Controls.COLOR_PICKER)
     %NextControl.text = Controls.get_key_label(Controls.NEXT_COLOR)
     %PreviousControl.text = Controls.get_key_label(Controls.PREV_COLOR)
+    %ReselectControl.text = Controls.get_key_label(Controls.RESELECT_COLOR)
