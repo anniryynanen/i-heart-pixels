@@ -335,9 +335,9 @@ grow_begin = -6.0
 grow_end = -6.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jxloo"]
-bg_color = Color(0.619082, 0.619082, 0.619082, 1)
+bg_color = Color(0.446313, 0.446313, 0.446313, 1)
 expand_margin_top = 1.0
-expand_margin_bottom = 2.0
+expand_margin_bottom = 1.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tesxp"]
 
@@ -500,6 +500,7 @@ KeyHintLabel/styles/normal = SubResource("StyleBoxFlat_bhehw")
 KeyHintPanel/base_type = &"Panel"
 KeyHintPanel/styles/panel = SubResource("StyleBoxFlat_6ik4c")
 Label/colors/font_color = Color(0, 0, 0, 1)
+Label/constants/line_spacing = 0
 LineEdit/colors/caret_color = Color(0, 0, 0, 1)
 LineEdit/colors/font_color = Color(0, 0, 0, 1)
 LineEdit/colors/font_selected_color = Color(0, 0, 0, 1)

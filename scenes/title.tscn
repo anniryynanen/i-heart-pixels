@@ -1,7 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://dmmnh8ec13bmw"]
+[gd_scene load_steps=5 format=3 uid="uid://dmmnh8ec13bmw"]
 
 [ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_phnsi"]
 [ext_resource type="Script" path="res://scenes/title.gd" id="2_07wht"]
+[ext_resource type="FontFile" uid="uid://bmin1ykm7syfj" path="res://fonts/noto-sans/NotoSans-Bold.ttf" id="3_e2cks"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fthik"]
+line_spacing = 0.0
+font = ExtResource("3_e2cks")
+font_size = 14
+font_color = Color(0, 0, 0, 1)
 
 [node name="Title" type="HBoxContainer"]
 anchors_preset = 15
@@ -23,6 +30,7 @@ theme_type_variation = &"TitleDecor"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Title"
+label_settings = SubResource("LabelSettings_fthik")
 horizontal_alignment = 1
 
 [node name="RightDecor" type="Panel" parent="."]

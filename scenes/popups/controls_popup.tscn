@@ -1,12 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://6i5h1tdoctk6"]
+[gd_scene load_steps=4 format=3 uid="uid://6i5h1tdoctk6"]
 
 [ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_uek5m"]
 [ext_resource type="Script" path="res://scenes/popups/controls_popup.gd" id="2_af0oy"]
+[ext_resource type="PackedScene" uid="uid://dmmnh8ec13bmw" path="res://scenes/title.tscn" id="3_c16y8"]
 
 [node name="ControlsInfoPopup" type="Window"]
 title = "Controls"
 initial_position = 2
-size = Vector2i(368, 245)
+size = Vector2i(473, 267)
 wrap_controls = true
 transient = true
 exclusive = true
@@ -16,58 +17,135 @@ theme = ExtResource("1_uek5m")
 script = ExtResource("2_af0oy")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_type_variation = &"PopupMargins"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 21
 
-[node name="PanLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
-bbcode_enabled = true
-text = "Pan!"
-fit_content = true
-autowrap_mode = 0
+theme_override_constants/separation = 22
 
-[node name="ZoomLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="Movement" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-bbcode_enabled = true
-text = "Zoom!"
-fit_content = true
-autowrap_mode = 0
+theme_override_constants/separation = 6
 
-[node name="PenAndEraserLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="MovementTitle" parent="MarginContainer/HBoxContainer/VBoxContainer/Movement" instance=ExtResource("3_c16y8")]
 layout_mode = 2
-bbcode_enabled = true
-text = "Pen and eraser!"
-fit_content = true
-autowrap_mode = 0
+text = "Movement"
 
-[node name="ColorSamplerLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="PanLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/Movement"]
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
-bbcode_enabled = true
-text = "Color sampler!"
-fit_content = true
-autowrap_mode = 0
+size_flags_vertical = 0
+text = "To pan the canvas, drag with middle mouse button."
+autowrap_mode = 2
 
-[node name="ColorPickerLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="ZoomLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/Movement"]
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
-bbcode_enabled = true
-text = "Color picker!"
-fit_content = true
-autowrap_mode = 0
+size_flags_vertical = 0
+text = "To zoom the canvas, scroll with mouse wheel."
+autowrap_mode = 2
 
-[node name="NextPrevColorLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="Colors" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-bbcode_enabled = true
-text = "Change color!"
-fit_content = true
-autowrap_mode = 0
+
+[node name="ColorsTitle" parent="MarginContainer/HBoxContainer/VBoxContainer/Colors" instance=ExtResource("3_c16y8")]
+layout_mode = 2
+text = "Colors"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/Colors"]
+layout_mode = 2
+size_flags_horizontal = 4
+columns = 2
+
+[node name="PickerLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/Colors/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Open color picker:"
+horizontal_alignment = 2
+
+[node name="PickerControl" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/Colors/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "KEY"
+
+[node name="PreviousLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/Colors/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Previous color:"
+horizontal_alignment = 2
+
+[node name="PreviousControl" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/Colors/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "KEY"
+
+[node name="NextLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/Colors/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Next color:"
+horizontal_alignment = 2
+
+[node name="NextControl" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/Colors/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "KEY"
+
+[node name="Tools" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ToolsTitle" parent="MarginContainer/HBoxContainer/Tools" instance=ExtResource("3_c16y8")]
+layout_mode = 2
+text = "Tools"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/Tools"]
+layout_mode = 2
+size_flags_horizontal = 4
+columns = 2
+
+[node name="PenLabel" type="Label" parent="MarginContainer/HBoxContainer/Tools/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Pen and eraser:"
+horizontal_alignment = 2
+
+[node name="PenControl" type="Label" parent="MarginContainer/HBoxContainer/Tools/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "KEY"
+
+[node name="SamplerLabel" type="Label" parent="MarginContainer/HBoxContainer/Tools/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Color sampler:"
+horizontal_alignment = 2
+
+[node name="SamplerControl" type="Label" parent="MarginContainer/HBoxContainer/Tools/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "KEY"
+
+[node name="ReplacerLabel" type="Label" parent="MarginContainer/HBoxContainer/Tools/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Color replacer:"
+horizontal_alignment = 2
+
+[node name="ReplacerControl" type="Label" parent="MarginContainer/HBoxContainer/Tools/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "KEY"

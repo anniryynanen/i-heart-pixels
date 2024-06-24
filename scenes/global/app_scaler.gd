@@ -8,7 +8,8 @@ const SCALED_CONSTANTS_: Array[String] = [
     "minimum_grab_thickness",
     "indent",
     "outline_size",
-    "grabber_offset"
+    "grabber_offset",
+    "line_spacing"
 ]
 
 const UNSCALED_CONSTANTS_: Array[String] = ["autohide", "center_grabber"]
