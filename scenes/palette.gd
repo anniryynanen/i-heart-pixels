@@ -1,12 +1,25 @@
 extends Control
 
 var current_index_: int = -1
+var dragged_bar_: ColorBar
 
 
 func _ready() -> void:
     load_colors_()
 
     custom_minimum_size.y = %ColorBars.get_child(0).size.y + %ButtonContainer.size.y
+
+
+func _notification(what: int) -> void:
+    if what == NOTIFICATION_DRAG_BEGIN:
+        var data: Variant = get_viewport().gui_get_drag_data()
+        if data is ColorBar:
+            dragged_bar_ = data as ColorBar
+            dragged_bar_.highlighted = true
+
+    elif what == NOTIFICATION_DRAG_END:
+        dragged_bar_.highlighted = false
+        dragged_bar_ = null
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -36,6 +49,18 @@ func _on_bar_pressed(bar: ColorBar) -> void:
     select_index_(bar.get_index())
 
 
+func _on_bar_drag_hovered(above: bool, bar: ColorBar) -> void:
+    if bar == dragged_bar_:
+        return
+
+    var current_bar: ColorBar = get_current_bar_()
+    var index = bar.get_index() if above else bar.get_index() + 1
+    %ColorBars.move_child(dragged_bar_, index)
+
+    current_index_ = current_bar.get_index()
+    save_current_index_()
+
+
 func _on_color_picker_color_changed(color: OKColor) -> void:
     Globals.tool_color = color
 
@@ -53,24 +78,6 @@ func _on_set_pressed() -> void:
     save_colors_()
 
 
-func _on_move_up_pressed() -> void:
-    if at_beginning_():
-        return
-
-    var index: int = current_index_ - 1
-    %ColorBars.move_child(get_current_bar_(), index)
-    select_index_(index)
-
-
-func _on_move_down_pressed() -> void:
-    if at_end_():
-        return
-
-    var index: int = current_index_ + 1
-    %ColorBars.move_child(get_current_bar_(), index)
-    select_index_(index)
-
-
 func _on_delete_pressed() -> void:
     if %ColorBars.get_child_count() < 2:
         return
@@ -84,6 +91,9 @@ func _on_delete_pressed() -> void:
 
     for connection in bar.get_signal_connection_list("pressed"):
         bar.pressed.disconnect(connection.callable)
+
+    for connection in bar.get_signal_connection_list("drag_hovered"):
+        bar.drag_hovered.disconnect(connection.callable)
 
     save_colors_()
     update_buttons_()
@@ -113,6 +123,7 @@ func add_bar_(color: OKColor) -> void:
     bar.color = color
     bar.selected = true
     bar.pressed.connect(_on_bar_pressed.bind(bar))
+    bar.drag_hovered.connect(_on_bar_drag_hovered.bind(bar))
 
     current_index_ += 1
     %ColorBars.add_child(bar)
@@ -142,14 +153,10 @@ func select_index_(index: int) -> void:
 
     current_index_ = index
     save_current_index_()
-
-    update_buttons_()
     show_current_bar_()
 
 
 func update_buttons_() -> void:
-    %MoveUp.disabled = at_beginning_()
-    %MoveDown.disabled = at_end_()
     %Delete.disabled = %ColorBars.get_child_count() < 2
 
 

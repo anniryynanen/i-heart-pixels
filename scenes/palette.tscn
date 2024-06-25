@@ -1,12 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://b7kxhlrp3gtms"]
+[gd_scene load_steps=8 format=3 uid="uid://b7kxhlrp3gtms"]
 
 [ext_resource type="Script" path="res://scenes/palette.gd" id="1_7kf47"]
 [ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_8ld5c"]
 [ext_resource type="Texture2D" uid="uid://cfep40epnp028" path="res://icons/phosphor/20px/plus-square-duotone.svg" id="3_fftmp"]
 [ext_resource type="PackedScene" uid="uid://dwl8qyprnb8is" path="res://scenes/color_picker/color_picker.tscn" id="4_6c1x4"]
 [ext_resource type="Texture2D" uid="uid://c0jew8gbjut0m" path="res://icons/phosphor/20px/arrow-square-in-duotone.svg" id="4_vsbyl"]
-[ext_resource type="Texture2D" uid="uid://bmit5r07tjbkd" path="res://icons/phosphor/20px/arrow-fat-up-duotone.svg" id="5_2m7bc"]
-[ext_resource type="Texture2D" uid="uid://bxw252h1ki2xb" path="res://icons/phosphor/20px/arrow-fat-down-duotone.svg" id="6_cts40"]
 [ext_resource type="Texture2D" uid="uid://dcxhxup1knasg" path="res://icons/phosphor/20px/trash-duotone.svg" id="9_t77ok"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t3v4r"]
@@ -40,6 +38,7 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_t3v4r")
 
 [node name="ColorBars" type="VBoxContainer" parent="VBoxContainer/Scroll/PanelContainer"]
@@ -67,10 +66,6 @@ focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("3_fftmp")
 
-[node name="Spacer" type="Control" parent="VBoxContainer/ButtonContainer/Buttons"]
-layout_mode = 2
-size_flags_horizontal = 3
-
 [node name="Set" type="Button" parent="VBoxContainer/ButtonContainer/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -79,23 +74,7 @@ focus_mode = 0
 theme_type_variation = &"IconButton"
 icon = ExtResource("4_vsbyl")
 
-[node name="MoveUp" type="Button" parent="VBoxContainer/ButtonContainer/Buttons"]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Move color up"
-focus_mode = 0
-theme_type_variation = &"IconButton"
-icon = ExtResource("5_2m7bc")
-
-[node name="MoveDown" type="Button" parent="VBoxContainer/ButtonContainer/Buttons"]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Move color down"
-focus_mode = 0
-theme_type_variation = &"IconButton"
-icon = ExtResource("6_cts40")
-
-[node name="Spacer2" type="Control" parent="VBoxContainer/ButtonContainer/Buttons"]
+[node name="Spacer" type="Control" parent="VBoxContainer/ButtonContainer/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -112,7 +91,5 @@ visible = false
 
 [connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/Add" to="." method="_on_add_pressed"]
 [connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/Set" to="." method="_on_set_pressed"]
-[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/MoveUp" to="." method="_on_move_up_pressed"]
-[connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/MoveDown" to="." method="_on_move_down_pressed"]
 [connection signal="pressed" from="VBoxContainer/ButtonContainer/Buttons/Delete" to="." method="_on_delete_pressed"]
 [connection signal="color_changed" from="ColorPicker" to="." method="_on_color_picker_color_changed"]

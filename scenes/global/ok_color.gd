@@ -35,6 +35,10 @@ func equals(other: OKColor) -> bool:
         and is_equal_approx(a, other.a)
 
 
+func is_light() -> bool:
+    return l > 0.5
+
+
 func to_hex() -> String:
     return to_rgb().to_html(false)
 
