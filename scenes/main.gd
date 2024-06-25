@@ -17,6 +17,7 @@ func _enter_tree() -> void:
     Globals.show_notification.connect(show_notification_)
 
     get_tree().auto_accept_quit = false
+    get_tree().node_added.connect(_on_node_added)
 
 
 func _ready() -> void:
@@ -37,6 +38,24 @@ func _notification(what: int) -> void:
             $UnsavedChangesPopup.popup_centered()
         else:
             quit_()
+
+
+func _on_node_added(node: Node) -> void:
+    if node is Control:
+        var control: Control = node as Control
+
+        if control.focus_mode != Control.FOCUS_NONE:
+            var parent = control.get_parent()
+
+            while parent != self:
+                # Don't mind popup contents
+                if parent is Window:
+                    return
+                parent = parent.get_parent()
+
+            # Can't have focusable nodes in the main view, or Space can
+            # activate them in addition to color sampler
+            push_error("Focusable node added to main view: ", control)
 
 
 func _on_resized() -> void:
