@@ -2,7 +2,7 @@ class_name Controls
 
 const PEN = KEY_F
 const COLOR_SAMPLER = KEY_SPACE
-const COLOR_REPLACER = KEY_R
+const FILL = KEY_G
 
 const COLOR_PICKER = KEY_V
 const NEXT_COLOR = KEY_D

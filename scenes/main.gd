@@ -45,10 +45,9 @@ func _on_node_added(node: Node) -> void:
         var control: Control = node as Control
 
         if control.focus_mode != Control.FOCUS_NONE:
+            # Don't mind popup contents
             var parent = control.get_parent()
-
             while parent != self:
-                # Don't mind popup contents
                 if parent is Window:
                     return
                 parent = parent.get_parent()

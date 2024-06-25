@@ -28,7 +28,7 @@ unique_name_in_owner = true
 layout_mode = 2
 tool = 2
 
-[node name="ColorReplacer" parent="VBoxContainer" instance=ExtResource("6_mws6c")]
+[node name="Fill" parent="VBoxContainer" instance=ExtResource("6_mws6c")]
 unique_name_in_owner = true
 layout_mode = 2
 tool = 3

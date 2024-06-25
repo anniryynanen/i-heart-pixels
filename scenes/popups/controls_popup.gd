@@ -8,7 +8,7 @@ func _ready() -> void:
 func _on_keyboard_layout_changed() -> void:
     %PenControl.text = Controls.get_key_label(Controls.PEN)
     %SamplerControl.text = "Hold " + Controls.get_key_label(Controls.COLOR_SAMPLER)
-    %ReplacerControl.text = Controls.get_key_label(Controls.COLOR_REPLACER)
+    %FillControl.text = Controls.get_key_label(Controls.FILL)
     %PickerControl.text = Controls.get_key_label(Controls.COLOR_PICKER)
     %NextControl.text = Controls.get_key_label(Controls.NEXT_COLOR)
     %PreviousControl.text = Controls.get_key_label(Controls.PREV_COLOR)

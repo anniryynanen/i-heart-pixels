@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://00bbejw7me11"
-path="res://.godot/imported/cursor-pen-duotone.svg-47a4ef7dd1cbcf86f1d6307ccce6f5c7.ctex"
+uid="uid://yyyg0cnsihdc"
+path="res://.godot/imported/cursor-eyedropper-fill-duotone.svg-387fb68fe26bb7c19ea3abd260ca21ca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icons/phosphor/cursors/cursor-pen-duotone.svg"
-dest_files=["res://.godot/imported/cursor-pen-duotone.svg-47a4ef7dd1cbcf86f1d6307ccce6f5c7.ctex"]
+source_file="res://icons/phosphor/28px-cursors/cursor-eyedropper-fill-duotone.svg"
+dest_files=["res://.godot/imported/cursor-eyedropper-fill-duotone.svg-387fb68fe26bb7c19ea3abd260ca21ca.ctex"]
 
 [params]
 

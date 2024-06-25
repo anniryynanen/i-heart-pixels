@@ -89,13 +89,13 @@ custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 text = "KEY"
 
-[node name="ReplacerLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Tools/GridContainer"]
+[node name="FillLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Tools/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 0
-text = "Color replacer:"
+text = "Fill:"
 horizontal_alignment = 2
 
-[node name="ReplacerControl" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Tools/GridContainer"]
+[node name="FillControl" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Tools/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2

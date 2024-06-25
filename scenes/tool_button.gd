@@ -16,9 +16,9 @@ func _ready() -> void:
         Tool.COLOR_SAMPLER:
             key_ = Controls.COLOR_SAMPLER
             $Button.icon = load("res://icons/phosphor/24px/eyedropper-duotone.svg")
-        Tool.COLOR_REPLACER:
-            key_ = Controls.COLOR_REPLACER
-            $Button.icon = load("res://icons/phosphor/24px/eyedropper-sample-duotone.svg")
+        Tool.FILL:
+            key_ = Controls.FILL
+            $Button.icon = load("res://icons/phosphor/24px/paint-bucket-duotone.svg")
 
     Globals.tool_changed.connect(_on_tool_changed)
     Globals.keyboard_layout_changed.connect(_on_keyboard_layout_changed)
@@ -59,7 +59,7 @@ func _on_keyboard_layout_changed():
         Tool.PEN: $Button.tooltip_text = "Pen"
         Tool.ERASER: $Button.tooltip_text = "Eraser"
         Tool.COLOR_SAMPLER: $Button.tooltip_text = "Color Sampler"
-        Tool.COLOR_REPLACER: $Button.tooltip_text = "Color Replacer"
+        Tool.FILL: $Button.tooltip_text = "Fill"
 
     if key_:
         $Button.tooltip_text += " (%s)" % Controls.get_key_label(key_)

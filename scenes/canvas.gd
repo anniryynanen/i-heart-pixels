@@ -16,7 +16,7 @@ var pan_step_: float = BASE_PAN_STEP
 var cursors_: Dictionary
 var cursor_fills_: Dictionary
 var pan_cursor_: ScalableSVG = ScalableSVG.new(load(
-    "res://icons/phosphor/cursors/cursor-hand-grabbing.svg"))
+    "res://icons/phosphor/28px-cursors/cursor-hand-grabbing.svg"))
 var pen_tips_: Dictionary
 
 var current_layer_: Image
@@ -26,18 +26,20 @@ var texture_: ImageTexture
 
 func _ready() -> void:
     cursors_[Tool.PEN] = ScalableSVG.new(load(
-        "res://icons/phosphor/cursors/cursor-pen-duotone.svg"))
+        "res://icons/phosphor/28px-cursors/cursor-pen-duotone.svg"))
     cursors_[Tool.ERASER] = ScalableSVG.new(load(
-        "res://icons/phosphor/cursors/cursor-eraser-duotone.svg"))
+        "res://icons/phosphor/28px-cursors/cursor-eraser-duotone.svg"))
     cursors_[Tool.COLOR_SAMPLER] = ScalableSVG.new(load(
-        "res://icons/phosphor/cursors/cursor-eyedropper-duotone.svg"))
-    cursors_[Tool.COLOR_REPLACER] = ScalableSVG.new(load(
-        "res://icons/phosphor/cursors/cursor-eyedropper-sample-duotone.svg"))
+        "res://icons/phosphor/28px-cursors/cursor-eyedropper-duotone.svg"))
+    cursors_[Tool.FILL] = ScalableSVG.new(load(
+        "res://icons/phosphor/28px-cursors/cursor-paint-bucket-duotone.svg"))
 
     cursor_fills_[Tool.PEN] = ScalableSVG.new(load(
-        "res://icons/phosphor/cursors/cursor-pen-fill-duotone.svg"))
-    cursor_fills_[Tool.COLOR_REPLACER] = ScalableSVG.new(load(
-        "res://icons/phosphor/cursors/cursor-eyedropper-sample-fill-duotone.svg"))
+        "res://icons/phosphor/28px-cursors/cursor-pen-fill-duotone.svg"))
+    cursor_fills_[Tool.COLOR_SAMPLER] = ScalableSVG.new(load(
+        "res://icons/phosphor/28px-cursors/cursor-eyedropper-fill-duotone.svg"))
+    cursor_fills_[Tool.FILL] = ScalableSVG.new(load(
+        "res://icons/phosphor/28px-cursors/cursor-paint-bucket-fill-duotone.svg"))
 
     for pen_size in range(3, 12, 2):
         var bitmask: BitMap = BitMap.new()
@@ -73,6 +75,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
             Globals.tool = last_tool_
 
         update_cursor_()
+        get_viewport().set_input_as_handled()
 
 
 @warning_ignore("standalone_ternary")
@@ -214,7 +217,9 @@ func start_drawing_(mouse_pos: Vector2) -> void:
         draw_pixel_(current_pixel_)
 
     elif pixel_in_image_(current_pixel_):
-        activate_tool_()
+        match Globals.tool:
+            Tool.COLOR_SAMPLER: sample_color_()
+            Tool.FILL: fill_()
 
 
 func stop_drawing_() -> void:
@@ -247,22 +252,36 @@ func draw_pixel_(pixel: Vector2i) -> void:
     mark_layer_as_changed_()
 
 
-func activate_tool_() -> void:
-     match Globals.tool:
-        Tool.COLOR_SAMPLER:
-            var rgb: Color = current_layer_.get_pixel(current_pixel_.x, current_pixel_.y)
-            Globals.tool_color = OKColor.from_rgb(rgb).opaque()
+func sample_color_() -> void:
+    var rgb: Color = current_layer_.get_pixel(current_pixel_.x, current_pixel_.y)
+    Globals.tool_color = OKColor.from_rgb(rgb).opaque()
 
-        Tool.COLOR_REPLACER:
-            var replaced: Color = current_layer_.get_pixel(current_pixel_.x, current_pixel_.y)
-            var tool_color: Color = Globals.tool_color.to_rgb()
 
-            for x in range(current_layer_.get_width()):
-                for y in range(current_layer_.get_height()):
+func fill_() -> void:
+    var target: Color = current_layer_.get_pixel(current_pixel_.x, current_pixel_.y)
+    var fill: Color = Globals.tool_color.to_rgb()
 
-                    if current_layer_.get_pixel(x, y).is_equal_approx(replaced):
-                        current_layer_.set_pixel(x, y, tool_color)
-                        mark_layer_as_changed_()
+    var edge: Array[Vector2i] = [current_pixel_]
+
+    while not edge.is_empty():
+        var point: Vector2i = edge.pop_back()
+        current_layer_.set_pixel(point.x, point.y, fill)
+
+        for neighbor in [
+                point + Vector2i.UP,
+                point + Vector2i.DOWN,
+                point + Vector2i.LEFT,
+                point + Vector2i.RIGHT,
+                point + Vector2i.UP + Vector2i.LEFT,
+                point + Vector2i.UP + Vector2i.RIGHT,
+                point + Vector2i.DOWN + Vector2i.LEFT,
+                point + Vector2i.DOWN + Vector2i.RIGHT]:
+
+            if pixel_in_image_(neighbor) \
+                    and current_layer_.get_pixel(neighbor.x, neighbor.y).is_equal_approx(target):
+                edge.append(neighbor)
+
+    mark_layer_as_changed_()
 
 
 func mark_layer_as_changed_() -> void:
@@ -292,7 +311,13 @@ func update_cursor_() -> void:
             cursor = cursors_[Globals.tool].get_texture(Globals.app_scale)
 
     if cursor:
-        if Globals.tool in cursor_fills_:
+        match Globals.tool:
+            Tool.FILL:
+                hotspot = Vector2(1.0, 14.0) * Globals.app_scale
+            Tool.COLOR_SAMPLER:
+                hotspot = Vector2(0.0, 28.0) * Globals.app_scale
+
+        if not panning_ and Globals.tool in cursor_fills_:
             var fill: ImageTexture = cursor_fills_[Globals.tool].get_texture(
                 Globals.app_scale, Globals.tool_color)
 
