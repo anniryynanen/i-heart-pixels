@@ -6,10 +6,10 @@ func _ready() -> void:
 
 
 func _on_keyboard_layout_changed() -> void:
-    %PenControl.text = Controls.get_key_label(Controls.PEN)
-    %SamplerControl.text = "Hold " + Controls.get_key_label(Controls.COLOR_SAMPLER)
-    %FillControl.text = Controls.get_key_label(Controls.FILL)
-    %PickerControl.text = Controls.get_key_label(Controls.COLOR_PICKER)
-    %NextControl.text = Controls.get_key_label(Controls.NEXT_COLOR)
-    %PreviousControl.text = Controls.get_key_label(Controls.PREV_COLOR)
-    %ReselectControl.text = Controls.get_key_label(Controls.RESELECT_COLOR)
+    %PenKey.text = Controls.get_key_label(Controls.PEN)
+    %SamplerKey.text = "Hold " + Controls.get_key_label(Controls.COLOR_SAMPLER)
+    %FillKey.text = Controls.get_key_label(Controls.FILL)
+    %PickerKey.text = Controls.get_key_label(Controls.COLOR_PICKER)
+    %NextKey.text = Controls.get_key_label(Controls.NEXT_COLOR)
+    %PreviousKey.text = Controls.get_key_label(Controls.PREV_COLOR)
+    %ReselectKey.text = Controls.get_key_label(Controls.RESELECT_COLOR)

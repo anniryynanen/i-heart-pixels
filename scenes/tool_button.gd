@@ -6,6 +6,9 @@ var key_: Key
 
 
 func _ready() -> void:
+    # Without this, clear icon goes all black when disabled
+    $Button.add_theme_color_override("icon_disabled_color", Color(1.0, 1.0, 1.0))
+
     match tool:
         Tool.PEN:
             key_ = Controls.PEN
@@ -19,6 +22,9 @@ func _ready() -> void:
         Tool.FILL:
             key_ = Controls.FILL
             $Button.icon = load("res://icons/phosphor/24px/paint-bucket-duotone.svg")
+        Tool.CLEAR:
+            key_ = Controls.FILL
+            $Button.icon = load("res://icons/phosphor/24px/paint-bucket-clear-duotone.svg")
 
     Globals.tool_changed.connect(_on_tool_changed)
     Globals.keyboard_layout_changed.connect(_on_keyboard_layout_changed)
@@ -31,13 +37,21 @@ func _unhandled_key_input(event: InputEvent) -> void:
     if tool == Tool.ERASER:
         return
 
-    # Color sampler is a toggle that canvas manages
+    # Fill and clear also share a shortcut
+    if tool == Tool.CLEAR:
+        return
+
+    # Color sampler is handled in canvas
     if tool == Tool.COLOR_SAMPLER:
         return
 
     if key.pressed and key.physical_keycode == key_:
-        if tool == Tool.PEN and Globals.tool == Tool.PEN:
+        if tool == Tool.PEN and Globals.tool == tool:
             Globals.tool = Tool.ERASER
+
+        elif tool == Tool.FILL and Globals.tool == tool:
+            Globals.tool = Tool.CLEAR
+
         else:
             Globals.tool = tool
 
@@ -60,6 +74,7 @@ func _on_keyboard_layout_changed():
         Tool.ERASER: $Button.tooltip_text = "Eraser"
         Tool.COLOR_SAMPLER: $Button.tooltip_text = "Color Sampler"
         Tool.FILL: $Button.tooltip_text = "Fill"
+        Tool.CLEAR: $Button.tooltip_text = "Clear"
 
     if key_:
         $Button.tooltip_text += " (%s)" % Controls.get_key_label(key_)

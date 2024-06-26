@@ -71,7 +71,7 @@ size_flags_vertical = 0
 text = "Pen and eraser:"
 horizontal_alignment = 2
 
-[node name="PenControl" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Tools/GridContainer"]
+[node name="PenKey" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Tools/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
@@ -83,7 +83,7 @@ size_flags_vertical = 0
 text = "Color sampler:"
 horizontal_alignment = 2
 
-[node name="SamplerControl" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Tools/GridContainer"]
+[node name="SamplerKey" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Tools/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
@@ -92,10 +92,10 @@ text = "KEY"
 [node name="FillLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Tools/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 0
-text = "Fill:"
+text = "Fill and clear:"
 horizontal_alignment = 2
 
-[node name="FillControl" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Tools/GridContainer"]
+[node name="FillKey" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Tools/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
@@ -120,7 +120,7 @@ size_flags_vertical = 0
 text = "Open color picker:"
 horizontal_alignment = 2
 
-[node name="PickerControl" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Colors/GridContainer"]
+[node name="PickerKey" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Colors/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
@@ -132,7 +132,7 @@ size_flags_vertical = 0
 text = "Previous color:"
 horizontal_alignment = 2
 
-[node name="PreviousControl" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Colors/GridContainer"]
+[node name="PreviousKey" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Colors/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
@@ -144,7 +144,7 @@ size_flags_vertical = 0
 text = "Next color:"
 horizontal_alignment = 2
 
-[node name="NextControl" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Colors/GridContainer"]
+[node name="NextKey" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Colors/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
@@ -156,7 +156,7 @@ size_flags_vertical = 0
 text = "Reselect color:"
 horizontal_alignment = 2
 
-[node name="ReselectControl" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Colors/GridContainer"]
+[node name="ReselectKey" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Colors/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2

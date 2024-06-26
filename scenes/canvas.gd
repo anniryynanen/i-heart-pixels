@@ -16,7 +16,7 @@ var pan_step_: float = BASE_PAN_STEP
 var cursors_: Dictionary
 var cursor_fills_: Dictionary
 var pan_cursor_: ScalableSVG = ScalableSVG.new(load(
-    "res://icons/phosphor/28px-cursors/cursor-hand-grabbing.svg"))
+    "res://icons/phosphor/28px-cursors/hand-grabbing.svg"))
 var pen_tips_: Dictionary
 
 var current_layer_: Image
@@ -26,20 +26,22 @@ var texture_: ImageTexture
 
 func _ready() -> void:
     cursors_[Tool.PEN] = ScalableSVG.new(load(
-        "res://icons/phosphor/28px-cursors/cursor-pen-duotone.svg"))
+        "res://icons/phosphor/28px-cursors/pen-duotone.svg"))
     cursors_[Tool.ERASER] = ScalableSVG.new(load(
-        "res://icons/phosphor/28px-cursors/cursor-eraser-duotone.svg"))
+        "res://icons/phosphor/28px-cursors/eraser-duotone.svg"))
     cursors_[Tool.COLOR_SAMPLER] = ScalableSVG.new(load(
-        "res://icons/phosphor/28px-cursors/cursor-eyedropper-duotone.svg"))
+        "res://icons/phosphor/28px-cursors/eyedropper-duotone.svg"))
     cursors_[Tool.FILL] = ScalableSVG.new(load(
-        "res://icons/phosphor/28px-cursors/cursor-paint-bucket-duotone.svg"))
+        "res://icons/phosphor/28px-cursors/paint-bucket-duotone.svg"))
+    cursors_[Tool.CLEAR] = ScalableSVG.new(load(
+        "res://icons/phosphor/28px-cursors/paint-bucket-clear-duotone.svg"))
 
     cursor_fills_[Tool.PEN] = ScalableSVG.new(load(
-        "res://icons/phosphor/28px-cursors/cursor-pen-fill-duotone.svg"))
+        "res://icons/phosphor/28px-cursors/pen-fill-duotone.svg"))
     cursor_fills_[Tool.COLOR_SAMPLER] = ScalableSVG.new(load(
-        "res://icons/phosphor/28px-cursors/cursor-eyedropper-fill-duotone.svg"))
+        "res://icons/phosphor/28px-cursors/eyedropper-fill-duotone.svg"))
     cursor_fills_[Tool.FILL] = ScalableSVG.new(load(
-        "res://icons/phosphor/28px-cursors/cursor-paint-bucket-fill-duotone.svg"))
+        "res://icons/phosphor/28px-cursors/paint-bucket-fill-duotone.svg"))
 
     for pen_size in range(3, 12, 2):
         var bitmask: BitMap = BitMap.new()
@@ -219,7 +221,8 @@ func start_drawing_(mouse_pos: Vector2) -> void:
     elif pixel_in_image_(current_pixel_):
         match Globals.tool:
             Tool.COLOR_SAMPLER: sample_color_()
-            Tool.FILL: fill_()
+            Tool.FILL: fill_(Globals.tool_color)
+            Tool.CLEAR: fill_(OKColor.new(0.0, 0.0, 0.0, 0.0))
 
 
 func stop_drawing_() -> void:
@@ -257,9 +260,9 @@ func sample_color_() -> void:
     Globals.tool_color = OKColor.from_rgb(rgb).opaque()
 
 
-func fill_() -> void:
+func fill_(color: OKColor) -> void:
     var target: Color = current_layer_.get_pixel(current_pixel_.x, current_pixel_.y)
-    var fill: Color = Globals.tool_color.to_rgb()
+    var fill: Color = color.to_rgb()
 
     var edge: Array[Vector2i] = [current_pixel_]
 
@@ -312,7 +315,7 @@ func update_cursor_() -> void:
 
     if cursor:
         match Globals.tool:
-            Tool.FILL:
+            Tool.FILL or Tool.CLEAR:
                 hotspot = Vector2(1.0, 14.0) * Globals.app_scale
             Tool.COLOR_SAMPLER:
                 hotspot = Vector2(0.0, 28.0) * Globals.app_scale
@@ -440,8 +443,11 @@ func draw_hover_highlight_() -> void:
     var hl_pos: Vector2 = current_pixel_ * pixel_width_ - top_left_
     hl_pos += Vector2(line_width / 2.0, line_width / 2.0)
 
-    # Outline size 1 pen tip
-    if Globals.pen_size == 1:
+    var turtle_hl = Globals.pen_size > 1 and \
+        (Globals.tool == Tool.PEN or Globals.tool == Tool.ERASER)
+
+    # Outline size 1 tool
+    if not turtle_hl:
         var hl_size: Vector2 = Vector2(pixel_width_ - line_width, pixel_width_ - line_width)
         draw_rect(Rect2(hl_pos, hl_size),
             IHPColorPicker.get_line_color(pixel_color).to_rgb(), false, line_width)

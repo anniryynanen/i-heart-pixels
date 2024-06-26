@@ -2,13 +2,13 @@
 
 [ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_flb6c"]
 [ext_resource type="Script" path="res://scenes/tool_button.gd" id="2_ieavh"]
-[ext_resource type="Texture2D" uid="uid://b4k6h0flv4wu3" path="res://icons/phosphor/24px/pen-duotone.svg" id="2_olnit"]
+[ext_resource type="Texture2D" uid="uid://b75tdmgkel2s1" path="res://icons/phosphor/24px/paint-bucket-clear-duotone.svg" id="3_ynxwu"]
 
 [node name="ToolButton" type="PanelContainer"]
 offset_right = 28.0
 offset_bottom = 28.0
 theme = ExtResource("1_flb6c")
-theme_type_variation = &"ToolPanelInactive"
+theme_type_variation = &"ToolPanelActive"
 script = ExtResource("2_ieavh")
 
 [node name="Button" type="Button" parent="."]
@@ -17,7 +17,7 @@ layout_mode = 2
 focus_mode = 0
 theme_type_variation = &"ToolButton"
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
-icon = ExtResource("2_olnit")
+icon = ExtResource("3_ynxwu")
 icon_alignment = 1
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
