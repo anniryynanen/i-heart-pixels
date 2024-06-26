@@ -1,13 +1,19 @@
 extends Control
 
+var palette_icon_: ScalableSVG
 var current_index_: int = -1
 var dragged_bar_: ColorBar
 
 
 func _ready() -> void:
-    load_colors_()
+    palette_icon_ = ScalableSVG.new(load("res://icons/phosphor/20px/swatches-duotone.svg"))
 
+    load_colors_()
     custom_minimum_size.y = %ColorBars.get_child(0).size.y + %ButtonContainer.size.y
+
+    Globals.tool_color_changed.connect(func(_c): update_palette_icon_())
+    Globals.app_scale_changed.connect(func(_s): update_palette_icon_())
+    Globals.keyboard_layout_changed.connect(_on_keyboard_layout_changed)
 
 
 func _notification(what: int) -> void:
@@ -27,9 +33,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
     if key.pressed:
         if key.physical_keycode == Controls.COLOR_PICKER:
-            if not $ColorPicker.visible:
-                $ColorPicker.popup_color(Globals.tool_color)
-
+            if not $ColorPickerPopup.visible:
+                show_color_picker_()
             get_viewport().set_input_as_handled()
 
         elif key.physical_keycode == Controls.NEXT_COLOR:
@@ -73,12 +78,12 @@ func _on_add_pressed() -> void:
     show_current_bar_()
 
 
-func _on_set_pressed() -> void:
+func _on_replace_pressed() -> void:
     get_current_bar_().color = Globals.tool_color
     save_colors_()
 
 
-func _on_delete_pressed() -> void:
+func _on_remove_pressed() -> void:
     if %ColorBars.get_child_count() < 2:
         return
 
@@ -100,6 +105,15 @@ func _on_delete_pressed() -> void:
     show_current_bar_()
 
     AppScaler.remove_transient(bar)
+
+
+func _on_keyboard_layout_changed():
+    var key: String = Controls.get_key_label(Controls.COLOR_PICKER)
+    %ColorPicker.tooltip_text = "Open color picker (%s)" % key
+
+
+func show_color_picker_() -> void:
+    $ColorPickerPopup.popup_color(Globals.tool_color)
 
 
 func get_current_bar_() -> ColorBar:
@@ -157,12 +171,18 @@ func select_index_(index: int) -> void:
 
 
 func update_buttons_() -> void:
-    %Delete.disabled = %ColorBars.get_child_count() < 2
+    %Remove.disabled = %ColorBars.get_child_count() < 2
 
 
 func show_current_bar_() -> void:
     await get_tree().process_frame
     %Scroll.ensure_control_visible(get_current_bar_())
+
+
+func update_palette_icon_():
+    # Defer in case the app is being scaled, which updates the icon too
+    %ColorPicker.set_deferred("icon", palette_icon_.get_texture(Globals.app_scale,
+        Globals.tool_color))
 
 
 func load_colors_() -> void:

@@ -2,8 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_o3psl"]
 [ext_resource type="Script" path="res://scenes/color_bar.gd" id="2_iwf5p"]
-[ext_resource type="Texture2D" uid="uid://bkqsbpimlxpoy" path="res://icons/phosphor/16px/asterisk-duotone.svg" id="3_bje7w"]
-[ext_resource type="Texture2D" uid="uid://4l4edp28xie0" path="res://icons/phosphor/16px/asterisk-duotone-light.svg" id="4_7n7ne"]
+[ext_resource type="Texture2D" uid="uid://prin30yngfd3" path="res://icons/phosphor/16px/asterisk-bold.svg" id="3_quspq"]
+[ext_resource type="Texture2D" uid="uid://c2ufxrn5htimw" path="res://icons/phosphor/16px/asterisk-bold-light.svg" id="4_3mwup"]
 
 [node name="ColorBar" type="Button"]
 custom_minimum_size = Vector2(26, 26)
@@ -30,16 +30,16 @@ theme_override_constants/margin_left = 4
 
 [node name="Asterisk" type="TextureRect" parent="Panel/MarginContainer"]
 unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0.501961)
+modulate = Color(1, 1, 1, 0.588235)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-texture = ExtResource("3_bje7w")
+texture = ExtResource("3_quspq")
 
 [node name="AsteriskLight" type="TextureRect" parent="Panel/MarginContainer"]
 unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0.501961)
+modulate = Color(1, 1, 1, 0.588235)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-texture = ExtResource("4_7n7ne")
+texture = ExtResource("4_3mwup")

@@ -44,6 +44,10 @@ func _on_node_added(node: Node) -> void:
     if node is Control:
         var control: Control = node as Control
 
+        if control is LineEdit:
+            var line: LineEdit = control as LineEdit
+            line.caret_blink = true
+
         if control.focus_mode != Control.FOCUS_NONE:
             # Don't mind popup contents
             var parent = control.get_parent()

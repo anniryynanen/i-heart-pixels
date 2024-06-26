@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkqsbpimlxpoy"
-path="res://.godot/imported/asterisk-duotone.svg-22bd2c26530daa9fa0e5358fcfc66a3c.ctex"
+uid="uid://dd3253vhk3mkx"
+path="res://.godot/imported/swatches-duotone.svg-9d56d52e96731107aebee7f6c225c4c8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icons/phosphor/16px/asterisk-duotone.svg"
-dest_files=["res://.godot/imported/asterisk-duotone.svg-22bd2c26530daa9fa0e5358fcfc66a3c.ctex"]
+source_file="res://icons/phosphor/20px/swatches-duotone.svg"
+dest_files=["res://.godot/imported/swatches-duotone.svg-9d56d52e96731107aebee7f6c225c4c8.ctex"]
 
 [params]
 

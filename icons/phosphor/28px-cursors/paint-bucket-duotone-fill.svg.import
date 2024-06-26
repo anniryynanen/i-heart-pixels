@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4f3xk70t5c6j"
-path="res://.godot/imported/palette-duotone.svg-848f6f010dd9a6742c971a3ac585cca9.ctex"
+uid="uid://8agjsqc1chon"
+path="res://.godot/imported/paint-bucket-duotone-fill.svg-7063cbf6012f8f4eff6b3f102cdacb44.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icons/phosphor/20px/palette-duotone.svg"
-dest_files=["res://.godot/imported/palette-duotone.svg-848f6f010dd9a6742c971a3ac585cca9.ctex"]
+source_file="res://icons/phosphor/28px-cursors/paint-bucket-duotone-fill.svg"
+dest_files=["res://.godot/imported/paint-bucket-duotone-fill.svg-7063cbf6012f8f4eff6b3f102cdacb44.ctex"]
 
 [params]
 

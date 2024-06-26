@@ -37,11 +37,11 @@ func _ready() -> void:
         "res://icons/phosphor/28px-cursors/paint-bucket-clear-duotone.svg"))
 
     cursor_fills_[Tool.PEN] = ScalableSVG.new(load(
-        "res://icons/phosphor/28px-cursors/pen-fill-duotone.svg"))
+        "res://icons/phosphor/28px-cursors/pen-duotone-fill.svg"))
     cursor_fills_[Tool.COLOR_SAMPLER] = ScalableSVG.new(load(
-        "res://icons/phosphor/28px-cursors/eyedropper-fill-duotone.svg"))
+        "res://icons/phosphor/28px-cursors/eyedropper-duotone-fill.svg"))
     cursor_fills_[Tool.FILL] = ScalableSVG.new(load(
-        "res://icons/phosphor/28px-cursors/paint-bucket-fill-duotone.svg"))
+        "res://icons/phosphor/28px-cursors/paint-bucket-duotone-fill.svg"))
 
     for pen_size in range(3, 12, 2):
         var bitmask: BitMap = BitMap.new()
