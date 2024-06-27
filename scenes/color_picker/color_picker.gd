@@ -102,15 +102,18 @@ func set_color_(color: OKColor, emit: bool = true, update_last = false) -> void:
 
     var text_color: OKColor = IHPColorPicker.get_text_color(color)
     %Hex.add_theme_color_override("font_color", text_color.to_rgb())
+    %Hex.add_theme_color_override("caret_color", text_color.to_rgb())
 
     var bg_color: OKColor = text_color.duplicate()
     var border_color: OKColor = text_color.duplicate()
     bg_color.a = 0.07
     border_color.a = 0.68
 
-    var stylebox: StyleBoxFlat = %Hex.get_theme_stylebox("normal", "LineEdit")
+    var stylebox: StyleBoxFlat = %Hex.get_theme_stylebox("normal", "LineEditColor")
+    stylebox.set_block_signals(true)
     stylebox.bg_color = bg_color.to_rgb()
     stylebox.border_color = border_color.to_rgb()
+    stylebox.set_block_signals(false)
 
     var hover_color: OKColor
     if text_color.l == 0.0:
@@ -123,9 +126,16 @@ func set_color_(color: OKColor, emit: bool = true, update_last = false) -> void:
     %CopyLight.visible = text_color.l == 1.0
     %PasteLight.visible = text_color.l == 1.0
 
-    %Copy.get_theme_stylebox("hover").bg_color = hover_color.to_rgb()
+    stylebox = %Copy.get_theme_stylebox("hover")
+    stylebox.set_block_signals(true)
+    stylebox.bg_color = hover_color.to_rgb()
+    stylebox.set_block_signals(false)
+
     hover_color.a *= 1.8
-    %Copy.get_theme_stylebox("pressed").bg_color = hover_color.to_rgb()
+    stylebox = %Copy.get_theme_stylebox("pressed")
+    stylebox.set_block_signals(true)
+    stylebox.bg_color = hover_color.to_rgb()
+    stylebox.set_block_signals(false)
 
     if emit:
         color_changed.emit(color.duplicate())
