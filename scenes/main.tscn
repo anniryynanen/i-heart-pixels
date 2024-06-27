@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://dpqpbds16fmgh"]
+[gd_scene load_steps=9 format=3 uid="uid://dpqpbds16fmgh"]
 
-[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_0c86d"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_qg5aj"]
 [ext_resource type="PackedScene" uid="uid://clr3rba3j2bsb" path="res://scenes/canvas.tscn" id="2_hvaxd"]
 [ext_resource type="PackedScene" uid="uid://cq54mhhpfawor" path="res://scenes/main_menu.tscn" id="4_7m4tl"]
@@ -17,7 +16,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_0c86d")
 script = ExtResource("1_qg5aj")
 
 [node name="MainSplit" type="HSplitContainer" parent="."]

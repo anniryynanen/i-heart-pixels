@@ -1,11 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cuvv0ttrqqef3"]
+[gd_scene load_steps=2 format=3 uid="uid://cuvv0ttrqqef3"]
 
 [ext_resource type="Script" path="res://scenes/color_picker/color_handle.gd" id="1_f7go5"]
-[ext_resource type="FontFile" uid="uid://c1wr0ejvh1ea7" path="res://fonts/noto-sans/NotoSans_ExtraCondensed-Regular.ttf" id="2_6wk07"]
-
-[sub_resource type="Theme" id="Theme_s76h8"]
-default_font = ExtResource("2_6wk07")
-default_font_size = 17
 
 [node name="ColorHandle" type="Control"]
 layout_mode = 3
@@ -40,7 +35,7 @@ offset_top = -22.0
 offset_right = 10.5
 grow_horizontal = 2
 grow_vertical = 0
-theme = SubResource("Theme_s76h8")
+theme_type_variation = &"ColorPickerLabel"
 text = "255"
 horizontal_alignment = 1
 metadata/keep_anchors = true

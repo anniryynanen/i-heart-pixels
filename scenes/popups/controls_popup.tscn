@@ -1,19 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://6i5h1tdoctk6"]
+[gd_scene load_steps=3 format=3 uid="uid://6i5h1tdoctk6"]
 
-[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_uek5m"]
 [ext_resource type="Script" path="res://scenes/popups/controls_popup.gd" id="2_af0oy"]
 [ext_resource type="PackedScene" uid="uid://dmmnh8ec13bmw" path="res://scenes/title.tscn" id="3_c16y8"]
 
 [node name="ControlsInfoPopup" type="Window"]
 title = "Controls"
-initial_position = 2
 size = Vector2i(463, 253)
 wrap_controls = true
 transient = true
 exclusive = true
 unresizable = true
 popup_window = true
-theme = ExtResource("1_uek5m")
 script = ExtResource("2_af0oy")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

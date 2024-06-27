@@ -32,6 +32,10 @@ AppScaler="*res://scenes/global/app_scaler.tscn"
 window/subwindows/embed_subwindows=false
 window/per_pixel_transparency/allowed=true
 
+[gui]
+
+theme/custom="res://scenes/theme.tres"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

@@ -1,10 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://dwl8qyprnb8is"]
+[gd_scene load_steps=12 format=3 uid="uid://dwl8qyprnb8is"]
 
-[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_0y57v"]
 [ext_resource type="Script" path="res://scenes/color_picker/color_picker.gd" id="1_pcwig"]
 [ext_resource type="PackedScene" uid="uid://dl1hwv3q6do0e" path="res://scenes/color_picker/color_strip.tscn" id="2_oesjs"]
 [ext_resource type="Texture2D" uid="uid://c1iqjcrtfqki6" path="res://icons/phosphor/warning-duotone.svg" id="2_q3cpo"]
-[ext_resource type="FontFile" uid="uid://c1wr0ejvh1ea7" path="res://fonts/noto-sans/NotoSans_ExtraCondensed-Regular.ttf" id="3_nvgas"]
 [ext_resource type="Texture2D" uid="uid://0i6upj5oto4f" path="res://icons/phosphor/20px/copy-duotone.svg" id="4_0itdt"]
 [ext_resource type="PackedScene" uid="uid://cuvv0ttrqqef3" path="res://scenes/color_picker/color_handle.tscn" id="5_fqclp"]
 [ext_resource type="Texture2D" uid="uid://bvn264uxard5k" path="res://icons/phosphor/20px/clipboard-duotone.svg" id="5_gyost"]
@@ -19,10 +17,6 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1salt"]
 bg_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Theme" id="Theme_e7lmp"]
-default_font = ExtResource("3_nvgas")
-default_font_size = 17
-
 [node name="ColorPicker" type="Window"]
 title = "Color Picker"
 position = Vector2i(0, 36)
@@ -32,7 +26,6 @@ transient = true
 exclusive = true
 unresizable = true
 popup_window = true
-theme = ExtResource("1_0y57v")
 script = ExtResource("1_pcwig")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -193,7 +186,7 @@ offset_top = -24.0
 offset_right = -3.0
 grow_horizontal = 0
 grow_vertical = 0
-theme = SubResource("Theme_e7lmp")
+theme_type_variation = &"ColorPickerLabel"
 text = "OKHSL"
 metadata/keep_anchors = true
 

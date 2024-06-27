@@ -1,13 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://80q74pk3rmx1"]
+[gd_scene load_steps=2 format=3 uid="uid://80q74pk3rmx1"]
 
-[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_87uw6"]
 [ext_resource type="PackedScene" uid="uid://bjhsmo6khhqpe" path="res://scenes/tool_button.tscn" id="6_mws6c"]
 
 [node name="Toolbar" type="PanelContainer"]
 clip_contents = true
 offset_right = 32.0
 offset_bottom = 134.0
-theme = ExtResource("1_87uw6")
 theme_type_variation = &"Toolbar"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]

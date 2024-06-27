@@ -15,7 +15,6 @@ const SCALED_CONSTANTS_: Array[String] = [
 const UNSCALED_CONSTANTS_: Array[String] = ["autohide", "center_grabber"]
 
 var main_: Control
-var themes_: Dictionary
 var windows_: Array[Window]
 var anchor_keepers_: Array[AnchorKeeper]
 var controls_: Array[Control]
@@ -25,7 +24,7 @@ var transient_controls_: Array[Control]
 func start() -> void:
     main_ = get_tree().root.find_child("Main", true, false) as Control
     scan_nodes_(main_)
-    save_themes_()
+    save_theme_()
     update_scale_()
 
     Globals.app_scale_changed.connect(func(_s): update_scale_())
@@ -65,9 +64,6 @@ func scan_nodes_(node: Node, transient: bool = false) -> Array[Control]:
         var control: Control = node as Control
 
         if not transient:
-            if control.theme and control.theme.get_instance_id() not in themes_:
-                themes_[control.theme.get_instance_id()] = control.theme
-
             if control.has_meta("keep_anchors") and control.get_meta("keep_anchors") == true:
                 anchor_keepers_.append(AnchorKeeper.new(control))
 
@@ -117,35 +113,34 @@ func save_constant_override_(control: Control, constant_name: String) -> void:
         control.set_meta(constant_name, control.get_theme_constant(constant_name))
 
 
-func save_themes_() -> void:
-    for theme: Theme in themes_.values():
-        theme.set_meta("default_font_size", theme.default_font_size)
+func save_theme_() -> void:
+    var theme: Theme = ThemeDB.get_project_theme()
+    theme.set_meta("default_font_size", theme.default_font_size)
 
-        for theme_type: String in theme.get_stylebox_type_list():
-            for box_name: String in theme.get_stylebox_list(theme_type):
+    for theme_type: String in theme.get_stylebox_type_list():
+        for box_name: String in theme.get_stylebox_list(theme_type):
 
-                save_stylebox_(theme.get_stylebox(box_name, theme_type))
+            save_stylebox_(theme.get_stylebox(box_name, theme_type))
 
-        for theme_type: String in theme.get_font_size_type_list():
-            for font_size_name: String in theme.get_font_size_list(theme_type):
+    for theme_type: String in theme.get_font_size_type_list():
+        for font_size_name: String in theme.get_font_size_list(theme_type):
+            theme.set_meta(
+                theme_type + "_" + font_size_name,
+                theme.get_font_size(font_size_name, theme_type))
 
-                theme.set_meta(
-                    theme_type + "_" + font_size_name,
-                    theme.get_font_size(font_size_name, theme_type))
+    for theme_type: String in theme.get_constant_type_list():
+        for constant_name: String in theme.get_constant_list(theme_type):
 
-        for theme_type: String in theme.get_constant_type_list():
-            for constant_name: String in theme.get_constant_list(theme_type):
+            theme.set_meta(
+                theme_type + "_" + constant_name,
+                theme.get_constant(constant_name, theme_type))
 
-                theme.set_meta(
-                    theme_type + "_" + constant_name,
-                    theme.get_constant(constant_name, theme_type))
+    for theme_type: String in theme.get_icon_type_list():
+        for icon_name: String in theme.get_icon_list(theme_type):
 
-        for theme_type: String in theme.get_icon_type_list():
-            for icon_name: String in theme.get_icon_list(theme_type):
-
-                var icon: Texture2D = theme.get_icon(icon_name, theme_type)
-                if icon.resource_path.ends_with(".svg"):
-                    theme.set_meta(theme_type + "_" + icon_name, ScalableSVG.new(icon))
+            var icon: Texture2D = theme.get_icon(icon_name, theme_type)
+            if icon.resource_path.ends_with(".svg"):
+                theme.set_meta(theme_type + "_" + icon_name, ScalableSVG.new(icon))
 
 
 func save_stylebox_(box: StyleBox) -> void:
@@ -190,32 +185,33 @@ func save_stylebox_(box: StyleBox) -> void:
 
 
 func update_scale_() -> void:
-    for theme: Theme in themes_.values():
-        theme.default_font_size = roundi(theme.get_meta("default_font_size") * Globals.app_scale)
+    var theme: Theme = ThemeDB.get_project_theme()
+    theme.default_font_size = roundi(theme.get_meta("default_font_size") * Globals.app_scale)
 
-        for theme_type: String in theme.get_stylebox_type_list():
-            for box_name: String in theme.get_stylebox_list(theme_type):
-                update_stylebox_(theme.get_stylebox(box_name, theme_type))
+    for theme_type: String in theme.get_stylebox_type_list():
+        for box_name: String in theme.get_stylebox_list(theme_type):
+            update_stylebox_(theme.get_stylebox(box_name, theme_type))
 
-        update_theme_font_size_(theme, "KeyHintLabel", "font_size")
+    update_theme_font_size_(theme, "KeyHintLabel", "font_size")
+    update_theme_font_size_(theme, "ColorPickerLabel", "font_size")
 
-        for theme_type in theme.get_constant_type_list():
-            for constant_name in theme.get_constant_list(theme_type):
+    for theme_type in theme.get_constant_type_list():
+        for constant_name in theme.get_constant_list(theme_type):
 
-                if constant_name in SCALED_CONSTANTS_:
-                    update_theme_constant_(theme, theme_type, constant_name)
-                elif constant_name not in UNSCALED_CONSTANTS_:
-                    push_error("Unknown theme constant: " + constant_name)
+            if constant_name in SCALED_CONSTANTS_:
+                update_theme_constant_(theme, theme_type, constant_name)
+            elif constant_name not in UNSCALED_CONSTANTS_:
+                push_error("Unknown theme constant: " + constant_name)
 
-        update_theme_icon_(theme, "HSplitContainer", "grabber")
-        update_theme_icon_(theme, "VSplitContainer", "grabber")
-        update_theme_icon_(theme, "SpinBox", "updown")
-        update_theme_icon_(theme, "HSlider", "grabber")
-        update_theme_icon_(theme, "HSlider", "grabber_highlight")
-        update_theme_icon_(theme, "HSlider", "grabber_disabled")
-        update_theme_icon_(theme, "VSlider", "grabber")
-        update_theme_icon_(theme, "VSlider", "grabber_highlight")
-        update_theme_icon_(theme, "VSlider", "grabber_disabled")
+    update_theme_icon_(theme, "HSplitContainer", "grabber")
+    update_theme_icon_(theme, "VSplitContainer", "grabber")
+    update_theme_icon_(theme, "SpinBox", "updown")
+    update_theme_icon_(theme, "HSlider", "grabber")
+    update_theme_icon_(theme, "HSlider", "grabber_highlight")
+    update_theme_icon_(theme, "HSlider", "grabber_disabled")
+    update_theme_icon_(theme, "VSlider", "grabber")
+    update_theme_icon_(theme, "VSlider", "grabber_highlight")
+    update_theme_icon_(theme, "VSlider", "grabber_disabled")
 
     for control in controls_:
         update_control_(control)

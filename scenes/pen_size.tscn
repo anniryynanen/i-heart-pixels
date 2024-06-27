@@ -1,12 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://cuhhtu4af3gb8"]
+[gd_scene load_steps=2 format=3 uid="uid://cuhhtu4af3gb8"]
 
-[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_360vh"]
 [ext_resource type="Script" path="res://scenes/pen_size.gd" id="2_1pw7s"]
 
 [node name="PenSize" type="VBoxContainer"]
 offset_right = 1152.0
 offset_bottom = 648.0
-theme = ExtResource("1_360vh")
 theme_override_constants/separation = 2
 script = ExtResource("2_1pw7s")
 

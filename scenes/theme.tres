@@ -1,6 +1,7 @@
-[gd_resource type="Theme" load_steps=66 format=3 uid="uid://bp7ntkss4y7ms"]
+[gd_resource type="Theme" load_steps=67 format=3 uid="uid://bp7ntkss4y7ms"]
 
 [ext_resource type="Texture2D" uid="uid://c685fxh0dy8li" path="res://icons/h-split-handle.svg" id="1_bpwql"]
+[ext_resource type="FontFile" uid="uid://c1wr0ejvh1ea7" path="res://fonts/noto-sans/NotoSans_ExtraCondensed-Regular.ttf" id="1_cxt53"]
 [ext_resource type="Texture2D" uid="uid://dpjb4lrwmancf" path="res://icons/scroll-grabber.svg" id="1_tsh5b"]
 [ext_resource type="FontFile" uid="uid://ddl7kojosp4sj" path="res://fonts/roboto/Roboto-Medium.ttf" id="2_omr0o"]
 [ext_resource type="Texture2D" uid="uid://b6dagk6okt1el" path="res://icons/scroll-grabber-highlight.svg" id="2_u428y"]
@@ -239,14 +240,16 @@ content_margin_left = 7.0
 content_margin_top = 3.0
 content_margin_right = 7.0
 content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 3
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_miast"]
 content_margin_left = 4.0
@@ -458,6 +461,9 @@ ButtonPopupMargins/constants/margin_bottom = 12
 ButtonPopupMargins/constants/margin_left = 21
 ButtonPopupMargins/constants/margin_right = 21
 ButtonPopupMargins/constants/margin_top = 17
+ColorPickerLabel/base_type = &"Label"
+ColorPickerLabel/font_sizes/font_size = 17
+ColorPickerLabel/fonts/font = ExtResource("1_cxt53")
 GridContainer/constants/h_separation = 6
 GridContainer/constants/v_separation = 6
 HBoxContainer/constants/separation = 6

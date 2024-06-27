@@ -1,18 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0gtifc3o4sq"]
+[gd_scene load_steps=2 format=3 uid="uid://b0gtifc3o4sq"]
 
-[ext_resource type="Theme" uid="uid://bp7ntkss4y7ms" path="res://scenes/theme.tres" id="1_jwyyr"]
 [ext_resource type="Script" path="res://scenes/popups/unsaved_changes_popup.gd" id="2_1xxfm"]
 
 [node name="UnsavedChangesPopup" type="Window"]
 title = "Unsaved Changes"
-initial_position = 2
 size = Vector2i(322, 89)
 wrap_controls = true
 transient = true
 exclusive = true
 unresizable = true
 popup_window = true
-theme = ExtResource("1_jwyyr")
 script = ExtResource("2_1xxfm")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
