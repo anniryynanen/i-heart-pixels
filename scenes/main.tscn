@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dpqpbds16fmgh"]
+[gd_scene load_steps=10 format=3 uid="uid://dpqpbds16fmgh"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_qg5aj"]
 [ext_resource type="PackedScene" uid="uid://clr3rba3j2bsb" path="res://scenes/canvas.tscn" id="2_hvaxd"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dmmnh8ec13bmw" path="res://scenes/title.tscn" id="6_11rqp"]
 [ext_resource type="PackedScene" uid="uid://80q74pk3rmx1" path="res://scenes/toolbar.tscn" id="7_0363p"]
 [ext_resource type="PackedScene" uid="uid://b0gtifc3o4sq" path="res://scenes/popups/unsaved_changes_popup.tscn" id="7_j86ne"]
+[ext_resource type="Texture2D" uid="uid://ddpvnnoxj4304" path="res://icons/phosphor/20px/github-logo-duotone.svg" id="7_y3etq"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -72,6 +73,7 @@ size_flags_vertical = 3
 [node name="MarginContainer3" type="MarginContainer" parent="MainSplit/RightSplit/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
 [node name="ImageSize" type="Label" parent="MainSplit/RightSplit/VBoxContainer/MarginContainer3"]
@@ -85,9 +87,28 @@ offset_right = 138.0
 offset_bottom = 27.0
 theme_type_variation = &"TopBar"
 
-[node name="MainMenu" parent="TopBar" instance=ExtResource("4_7m4tl")]
+[node name="HBoxContainer" type="HBoxContainer" parent="TopBar"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MainMenu" parent="TopBar/HBoxContainer" instance=ExtResource("4_7m4tl")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="GitHubContainer" type="MarginContainer" parent="TopBar/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 6
+
+[node name="GitHub" type="Button" parent="TopBar/HBoxContainer/GitHubContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"IconButton"
+icon = ExtResource("7_y3etq")
 
 [node name="Toolbar" parent="." instance=ExtResource("7_0363p")]
 unique_name_in_owner = true
@@ -111,5 +132,6 @@ visible = false
 [connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="dragged" from="MainSplit" to="." method="_on_main_split_dragged"]
 [connection signal="dragged" from="MainSplit/RightSplit" to="." method="_on_right_split_dragged"]
+[connection signal="pressed" from="TopBar/HBoxContainer/GitHubContainer/GitHub" to="." method="_on_github_pressed"]
 [connection signal="close" from="UnsavedChangesPopup" to="." method="quit_"]
 [connection signal="save" from="UnsavedChangesPopup" to="." method="_on_unsaved_changes_popup_save"]

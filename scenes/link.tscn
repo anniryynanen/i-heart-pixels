@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhwj400hb5g1e"]
+
+[ext_resource type="Script" path="res://scenes/link.gd" id="1_2am1m"]
+[ext_resource type="Texture2D" uid="uid://dp8fh3enx5r6x" path="res://icons/phosphor/20px/arrow-square-out-duotone.svg" id="1_lvo2s"]
+
+[node name="Link" type="HBoxContainer"]
+size_flags_horizontal = 4
+theme_override_constants/separation = 2
+script = ExtResource("1_2am1m")
+
+[node name="LinkButton" type="LinkButton" parent="."]
+layout_mode = 2
+text = "LINK"
+
+[node name="Spacer" type="Control" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_lvo2s")

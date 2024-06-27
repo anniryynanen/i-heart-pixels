@@ -1,12 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://be0bda4j678f"]
+[gd_scene load_steps=5 format=3 uid="uid://be0bda4j678f"]
 
-[ext_resource type="Script" path="res://scenes/popups/credits_popup.gd" id="2_i3hmq"]
+[ext_resource type="Script" path="res://scenes/popups/about_popup.gd" id="2_i3hmq"]
+[ext_resource type="PackedScene" uid="uid://dhwj400hb5g1e" path="res://scenes/link.tscn" id="2_n3b8f"]
+[ext_resource type="PackedScene" uid="uid://dmmnh8ec13bmw" path="res://scenes/title.tscn" id="3_4unvx"]
 [ext_resource type="Script" path="res://scenes/popups/closing_popup.gd" id="3_km5qd"]
-[ext_resource type="Texture2D" uid="uid://dp8fh3enx5r6x" path="res://icons/phosphor/20px/arrow-square-out-duotone.svg" id="3_m6xal"]
 
 [node name="CreditsPopup" type="Window"]
-title = "Credits"
-size = Vector2i(374, 236)
+title = "About"
+size = Vector2i(374, 346)
 wrap_controls = true
 transient = true
 exclusive = true
@@ -25,41 +26,63 @@ theme_type_variation = &"PopupMargins"
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="IHPLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "APP
+VERSION"
+horizontal_alignment = 1
+
+[node name="GitHub" parent="MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource("2_n3b8f")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "GitHub repository"
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_bottom = 6
+
+[node name="Title" parent="MarginContainer/VBoxContainer/MarginContainer2" instance=ExtResource("3_4unvx")]
+layout_mode = 2
+text = "Credits"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 19
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="MabeBy" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 text = "Made by Anni Ryynänen
 using Godot Engine"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 8
 
-[node name="IHP" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="IHP" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 focus_mode = 0
 text = "I ❤️ Pixels License"
 
-[node name="Godot" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Godot" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 focus_mode = 0
 text = "Godot Engine License"
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-columns = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_top = 13
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer"]
+[node name="Also" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Also included:"
 
@@ -79,19 +102,10 @@ focus_mode = 0
 text = "License of sRGB to OKHSL converter
 "
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HFlowContainer"]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="GodotDeps" type="LinkButton" parent="MarginContainer/VBoxContainer/HFlowContainer/HBoxContainer"]
-unique_name_in_owner = true
+[node name="GodotDeps" parent="MarginContainer/VBoxContainer/HFlowContainer" instance=ExtResource("2_n3b8f")]
 layout_mode = 2
 text = "Godot Engine components"
-uri = "https://github.com/godotengine/godot/blob/master/COPYRIGHT.txt"
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HFlowContainer/HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("3_m6xal")
+url = "https://github.com/godotengine/godot/blob/master/COPYRIGHT.txt"
 
 [node name="IHPPopup" type="Window" parent="."]
 title = "I ❤️ Pixels License"
@@ -222,7 +236,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
 autowrap_mode = 2
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/IHP" to="IHPPopup" method="popup_centered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/Godot" to="GodotPopup" method="popup_centered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/IHP" to="IHPPopup" method="popup_centered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/Godot" to="GodotPopup" method="popup_centered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HFlowContainer/Phosphor" to="PhosphorPopup" method="popup_centered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HFlowContainer/OKHSL" to="OKHSLPopup" method="popup_centered"]

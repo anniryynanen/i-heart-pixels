@@ -16,6 +16,7 @@ signal focus_lost
 signal show_notification(message: String)
 
 const ERROR_TITLE = ":("
+const GITHUB_URL = "https://github.com/anniryynanen/i-heart-pixels"
 
 var loading = true:
     set(value):

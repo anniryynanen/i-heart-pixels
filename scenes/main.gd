@@ -86,6 +86,10 @@ func _on_right_split_dragged(offset: int) -> void:
     Settings.set_value("panels", "right_height", roundi(-offset / Globals.app_scale))
 
 
+func _on_github_pressed() -> void:
+    OS.shell_open(Globals.GITHUB_URL)
+
+
 func _on_app_scale_changed(app_scale: float) -> void:
     %Toolbar.position.y = toolbar_orig_y_ * Globals.app_scale
     %Toolbar.reset_size.call_deferred()
@@ -116,6 +120,10 @@ func apply_settings_() -> void:
         get_window().position.y = Settings.get_value("window", "y")
 
     get_window().mode = Settings.get_value("window", "mode", Window.Mode.MODE_WINDOWED)
+
+    if OS.has_feature("web"):
+        %GitHubContainer.visible = true
+        %GitHub.tooltip_text = Globals.GITHUB_URL
 
     Globals.loading = false
 

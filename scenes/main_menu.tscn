@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c4votcijhmgs3" path="res://scenes/popups/app_scale_popup.tscn" id="2_c6cku"]
 [ext_resource type="PackedScene" uid="uid://6i5h1tdoctk6" path="res://scenes/popups/controls_popup.tscn" id="3_vg75b"]
 [ext_resource type="PackedScene" uid="uid://686ef6jcvfk3" path="res://scenes/popups/resize_canvas_popup.tscn" id="4_r0twh"]
-[ext_resource type="PackedScene" uid="uid://be0bda4j678f" path="res://scenes/popups/credits_popup.tscn" id="6_ubg70"]
+[ext_resource type="PackedScene" uid="uid://be0bda4j678f" path="res://scenes/popups/about_popup.tscn" id="6_ubg70"]
 
 [node name="MainMenu" type="MenuBar"]
 script = ExtResource("1_jivql")
@@ -51,7 +51,7 @@ transparent_bg = true
 transparent = true
 item_count = 2
 item_0/text = "Controls..."
-item_1/text = "Credits..."
+item_1/text = "About..."
 item_1/id = 1
 
 [node name="AppScalePopup" parent="." instance=ExtResource("2_c6cku")]
@@ -64,7 +64,7 @@ visible = false
 [node name="ControlsPopup" parent="." instance=ExtResource("3_vg75b")]
 visible = false
 
-[node name="CreditsPopup" parent="." instance=ExtResource("6_ubg70")]
+[node name="AboutPopup" parent="." instance=ExtResource("6_ubg70")]
 visible = false
 
 [node name="OpenDialog" type="FileDialog" parent="."]

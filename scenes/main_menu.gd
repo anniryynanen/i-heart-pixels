@@ -20,7 +20,7 @@ enum Image_ {
 
 enum Info {
     CONTROLS = 0,
-    CREDITS = 1
+    ABOUT = 1
 }
 
 var on_saved_: Callable
@@ -95,8 +95,8 @@ func _on_info_index_pressed(index: int) -> void:
         Info.CONTROLS:
             $ControlsPopup.popup_centered()
 
-        Info.CREDITS:
-            $CreditsPopup.popup_centered()
+        Info.ABOUT:
+            $AboutPopup.popup_centered()
 
 
 func _on_open_dialog_file_selected(path: String) -> void:
