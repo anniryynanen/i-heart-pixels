@@ -5,14 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://dmmnh8ec13bmw" path="res://scenes/title.tscn" id="3_4unvx"]
 [ext_resource type="Script" path="res://scenes/popups/closing_popup.gd" id="3_km5qd"]
 
-[node name="CreditsPopup" type="Window"]
+[node name="AboutPopup" type="Window"]
 title = "About"
-size = Vector2i(374, 346)
-wrap_controls = true
-transient = true
-exclusive = true
-unresizable = true
-popup_window = true
+size = Vector2i(374, 320)
 script = ExtResource("2_i3hmq")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -104,6 +99,7 @@ text = "License of sRGB to OKHSL converter
 
 [node name="GodotDeps" parent="MarginContainer/VBoxContainer/HFlowContainer" instance=ExtResource("2_n3b8f")]
 layout_mode = 2
+size_flags_vertical = 4
 text = "Godot Engine components"
 url = "https://github.com/godotengine/godot/blob/master/COPYRIGHT.txt"
 

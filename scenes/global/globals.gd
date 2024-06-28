@@ -12,8 +12,9 @@ signal app_scale_changed(app_scale: float)
 signal keyboard_layout_changed
 signal focus_lost
 
-@warning_ignore("unused_signal")
-signal show_notification(message: String)
+@warning_ignore("unused_signal") signal show_notification(message: String)
+@warning_ignore("unused_signal") signal show_mouse_eater(pressed: Callable)
+@warning_ignore("unused_signal") signal hide_mouse_eater
 
 const ERROR_TITLE = ":("
 const GITHUB_URL = "https://github.com/anniryynanen/i-heart-pixels"

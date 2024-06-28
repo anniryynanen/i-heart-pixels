@@ -2,6 +2,13 @@ extends Control
 
 var toolbar_orig_y_: float
 var notification_tween_: Tween
+var on_mouse_eater_pressed_: Callable = func(): pass
+
+
+func _init() -> void:
+    # https://github.com/godotengine/godot/issues/93014
+    if OS.has_feature("linux"):
+        Engine.max_fps = 60
 
 
 func _enter_tree() -> void:
@@ -15,6 +22,14 @@ func _enter_tree() -> void:
     Globals.app_scale_changed.connect(_on_app_scale_changed)
 
     Globals.show_notification.connect(show_notification_)
+    Globals.show_mouse_eater.connect(func(on_pressed: Callable):
+        on_mouse_eater_pressed_ = on_pressed
+        %MouseEater.visible = true
+    )
+    Globals.hide_mouse_eater.connect(func(): %MouseEater.visible = false)
+
+    # Only needed in web build
+    %MouseEater.pressed.connect(func(): on_mouse_eater_pressed_.call())
 
     get_tree().auto_accept_quit = false
     get_tree().node_added.connect(_on_node_added)
@@ -111,36 +126,39 @@ func apply_settings_() -> void:
 
     await RenderingServer.frame_post_draw
 
-    if Settings.has_value("window", "width"):
-        get_window().size.x = Settings.get_value("window", "width")
-        get_window().size.y = Settings.get_value("window", "height")
-
-    if Settings.has_value("window", "x"):
-        get_window().position.x = Settings.get_value("window", "x")
-        get_window().position.y = Settings.get_value("window", "y")
-
-    get_window().mode = Settings.get_value("window", "mode", Window.Mode.MODE_WINDOWED)
-
     if OS.has_feature("web"):
         %GitHubContainer.visible = true
         %GitHub.tooltip_text = Globals.GITHUB_URL
+    else:
+        if Settings.has_value("window", "width"):
+            get_window().size.x = Settings.get_value("window", "width")
+            get_window().size.y = Settings.get_value("window", "height")
+
+        if Settings.has_value("window", "x"):
+            get_window().position.x = Settings.get_value("window", "x")
+            get_window().position.y = Settings.get_value("window", "y")
+
+        get_window().mode = Settings.get_value("window", "mode", Window.Mode.MODE_WINDOWED)
 
     Globals.loading = false
 
 
 func update_title_() -> void:
-    var title: String = ""
-
-    if Globals.current_path:
-        title += Globals.current_path.get_file()
+    if OS.has_feature("web"):
+        get_window().title = ProjectSettings.get_setting("application/config/name")
     else:
-        title += "[not saved]"
+        var title: String = ""
 
-    if Globals.image.unsaved_changes:
-        title += "*"
+        if Globals.current_path:
+            title += Globals.current_path.get_file()
+        else:
+            title += "[not saved]"
 
-    title += " - " + ProjectSettings.get_setting("application/config/name")
-    get_window().title = title
+        if Globals.image.unsaved_changes:
+            title += "*"
+
+        title += " - " + ProjectSettings.get_setting("application/config/name")
+        get_window().title = title
 
 
 func show_notification_(message: String) -> void:

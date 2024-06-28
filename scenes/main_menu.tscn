@@ -14,30 +14,32 @@ transparent_bg = true
 transparent = true
 item_count = 10
 item_0/text = "New"
+item_0/id = 1
 item_1/text = "Open..."
-item_1/id = 1
-item_2/id = 7
+item_1/id = 2
+item_2/id = 100
 item_2/separator = true
 item_3/text = "Save"
-item_3/id = 2
+item_3/id = 3
 item_4/text = "Save As..."
-item_4/id = 3
-item_5/id = 8
+item_4/id = 4
+item_5/id = 101
 item_5/separator = true
 item_6/text = "Export"
-item_6/id = 4
+item_6/id = 5
 item_7/text = "Export As..."
-item_7/id = 5
-item_8/id = 9
+item_7/id = 6
+item_8/id = 102
 item_8/separator = true
 item_9/text = "Close"
-item_9/id = 6
+item_9/id = 7
 
 [node name="View" type="PopupMenu" parent="."]
 transparent_bg = true
 transparent = true
 item_count = 1
 item_0/text = "App Scale..."
+item_0/id = 1
 
 [node name="Image" type="PopupMenu" parent="."]
 auto_translate_mode = 1
@@ -45,14 +47,16 @@ transparent_bg = true
 transparent = true
 item_count = 1
 item_0/text = "Resize Canvas..."
+item_0/id = 1
 
 [node name="Info" type="PopupMenu" parent="."]
 transparent_bg = true
 transparent = true
 item_count = 2
 item_0/text = "Controls..."
+item_0/id = 1
 item_1/text = "About..."
-item_1/id = 1
+item_1/id = 2
 
 [node name="AppScalePopup" parent="." instance=ExtResource("2_c6cku")]
 visible = false
@@ -69,7 +73,7 @@ visible = false
 
 [node name="OpenDialog" type="FileDialog" parent="."]
 title = "Open"
-size = Vector2i(324, 180)
+size = Vector2i(362, 175)
 ok_button_text = "Open"
 mode_overrides_title = false
 file_mode = 0
@@ -79,7 +83,7 @@ use_native_dialog = true
 
 [node name="SaveDialog" type="FileDialog" parent="."]
 title = "Save"
-size = Vector2i(352, 180)
+size = Vector2i(400, 175)
 ok_button_text = "Save"
 mode_overrides_title = false
 access = 2
@@ -88,7 +92,8 @@ use_native_dialog = true
 
 [node name="ExportDialog" type="FileDialog" parent="."]
 title = "Export"
-size = Vector2i(352, 180)
+position = Vector2i(0, 36)
+size = Vector2i(400, 175)
 ok_button_text = "Save"
 mode_overrides_title = false
 access = 2

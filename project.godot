@@ -16,7 +16,6 @@ run/main_scene="res://scenes/dummy.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="I Heart Pixels"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-run/max_fps=60
 config/icon="res://icons/i-heart-pixels-icon-v1.png"
 
 [autoload]

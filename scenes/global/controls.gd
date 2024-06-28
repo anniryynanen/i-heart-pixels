@@ -11,4 +11,7 @@ const RESELECT_COLOR = KEY_S
 
 
 static func get_key_label(key: Key) -> String:
-    return OS.get_keycode_string(DisplayServer.keyboard_get_label_from_physical(key))
+    if OS.has_feature("web"):
+        return OS.get_keycode_string(key)
+    else:
+        return OS.get_keycode_string(DisplayServer.keyboard_get_label_from_physical(key))

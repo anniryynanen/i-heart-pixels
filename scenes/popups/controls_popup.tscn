@@ -6,11 +6,6 @@
 [node name="ControlsInfoPopup" type="Window"]
 title = "Controls"
 size = Vector2i(463, 253)
-wrap_controls = true
-transient = true
-exclusive = true
-unresizable = true
-popup_window = true
 script = ExtResource("2_af0oy")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

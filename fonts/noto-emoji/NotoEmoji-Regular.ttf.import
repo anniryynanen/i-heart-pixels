@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://ddl7kojosp4sj"
-path="res://.godot/imported/Roboto-Medium.ttf-84087e010095b03d60df198177373c42.fontdata"
+uid="uid://u6w2rtmkb1ca"
+path="res://.godot/imported/NotoEmoji-Regular.ttf-1cf519b796fbfc37a6096c33d07e069e.fontdata"
 
 [deps]
 
-source_file="res://fonts/roboto/Roboto-Medium.ttf"
-dest_files=["res://.godot/imported/Roboto-Medium.ttf-84087e010095b03d60df198177373c42.fontdata"]
+source_file="res://fonts/noto-emoji/NotoEmoji-Regular.ttf"
+dest_files=["res://.godot/imported/NotoEmoji-Regular.ttf-1cf519b796fbfc37a6096c33d07e069e.fontdata"]
 
 [params]
 

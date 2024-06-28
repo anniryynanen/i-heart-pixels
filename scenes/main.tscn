@@ -125,6 +125,18 @@ offset_bottom = 26.0
 theme_type_variation = &"Notification"
 text = "Saved"
 
+[node name="MouseEater" type="Button" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+flat = true
+
 [node name="UnsavedChangesPopup" parent="." instance=ExtResource("7_j86ne")]
 size = Vector2i(300, 78)
 visible = false

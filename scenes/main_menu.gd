@@ -1,42 +1,53 @@
 extends MenuBar
 
 enum File {
-    NEW = 0,
-    OPEN = 1,
+    NEW = 1,
+    OPEN = 2,
     SAVE = 3,
     SAVE_AS = 4,
-    EXPORT = 6,
-    EXPORT_AS = 7,
-    CLOSE = 9
+    EXPORT = 5,
+    EXPORT_AS = 6,
+    CLOSE = 7
 }
 
 enum View {
-    APP_SCALE = 0
+    APP_SCALE = 1
 }
 
 enum Image_ {
-    RESIZE_CANVAS = 0
+    RESIZE_CANVAS = 1
 }
 
 enum Info {
-    CONTROLS = 0,
-    ABOUT = 1
+    CONTROLS = 1,
+    ABOUT = 2
 }
 
 var on_saved_: Callable
 
 
 func _ready() -> void:
-    setup_shortcut_(File.NEW, KEY_N)
-    setup_shortcut_(File.OPEN, KEY_O)
-    setup_shortcut_(File.SAVE, KEY_S)
-    setup_shortcut_(File.SAVE_AS, KEY_S, true)
-    setup_shortcut_(File.EXPORT, KEY_E)
-    setup_shortcut_(File.EXPORT_AS, KEY_E, true)
-    setup_shortcut_(File.CLOSE, KEY_W)
+    setup_shortcut_($File, File.SAVE, KEY_S)
+    setup_shortcut_($File, File.SAVE_AS, KEY_S, true)
+    setup_shortcut_($File, File.EXPORT, KEY_E)
+    setup_shortcut_($File, File.EXPORT_AS, KEY_E, true)
+
+    if OS.has_feature("web"):
+        $File.remove_item($File.get_item_index(File.NEW))
+        $File.remove_item($File.get_item_index(File.CLOSE) - 1)
+        $File.remove_item($File.get_item_index(File.CLOSE))
+
+        # Not implemented yet
+        remove_child($File)
+    else:
+        # No "open" shortcut in web build, there it fails before first click
+        setup_shortcut_($File, File.OPEN, KEY_O)
+
+        setup_shortcut_($File, File.NEW, KEY_N)
+        setup_shortcut_($File, File.CLOSE, KEY_W)
 
 
-func setup_shortcut_(index: int, keycode: Key, shift_pressed: bool = false) -> void:
+func setup_shortcut_(menu: PopupMenu, id: int, keycode: Key, shift_pressed: bool = false) -> void:
     var key: InputEventKey = InputEventKey.new()
     key.keycode = keycode
     key.ctrl_pressed = true
@@ -44,11 +55,11 @@ func setup_shortcut_(index: int, keycode: Key, shift_pressed: bool = false) -> v
 
     var shortcut: Shortcut = Shortcut.new()
     shortcut.events.append(key)
-    $File.set_item_shortcut(index, shortcut, true)
+    menu.set_item_shortcut(menu.get_item_index(id), shortcut, true)
 
 
 func _on_file_index_pressed(index: int) -> void:
-    match index:
+    match $File.get_item_id(index):
         File.NEW:
             OS.create_instance([])
 
@@ -79,19 +90,19 @@ func _on_file_index_pressed(index: int) -> void:
 
 
 func _on_view_index_pressed(index: int) -> void:
-    match index:
+    match $View.get_item_id(index):
         View.APP_SCALE:
             $AppScalePopup.popup_centered()
 
 
 func _on_image_index_pressed(index: int) -> void:
-    match index:
+    match $Image.get_item_id(index):
         Image_.RESIZE_CANVAS:
             $ResizeCanvasPopup.popup_centered()
 
 
 func _on_info_index_pressed(index: int) -> void:
-    match index:
+    match $Info.get_item_id(index):
         Info.CONTROLS:
             $ControlsPopup.popup_centered()
 

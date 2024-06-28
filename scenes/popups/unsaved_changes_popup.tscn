@@ -5,11 +5,6 @@
 [node name="UnsavedChangesPopup" type="Window"]
 title = "Unsaved Changes"
 size = Vector2i(322, 89)
-wrap_controls = true
-transient = true
-exclusive = true
-unresizable = true
-popup_window = true
 script = ExtResource("2_1xxfm")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
