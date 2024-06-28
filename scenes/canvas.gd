@@ -265,9 +265,12 @@ func fill_(color: OKColor) -> void:
     var fill: Color = color.to_rgb()
 
     var edge: Array[Vector2i] = [current_pixel_]
+    var visited: BitMap = BitMap.new()
+    visited.resize(current_layer_.get_size())
 
     while not edge.is_empty():
         var point: Vector2i = edge.pop_back()
+        visited.set_bit(point.x, point.y, true)
         current_layer_.set_pixel(point.x, point.y, fill)
 
         for neighbor in [
@@ -281,6 +284,7 @@ func fill_(color: OKColor) -> void:
                 point + Vector2i.DOWN + Vector2i.RIGHT]:
 
             if pixel_in_image_(neighbor) \
+                    and not visited.get_bit(neighbor.x, neighbor.y) \
                     and current_layer_.get_pixel(neighbor.x, neighbor.y).is_equal_approx(target):
                 edge.append(neighbor)
 
