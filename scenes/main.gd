@@ -2,7 +2,6 @@ extends Control
 
 var toolbar_orig_y_: float
 var notification_tween_: Tween
-var on_mouse_eater_pressed_: Callable = func(): pass
 
 
 func _init() -> void:
@@ -22,14 +21,6 @@ func _enter_tree() -> void:
     Globals.app_scale_changed.connect(_on_app_scale_changed)
 
     Globals.show_notification.connect(show_notification_)
-    Globals.show_mouse_eater.connect(func(on_pressed: Callable):
-        on_mouse_eater_pressed_ = on_pressed
-        %MouseEater.visible = true
-    )
-    Globals.hide_mouse_eater.connect(func(): %MouseEater.visible = false)
-
-    # Only needed in web build
-    %MouseEater.pressed.connect(func(): on_mouse_eater_pressed_.call())
 
     get_tree().auto_accept_quit = false
     get_tree().node_added.connect(_on_node_added)

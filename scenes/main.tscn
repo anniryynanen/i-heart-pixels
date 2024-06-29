@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dpqpbds16fmgh"]
+[gd_scene load_steps=11 format=3 uid="uid://dpqpbds16fmgh"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_qg5aj"]
 [ext_resource type="PackedScene" uid="uid://clr3rba3j2bsb" path="res://scenes/canvas.tscn" id="2_hvaxd"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://80q74pk3rmx1" path="res://scenes/toolbar.tscn" id="7_0363p"]
 [ext_resource type="PackedScene" uid="uid://b0gtifc3o4sq" path="res://scenes/popups/unsaved_changes_popup.tscn" id="7_j86ne"]
 [ext_resource type="Texture2D" uid="uid://ddpvnnoxj4304" path="res://icons/phosphor/20px/github-logo-duotone.svg" id="7_y3etq"]
+[ext_resource type="PackedScene" uid="uid://hh6lsi6gx0lb" path="res://scenes/mouse_eater.tscn" id="9_i028i"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -125,17 +126,8 @@ offset_bottom = 26.0
 theme_type_variation = &"Notification"
 text = "Saved"
 
-[node name="MouseEater" type="Button" parent="."]
-unique_name_in_owner = true
-visible = false
+[node name="MouseEater" parent="." instance=ExtResource("9_i028i")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-flat = true
 
 [node name="UnsavedChangesPopup" parent="." instance=ExtResource("7_j86ne")]
 size = Vector2i(300, 78)
