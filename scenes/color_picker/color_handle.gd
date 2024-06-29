@@ -19,7 +19,7 @@ var drag_start_value_: int
 
 func _ready() -> void:
     steps_ = OKColor.steps(color_param)
-    Globals.focus_lost.connect(func(): if dragging_: stop_dragging_())
+    Globals.focus_lost.connect(func()-> void: if dragging_: stop_dragging_())
 
 
 func _gui_input(event: InputEvent) -> void:

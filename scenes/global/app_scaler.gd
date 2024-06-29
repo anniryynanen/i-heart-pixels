@@ -27,7 +27,7 @@ func start() -> void:
     save_theme_()
     update_scale_()
 
-    Globals.app_scale_changed.connect(func(_s): update_scale_())
+    Globals.app_scale_changed.connect(func(_s: float) -> void: update_scale_())
 
 
 func add_transient(control: Control) -> void:
@@ -223,7 +223,7 @@ func update_scale_() -> void:
     update_size_(main_)
 
     for window in windows_:
-        (func():
+        (func() -> void:
             # Can't set window size if it's not visible
             if not window.visible:
                 await window.visibility_changed
@@ -233,7 +233,7 @@ func update_scale_() -> void:
                 roundi(window.get_meta("height") * Globals.app_scale))
 
             if new_size != window.size:
-                (func(): # Deferring is sometimes needed to reduce window size
+                (func() -> void: # Deferring is sometimes needed to reduce window size
                     window.position += (window.size - new_size) / 2
                     window.size = new_size
                 ).call_deferred()

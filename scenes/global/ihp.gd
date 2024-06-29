@@ -9,8 +9,8 @@ var size: Vector2i
 var layers: Array[Layer]
 var current_layer: Layer
 
-var untouched = true
-var unsaved_changes = false:
+var untouched: bool = true
+var unsaved_changes: bool = false:
     set(value):
         unsaved_changes = value
         untouched = false
@@ -135,7 +135,7 @@ static func load_ihp_(path: String) -> IHP:
     var ihp: IHP = IHP.new(Vector2(dict["width"], dict["height"]))
     ihp.next_layer_id_ = dict["next_layer_id"]
 
-    var first = true
+    var first: bool = true
     for layer_dict: Dictionary in dict["layers"]:
         var layer: Layer
         if first:

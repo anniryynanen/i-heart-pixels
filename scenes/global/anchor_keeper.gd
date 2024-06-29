@@ -8,7 +8,7 @@ var offset_top_: float
 var offset_bottom_: float
 
 
-func _init(control: Control):
+func _init(control: Control) -> void:
     control_ = control
     offset_right_ = control.offset_right
     offset_left_ = control.offset_left

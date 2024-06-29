@@ -63,12 +63,12 @@ func _on_button_pressed() -> void:
 
 
 func _on_tool_changed(new_tool: Tool.Type) -> void:
-    var active = new_tool == tool
+    var active: bool = new_tool == tool
     $Button.disabled = active
     theme_type_variation = &"ToolPanelActive" if active else &"ToolPanelInactive"
 
 
-func _on_keyboard_layout_changed():
+func _on_keyboard_layout_changed()-> void:
     match tool:
         Tool.PEN: $Button.tooltip_text = "Pen"
         Tool.ERASER: $Button.tooltip_text = "Eraser"

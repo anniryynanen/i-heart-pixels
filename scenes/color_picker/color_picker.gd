@@ -23,7 +23,7 @@ func _ready() -> void:
     handles_.append(%SaturationHandle)
     handles_.append(%LightnessHandle)
 
-    handles_.map(func(h): h.color_changed.connect(self.set_color_))
+    handles_.map(func(h: ColorHandle) -> void: h.color_changed.connect(self.set_color_))
     Globals.app_scale_changed.connect(_on_app_scale_changed)
 
 
@@ -79,7 +79,7 @@ func submit_hex_() -> void:
         %Warning.visible = true
 
 
-func set_color_(color: OKColor, emit: bool = true, update_last = false) -> void:
+func set_color_(color: OKColor, emit: bool = true, update_last: bool = false) -> void:
     color = color.duplicate()
 
     # Color picker only deals with opaque colors
@@ -89,8 +89,8 @@ func set_color_(color: OKColor, emit: bool = true, update_last = false) -> void:
         last_color_ = color
         %LastColor.get_theme_stylebox("normal").bg_color = color.to_rgb()
 
-    strips_.map(func(s): s.color = color)
-    handles_.map(func(h): h.color = color)
+    strips_.map(func(s: ColorStrip) -> void: s.color = color)
+    handles_.map(func(h: ColorHandle) -> void: h.color = color)
 
     %Color.get_theme_stylebox("panel").bg_color = color.to_rgb()
     %Hex.text = "#" + color.to_hex()

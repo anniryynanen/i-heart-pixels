@@ -18,7 +18,7 @@ var highlighted: bool:
         highlighted = value
 
         if highlighted:
-            var border_color = OKColor.new()
+            var border_color: OKColor = OKColor.new()
             border_color.l = 0.2 if color.is_light() else 0.8
 
             stylebox.border_color = border_color.to_rgb()

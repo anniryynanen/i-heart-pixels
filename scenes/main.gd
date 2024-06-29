@@ -16,8 +16,8 @@ func _enter_tree() -> void:
     toolbar_orig_y_ = %Toolbar.position.y
 
     Globals.image_changed.connect(_on_image_changed)
-    Globals.unsaved_changes_changed.connect(func(_u): update_title_())
-    Globals.current_path_changed.connect(func(_p): update_title_())
+    Globals.unsaved_changes_changed.connect(func(_u: bool) -> void: update_title_())
+    Globals.current_path_changed.connect(func(_p: String) -> void: update_title_())
     Globals.app_scale_changed.connect(_on_app_scale_changed)
 
     Globals.show_notification.connect(show_notification_)
@@ -56,7 +56,7 @@ func _on_node_added(node: Node) -> void:
 
         if control.focus_mode != Control.FOCUS_NONE:
             # Don't mind popup contents
-            var parent = control.get_parent()
+            var parent: Node = control.get_parent()
             while parent != self:
                 if parent is Window:
                     return
@@ -172,7 +172,7 @@ func show_notification_(message: String) -> void:
     notification_tween_.tween_property(%Notification, "position", Vector2.DOWN * distance, 0.12) \
         .as_relative().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 
-    notification_tween_.tween_callback(func(): %Notification.visible = false)
+    notification_tween_.tween_callback(func() -> void: %Notification.visible = false)
 
 
 func quit_() -> void:

@@ -23,7 +23,7 @@ func set_export_path(save_path: String, export_path: String) -> void:
         save_path_order_.pop_at(index)
 
     elif save_path_order_.size() >= 500:
-        var removed = save_path_order_.pop_front()
+        var removed: String = save_path_order_.pop_front()
         export_paths_.erase(removed)
 
     export_paths_[save_path] = export_path
@@ -48,7 +48,7 @@ func load_cache_() -> void:
         push_error("Couldn't parse cache loaded from " + CACHE_PATH)
         return
 
-    for tuple in dict["export_paths"]:
+    for tuple: Array in dict["export_paths"]:
         var save_path: String = tuple[0]
         var export_path: String = tuple[1]
         export_paths_[save_path] = export_path

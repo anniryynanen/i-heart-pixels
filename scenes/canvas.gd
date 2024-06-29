@@ -6,10 +6,10 @@ const BASE_PAN_STEP = 1.0
 var top_left_: Vector2 = Vector2(0.0, 0.0)
 var current_pixel_: Vector2i = Vector2i(-1, -1)
 var last_tool_: Tool.Type
-var first_resize_ = true
-var hovering_ = false
-var panning_ = false
-var drawing_ = false
+var first_resize_: bool = true
+var hovering_: bool = false
+var panning_: bool = false
+var drawing_: bool = false
 
 var pixel_width_: float = 80.0
 var pan_step_: float = BASE_PAN_STEP
@@ -20,7 +20,7 @@ var pan_cursor_: ScalableSVG = ScalableSVG.new(load(
 var pen_tips_: Dictionary
 
 var current_layer_: Image
-var current_layer_changed_ = false
+var current_layer_changed_: bool = false
 var texture_: ImageTexture
 
 
@@ -52,8 +52,8 @@ func _ready() -> void:
     get_window().focus_exited.connect(update_cursor_)
 
     Globals.image_changed.connect(_on_image_changed)
-    Globals.tool_changed.connect(func(_a): update_cursor_())
-    Globals.tool_color_changed.connect(func(_a): update_cursor_())
+    Globals.tool_changed.connect(func(_a: Tool.Type) -> void: update_cursor_())
+    Globals.tool_color_changed.connect(func(_a: OKColor) -> void: update_cursor_())
     Globals.app_scale_changed.connect(_on_app_scale_changed)
     Globals.focus_lost.connect(_on_focus_lost)
 
@@ -110,7 +110,7 @@ func _on_button_event(button: InputEventMouseButton) -> void:
 
 
 func _on_motion_event(motion: InputEventMouseMotion) -> void:
-    var pixel_moved = update_current_pixel_(motion.position)
+    var pixel_moved: bool = update_current_pixel_(motion.position)
 
     if panning_:
         top_left_ -= motion.relative
@@ -273,7 +273,7 @@ func fill_(color: OKColor) -> void:
         visited.set_bit(point.x, point.y, true)
         current_layer_.set_pixel(point.x, point.y, fill)
 
-        for neighbor in [
+        for neighbor: Vector2i in [
                 point + Vector2i.UP,
                 point + Vector2i.DOWN,
                 point + Vector2i.LEFT,
@@ -309,7 +309,7 @@ func update_cursor_() -> void:
     var cursor: ImageTexture = null
     var hotspot: Vector2
 
-    var window_has_focus = DisplayServer.window_is_focused(get_window().get_window_id())
+    var window_has_focus: bool = DisplayServer.window_is_focused(get_window().get_window_id())
     if hovering_ and window_has_focus:
         if panning_:
             cursor = pan_cursor_.get_texture(Globals.app_scale)
@@ -322,7 +322,7 @@ func update_cursor_() -> void:
             Tool.FILL or Tool.CLEAR:
                 hotspot = Vector2(1.0, 14.0) * Globals.app_scale
             Tool.COLOR_SAMPLER:
-                hotspot = Vector2(0.0, 28.0) * Globals.app_scale
+                hotspot = Vector2(0.0, 27.0) * Globals.app_scale
 
         if not panning_ and Globals.tool in cursor_fills_:
             var fill: ImageTexture = cursor_fills_[Globals.tool].get_texture(
@@ -420,7 +420,7 @@ func draw_background_alpha_() -> void:
             var color_y: int = y if color_offset_y < 0.5 else y + 1
             var square_color: Color = light_color if color_x % 2 == color_y % 2 else dark_color
 
-            var square = Rect2(Vector2(x, y) * square_size + offset, square_size)
+            var square: Rect2 = Rect2(Vector2(x, y) * square_size + offset, square_size)
             draw_rect(square.intersection(square_area), square_color)
 
 
@@ -447,7 +447,7 @@ func draw_hover_highlight_() -> void:
     var hl_pos: Vector2 = current_pixel_ * pixel_width_ - top_left_
     hl_pos += Vector2(line_width / 2.0, line_width / 2.0)
 
-    var turtle_hl = Globals.pen_size > 1 and \
+    var turtle_hl: bool = Globals.pen_size > 1 and \
         (Globals.tool == Tool.PEN or Globals.tool == Tool.ERASER)
 
     # Outline size 1 tool
@@ -471,8 +471,8 @@ func draw_hover_highlight_() -> void:
 
         while points.size() == 2 or turtle_pos != turtle_start:
             var distance: float = pixel_width_
-            var ahead = turtle_pos + turtle_direction
-            var ahead_left = ahead + rotate_left_(turtle_direction)
+            var ahead: Vector2i = turtle_pos + turtle_direction
+            var ahead_left: Vector2i = ahead + rotate_left_(turtle_direction)
 
             if bounds.has_point(ahead) and pen_tip.get_bit(ahead.x, ahead.y):
                 # Turn left

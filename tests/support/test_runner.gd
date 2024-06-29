@@ -1,7 +1,7 @@
 extends Node
 
-var testing = false
-var quitting = false
+var testing: bool = false
+var quitting: bool = false
 var exit_code: int = 0
 
 
@@ -33,7 +33,7 @@ func launch_tests_(path: String) -> void:
     if exit_code != 0:
         return
 
-    var script = load(path).new()
+    var script: Resource = load(path).new()
 
     for method in script.get_method_list():
         if method.name.begins_with("test_"):
@@ -46,7 +46,7 @@ func launch_tests_(path: String) -> void:
                     "--method=" + method.name],
                 output, true)
 
-            for line in output:
+            for line: String in output:
                 print(line)
 
             if exit_code != 0:
@@ -54,7 +54,7 @@ func launch_tests_(path: String) -> void:
 
 
 func run_test_(path: String, method: String) -> void:
-    var script = load(path).new()
+    var script: Resource = load(path).new()
     var success: bool = script.call(method)
 
     if not success:

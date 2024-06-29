@@ -14,7 +14,7 @@ var a: float
 
 
 func _init(hue: float = 0.0, saturation: float = 0.0, lightness: float = 0.0,
-        alpha: float = 1.0):
+        alpha: float = 1.0) -> void:
     h = hue
     s = saturation
     l = lightness

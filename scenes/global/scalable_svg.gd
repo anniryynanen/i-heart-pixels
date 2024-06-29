@@ -10,7 +10,7 @@ var last_fill_: OKColor
 var last_texture_: ImageTexture
 
 
-func _init(texture: Texture2D):
+func _init(texture: Texture2D) -> void:
     width_ = texture.get_width()
     height_ = texture.get_height()
 
@@ -23,13 +23,15 @@ func _init(texture: Texture2D):
 
 func get_texture(scale: float, fill: OKColor = null) -> ImageTexture:
     if last_texture_:
-        var same_scale = is_equal_approx(scale, last_scale_)
-        var same_fill = (fill == null and last_fill_ == null) or (fill and fill.equals(last_fill_))
+        var same_scale: bool = is_equal_approx(scale, last_scale_)
+        var same_fill: bool = \
+            (fill == null and last_fill_ == null) \
+            or (fill and fill.equals(last_fill_))
 
         if same_scale and same_fill:
             return last_texture_
 
-    var modified_text = text_
+    var modified_text: String = text_
     if fill:
         modified_text = modified_text.replace('fill="#000000"', 'fill="#%s"' % fill.to_hex())
 

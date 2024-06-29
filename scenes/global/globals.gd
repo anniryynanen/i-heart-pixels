@@ -19,7 +19,7 @@ signal focus_lost
 const ERROR_TITLE = ":("
 const GITHUB_URL = "https://github.com/anniryynanen/i-heart-pixels"
 
-var loading = true:
+var loading: bool = true:
     set(value):
         if loading and not value:
             loading = false

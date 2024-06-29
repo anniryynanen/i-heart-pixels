@@ -121,7 +121,7 @@ func _on_save_dialog_file_selected(path: String) -> void:
     save(path, on_saved_)
 
 
-func save(path: String = "", on_saved: Callable = func(): pass) -> void:
+func save(path: String = "", on_saved: Callable = func() -> void: pass) -> void:
     if not path:
         show_save_dialog_(on_saved)
         return
@@ -138,13 +138,13 @@ func save(path: String = "", on_saved: Callable = func(): pass) -> void:
         on_saved.call()
 
 
-func show_save_dialog_(on_saved: Callable = func(): pass) -> void:
+func show_save_dialog_(on_saved: Callable = func() -> void: pass) -> void:
     on_saved_ = on_saved
     $SaveDialog.popup_centered()
 
 
 func export_(path: String) -> void:
-    var success = Globals.image.save_to_png(path)
+    var success: bool = Globals.image.save_to_png(path)
     if success:
         if Globals.current_path:
             Cache.set_export_path(Globals.current_path, path)

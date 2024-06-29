@@ -3,7 +3,7 @@ extends ClosingPopup
 ## text gets smaller, but node size and anchors don't adjust. This could be
 ## fixed with custom controls.
 
-var dragging_ = false
+var dragging_: bool = false
 
 
 func _ready() -> void:

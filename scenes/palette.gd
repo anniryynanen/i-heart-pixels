@@ -11,8 +11,8 @@ func _ready() -> void:
     load_colors_()
     custom_minimum_size.y = %ColorBars.get_child(0).size.y + %ButtonContainer.size.y
 
-    Globals.tool_color_changed.connect(func(_c): update_palette_icon_())
-    Globals.app_scale_changed.connect(func(_s): update_palette_icon_())
+    Globals.tool_color_changed.connect(func(_c: OKColor) -> void: update_palette_icon_())
+    Globals.app_scale_changed.connect(func(_s: float) -> void: update_palette_icon_())
     Globals.keyboard_layout_changed.connect(_on_keyboard_layout_changed)
 
 
@@ -59,7 +59,7 @@ func _on_bar_drag_hovered(above: bool, bar: ColorBar) -> void:
         return
 
     var current_bar: ColorBar = get_current_bar_()
-    var index = bar.get_index() if above else bar.get_index() + 1
+    var index: int = bar.get_index() if above else bar.get_index() + 1
     %ColorBars.move_child(dragged_bar_, index)
 
     current_index_ = current_bar.get_index()
@@ -107,7 +107,7 @@ func _on_remove_pressed() -> void:
     AppScaler.remove_transient(bar)
 
 
-func _on_keyboard_layout_changed():
+func _on_keyboard_layout_changed() -> void:
     var key: String = Controls.get_key_label(Controls.COLOR_PICKER)
     %ColorPicker.tooltip_text = "Open color picker (%s)" % key
 
@@ -179,7 +179,7 @@ func show_current_bar_() -> void:
     %Scroll.ensure_control_visible(get_current_bar_())
 
 
-func update_palette_icon_():
+func update_palette_icon_() -> void:
     # Defer in case the app is being scaled, which updates the icon too
     %ColorPicker.set_deferred("icon", palette_icon_.get_texture(Globals.app_scale,
         Globals.tool_color))
@@ -187,7 +187,7 @@ func update_palette_icon_():
 
 func load_colors_() -> void:
     if Settings.has_value("palette", "colors"):
-        for color in Settings.get_value("palette", "colors"):
+        for color: Array in Settings.get_value("palette", "colors"):
             add_bar_(OKColor.new(color[0], color[1], color[2]))
             get_current_bar_().selected = false
 

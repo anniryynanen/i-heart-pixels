@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="I ❤️ Pixels"
-config/version="0.1.0"
+config/version="0.2.0-dev"
 run/main_scene="res://scenes/dummy.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="I Heart Pixels"
@@ -26,6 +26,10 @@ Cache="*res://scenes/global/cache.tscn"
 Settings="*res://scenes/global/settings.tscn"
 Globals="*res://scenes/global/globals.tscn"
 AppScaler="*res://scenes/global/app_scaler.tscn"
+
+[debug]
+
+gdscript/warnings/untyped_declaration=2
 
 [display]
 

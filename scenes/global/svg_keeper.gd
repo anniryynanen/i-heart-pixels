@@ -8,7 +8,7 @@ var svgs_: Dictionary
 func _init() -> void:
     var json: String = FileAccess.get_file_as_string(JSON_PATH)
     if json:
-        var variant = JSON.parse_string(json)
+        var variant: Variant = JSON.parse_string(json)
         if variant:
             svgs_ = variant as Dictionary
 
@@ -23,5 +23,5 @@ func set_svg_(path: String, text: String) -> void:
 
 
 func save_json_() -> void:
-    var file = FileAccess.open(JSON_PATH, FileAccess.WRITE)
+    var file: FileAccess = FileAccess.open(JSON_PATH, FileAccess.WRITE)
     file.store_string(JSON.stringify(svgs_))
