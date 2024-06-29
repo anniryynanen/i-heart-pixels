@@ -319,7 +319,7 @@ func update_cursor_() -> void:
 
     if cursor:
         match Globals.tool:
-            Tool.FILL or Tool.CLEAR:
+            Tool.FILL, Tool.CLEAR:
                 hotspot = Vector2(1.0, 14.0) * Globals.app_scale
             Tool.COLOR_SAMPLER:
                 hotspot = Vector2(0.0, 27.0) * Globals.app_scale
@@ -386,7 +386,7 @@ func _draw() -> void:
     draw_texture_rect(texture_, Rect2(-top_left_, get_image_size_()), false)
     draw_image_outline_()
 
-    if hovering_:
+    if hovering_ and not panning_:
         draw_hover_highlight_()
 
 
