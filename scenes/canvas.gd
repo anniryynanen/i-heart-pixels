@@ -407,8 +407,8 @@ func draw_background_alpha_() -> void:
         fmod(-top_left_.x, square_size.x) - square_size.x / 2.0,
         fmod(-top_left_.y, square_size.y) - square_size.y / 2.0)
 
-    var light_color: Color = OKColor.new(0.0, 0.0, 0.53).to_rgb()
-    var dark_color: Color = OKColor.new(0.0, 0.0, 0.47).to_rgb()
+    var light_color: Color = OKColor.new(0.0, 0.0, 0.57).to_rgb()
+    var dark_color: Color = OKColor.new(0.0, 0.0, 0.51).to_rgb()
 
     var color_repeat: float = square_size.x * 2.0
     var color_offset_x: float = absf(fmod(top_left_.x, color_repeat) / color_repeat)
