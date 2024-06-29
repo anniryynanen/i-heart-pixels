@@ -1,2 +1,4 @@
 .godot
-dist
+dist/windows
+dist/linux
+dist/web

@@ -7,6 +7,7 @@
 
 [node name="AboutPopup" type="Window"]
 title = "About"
+position = Vector2i(0, 36)
 size = Vector2i(374, 320)
 script = ExtResource("2_i3hmq")
 
@@ -105,8 +106,7 @@ url = "https://github.com/godotengine/godot/blob/master/COPYRIGHT.txt"
 
 [node name="IHPPopup" type="Window" parent="."]
 title = "I ❤️ Pixels License"
-position = Vector2i(0, 36)
-size = Vector2i(642, 446)
+size = Vector2i(642, 395)
 visible = false
 wrap_controls = true
 transient = true
@@ -161,7 +161,7 @@ layout_mode = 2
 [node name="PhosphorPopup" type="Window" parent="."]
 auto_translate_mode = 1
 title = "Phosphor Icons License"
-size = Vector2i(649, 469)
+size = Vector2i(649, 415)
 visible = false
 wrap_controls = true
 transient = true
@@ -203,7 +203,7 @@ SOFTWARE."
 [node name="OKHSLPopup" type="Window" parent="."]
 auto_translate_mode = 1
 title = "License of sRGB to OKHSL converter"
-size = Vector2i(642, 446)
+size = Vector2i(642, 395)
 visible = false
 wrap_controls = true
 transient = true
