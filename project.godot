@@ -34,6 +34,7 @@ gdscript/warnings/untyped_declaration=2
 [display]
 
 window/subwindows/embed_subwindows=false
+window/dpi/allow_hidpi=false
 window/per_pixel_transparency/allowed=true
 
 [gui]
