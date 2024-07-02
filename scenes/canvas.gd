@@ -15,8 +15,7 @@ var pixel_width_: float = 80.0
 var pan_step_: float = BASE_PAN_STEP
 var cursors_: Dictionary
 var cursor_fills_: Dictionary
-var pan_cursor_: ScalableSVG = ScalableSVG.new(load(
-    "res://icons/phosphor/28px-cursors/hand-grabbing.svg"))
+var pan_cursor_: ScalableSVG
 var pen_tips_: Dictionary
 
 var current_layer_: Image
@@ -42,6 +41,9 @@ func _ready() -> void:
         "res://icons/phosphor/28px-cursors/eyedropper-duotone-fill.svg"))
     cursor_fills_[Tool.FILL] = ScalableSVG.new(load(
         "res://icons/phosphor/28px-cursors/paint-bucket-duotone-fill.svg"))
+
+    pan_cursor_ = ScalableSVG.new(load(
+        "res://icons/phosphor/28px-cursors/hand-grabbing.svg"))
 
     for pen_size in range(3, 12, 2):
         var bitmask: BitMap = BitMap.new()
