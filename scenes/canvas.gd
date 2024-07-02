@@ -416,8 +416,8 @@ func draw_background_alpha_() -> void:
     var color_offset_x: float = absf(fmod(top_left_.x, color_repeat) / color_repeat)
     var color_offset_y: float = absf(fmod(top_left_.y, color_repeat) / color_repeat)
 
-    for x in range(indexes.position.x, indexes.position.x + indexes.size.x + 1):
-        for y in range(indexes.position.y, indexes.position.y + indexes.size.y + 1):
+    for x in range(indexes.position.x, indexes.position.x + indexes.size.x + 2):
+        for y in range(indexes.position.y, indexes.position.y + indexes.size.y + 2):
             var color_x: int = x if color_offset_x < 0.5 else x + 1
             var color_y: int = y if color_offset_y < 0.5 else y + 1
             var square_color: Color = light_color if color_x % 2 == color_y % 2 else dark_color
