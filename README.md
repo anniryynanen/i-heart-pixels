@@ -3,14 +3,4 @@
 
 I ❤️ Pixels is a work in progress. It may slowly be becoming a pixel graphics editor.
 
-[Try out the demo!](https://www.madebyanni.com/i-heart-pixels/)
-
-### Planned additions
-
-- Loading and saving files in the web build
-- Undo & redo
-- Layers
-- Desktop builds
-- Multiple palettes
-- Importing and exporting palettes
-- Drawing textures on 3D models
+[Try out the web version!](https://www.madebyanni.com/i-heart-pixels/)
