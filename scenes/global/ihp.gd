@@ -52,6 +52,7 @@ func resize_canvas(new_size: Vector2i, offset: Vector2i) -> void:
         layer.image = viewport.get_texture().get_image()
         layer.remove_meta("viewport")
         Globals.remove_child(viewport)
+        viewport.queue_free()
 
     unsaved_changes = true
 
@@ -74,7 +75,12 @@ func save_as_ihp(path: String) -> bool:
             "name": layer.name
         })
 
-    var file: FileAccess = FileAccess.open(path, FileAccess.WRITE)
+    var file: Object
+    if TestRunner.TESTING:
+        file = TestRunner.open_ihp(path)
+    else:
+        file = FileAccess.open(path, FileAccess.WRITE)
+
     var err: Error = FileAccess.get_open_error()
     if err:
         OS.alert("Couldn't save %s (%s)" % [path, error_string(err)], Globals.ERROR_TITLE)
@@ -93,7 +99,7 @@ func save_as_png(path: String) -> bool:
         OS.alert("Can't save as PNG")
         return false
 
-    var err: Error = Globals.image.current_layer.image.save_png(path)
+    var err: Error = IHP.save_png_(path, current_layer.image)
     if err:
         OS.alert("Couldn't save %s (%s)" % [path, error_string(err)], Globals.ERROR_TITLE)
         return false
@@ -104,7 +110,7 @@ func save_as_png(path: String) -> bool:
 
 
 func export(path: String) -> bool:
-    var err: Error = Globals.image.current_layer.image.save_png(path)
+    var err: Error = IHP.save_png_(path, current_layer.image)
     if err:
         OS.alert("Couldn't save %s (%s)" % [path, error_string(err)], Globals.ERROR_TITLE)
         return false
@@ -121,7 +127,12 @@ static func load_from_file(path: String) -> IHP:
 
 
 static func load_ihp_(path: String) -> IHP:
-    var file: FileAccess = FileAccess.open(path, FileAccess.READ)
+    var file: Object
+    if TestRunner.TESTING:
+        file = TestRunner.open_ihp(path)
+    else:
+        file = FileAccess.open(path, FileAccess.READ)
+
     var err: Error = FileAccess.get_open_error()
     if err:
         OS.alert("Couldn't load %s (%s)" % [path, error_string(err)], Globals.ERROR_TITLE)
@@ -157,7 +168,12 @@ static func load_ihp_(path: String) -> IHP:
 
 
 static func load_image_(path: String) -> IHP:
-    var image: Image = Image.load_from_file(path)
+    var image: Image
+    if TestRunner.TESTING:
+        image = TestRunner.load_image(path)
+    else:
+        image = Image.load_from_file(path)
+
     if not image:
         OS.alert("Couldn't load " + path)
         return null
@@ -169,6 +185,14 @@ static func load_image_(path: String) -> IHP:
     ihp.current_layer.image = image
     ihp.untouched = false
     return ihp
+
+
+static func save_png_(path: String, image: Image) -> Error:
+    if TestRunner.TESTING:
+        TestRunner.save_png(path, image)
+        return OK
+    else:
+        return image.save_png(path)
 
 
 func get_next_layer_id_() -> int:

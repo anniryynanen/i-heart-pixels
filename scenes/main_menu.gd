@@ -144,7 +144,7 @@ func show_save_dialog_(on_saved: Callable = func() -> void: pass) -> void:
 
 
 func export_(path: String) -> void:
-    var success: bool = Globals.image.save_to_png(path)
+    var success: bool = Globals.image.export(path)
     if success:
         if Globals.current_path:
             Cache.set_export_path(Globals.current_path, path)

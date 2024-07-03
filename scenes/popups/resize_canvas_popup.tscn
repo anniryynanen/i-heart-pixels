@@ -71,6 +71,8 @@ horizontal_alignment = 2
 [node name="XOffset" type="SpinBox" parent="VBoxContainer/MarginContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+min_value = -16384.0
+max_value = 16384.0
 rounded = true
 update_on_text_changed = true
 
@@ -112,6 +114,8 @@ horizontal_alignment = 2
 [node name="YOffset" type="SpinBox" parent="VBoxContainer/MarginContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+min_value = -16384.0
+max_value = 16384.0
 rounded = true
 update_on_text_changed = true
 

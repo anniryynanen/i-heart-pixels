@@ -92,6 +92,7 @@ func _on_remove_pressed() -> void:
         current_index_ -= 1
 
     %ColorBars.remove_child(bar)
+    bar.queue_free()
     select_index_(current_index_)
 
     for connection in bar.get_signal_connection_list("pressed"):
