@@ -3,8 +3,9 @@
 [ext_resource type="Script" path="res://scenes/popups/controls_popup.gd" id="2_af0oy"]
 [ext_resource type="PackedScene" uid="uid://dmmnh8ec13bmw" path="res://scenes/title.tscn" id="3_c16y8"]
 
-[node name="ControlsInfoPopup" type="Window"]
+[node name="ControlsPopup" type="Window"]
 title = "Controls"
+position = Vector2i(0, 36)
 size = Vector2i(463, 253)
 script = ExtResource("2_af0oy")
 

@@ -4,6 +4,7 @@
 
 [node name="UnsavedChangesPopup" type="Window"]
 title = "Unsaved Changes"
+position = Vector2i(0, 36)
 size = Vector2i(322, 89)
 script = ExtResource("2_1xxfm")
 
