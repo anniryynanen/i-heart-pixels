@@ -76,7 +76,7 @@ func save_as_ihp(path: String) -> bool:
         })
 
     var file: Object
-    if TestRunner.TESTING:
+    if TestRunner.testing:
         file = TestRunner.open_ihp(path)
     else:
         file = FileAccess.open(path, FileAccess.WRITE)
@@ -128,7 +128,7 @@ static func load_from_file(path: String) -> IHP:
 
 static func load_ihp_(path: String) -> IHP:
     var file: Object
-    if TestRunner.TESTING:
+    if TestRunner.testing:
         file = TestRunner.open_ihp(path)
     else:
         file = FileAccess.open(path, FileAccess.READ)
@@ -169,7 +169,7 @@ static func load_ihp_(path: String) -> IHP:
 
 static func load_image_(path: String) -> IHP:
     var image: Image
-    if TestRunner.TESTING:
+    if TestRunner.testing:
         image = TestRunner.load_image(path)
     else:
         image = Image.load_from_file(path)
@@ -188,7 +188,7 @@ static func load_image_(path: String) -> IHP:
 
 
 static func save_png_(path: String, image: Image) -> Error:
-    if TestRunner.TESTING:
+    if TestRunner.testing:
         TestRunner.save_png(path, image)
         return OK
     else:

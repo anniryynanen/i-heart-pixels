@@ -34,7 +34,7 @@ func set_export_path(save_path: String, export_path: String) -> void:
 
 func load_cache_() -> void:
     # Tests start with an empty cache
-    if TestRunner.TESTING:
+    if TestRunner.testing:
         return
 
     if not FileAccess.file_exists(CACHE_PATH):
@@ -61,7 +61,7 @@ func load_cache_() -> void:
 
 func save_cache_() -> void:
     # Tests don't save cache to file
-    if TestRunner.TESTING:
+    if TestRunner.testing:
         return
 
     var file: FileAccess = FileAccess.open(CACHE_PATH, FileAccess.WRITE)
